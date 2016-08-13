@@ -32,7 +32,7 @@
 | subtitle | VARCHAR(100) | the subtitle of the article |
 | tag | VARCHAR(200) | the tags of the article. separated by comma. e.g. fate/stay night,fate/zero |
 | content | MEDIUMTEXT | the article content |
-| view_time | int | the amount of visit to this article |
+| view | int | the amount of visit to this article |
 
 -----
 
@@ -63,6 +63,19 @@
 | post_time | DATETIME | the date time the artwork is posted |
 | video_url | CHAR(100) | the url of the video from VIMEO |
 | description | MEDIUMTEXT | the description of the artwork |
+| view | INT | the amount of views of the artwork |
+
+------
+
+## artwork_comment
+
+| key | type | comment |
+|-----|------|---------|
+| id | int | primary key |
+| AUID | CHAR(36) | artwork foreign key |
+| username |
+| post_time |
+| 
 
 -----
 
@@ -95,6 +108,9 @@
 | SUID | CHAR(36) | score uid foreign key |
 | name | VARCHAR(100) | the name of the song |
 | post_time | DATETIME | the date time post time |
-| 
+| url | VARCHAR(100) | the name of the score |
+| description | MEDIUMTEXT| the description of the score |
+| view | INT | view time |
+| download | INT | download time |
 
 ------
