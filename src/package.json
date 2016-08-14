@@ -1,0 +1,19 @@
+{
+  "name": "liby.me",
+  "version": "0.0.1",
+  "description": "Liby's Personal Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "liby.me"
+  },
+  "keywords": [
+    "liby",
+    "website"
+  ],
+  "author": "Liby Lee",
+  "license": "ISC"
+}

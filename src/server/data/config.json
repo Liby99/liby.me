@@ -1,3 +1,6 @@
 {
-    "port": 8192
+    "name": "liby.me",
+    "port": 8192,
+    "default_page": "index.html",
+    
 }
