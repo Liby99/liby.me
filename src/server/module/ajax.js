@@ -2,6 +2,7 @@
  *
  */
 
+var bodyParser = require("body-parser");
 var response = require("./response.js");
 var verification = require("./verification.js");
 

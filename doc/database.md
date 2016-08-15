@@ -62,6 +62,7 @@
 | subtitle | VARCHAR(100) | the subtitle of the artwork |
 | post_time | DATETIME | the date time the artwork is posted |
 | vimeo | CHAR(100) | the url of the video from VIMEO |
+| src | CHAR(100) | the src in the server |
 | description | MEDIUMTEXT | the description of the artwork |
 | software | VARCHAR(100) | the software string array separated by , |
 | view | INT | the amount of views of the artwork |
@@ -75,8 +76,10 @@
 | id | int | primary key |
 | SUID | CHAR(36) | score uid foreign key |
 | name | VARCHAR(100) | the name of the song |
-| post_time | DATETIME | the date time post time |
-| url | VARCHAR(100) | the name of the score |
+| author | VARCHAR(50) | the original author of the song |
+| anime | VARCHAR(50) | the original anime source of the song |
+| post_time | DATETIME | the post time |
+| src | VARCHAR(100) | the url of the score in the server (should be in /src/pdf/) |
 | description | MEDIUMTEXT| the description of the score |
 | view | INT | view time |
 | download | INT | download time |

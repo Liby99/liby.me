@@ -3,7 +3,7 @@
  */
 
 var express = require("express");
-var config = require("./server/data/config.js");
+var config = require("./server/data/config.json");
 
 function setDateTime() {
     require("./server/module/datetime.js")();
@@ -11,7 +11,6 @@ function setDateTime() {
 
 function setCookie(server) {
     server.use(require("cookie-parser")());
-    server.use(require("./server/handler/cookie.js"));
 }
 
 function setRoute(server) {
@@ -33,7 +32,7 @@ function setPageHandler(server) {
 function setStaticField(server) {
     var fields = ["/css", "/js", "/fonts", "/img", "/view"];
     fields.forEach(function (obj, number) {
-        server.use(obj, express.static(require("path").resolve("./public/" + obj)));
+        server.use(obj, express.static(__dirname + "/public/" + obj));
     });
 }
 
