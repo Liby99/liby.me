@@ -2,20 +2,60 @@
 <html>
     <head>
         <title>Liby.me</title>
-        <style>
-            
-        </style>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <script src="js/lib/jquery.js"></script>
     </head>
     <body>
         <nav>
-            <ul>
-                <li>
-                    
-                </li>
-            </ul>
+            <div id="nav-inner">
+                <div id="nav-main">
+                    <div id="nav-logo">
+                        <img src="img/general/logo.png" />
+                        <span>liby.me</span>
+                    </div>
+                    <div id="nav-menu-toggle">
+                        <div class="nav-menu-toggle-bar"></div>
+                        <div class="nav-menu-toggle-bar"></div>
+                        <div class="nav-menu-toggle-bar"></div>
+                    </div>
+                </div>
+                <div id="nav-menu-outer">
+                    <ul id="nav-menu">
+                        <li>Me</li>
+                        <li>Artwork</li>
+                        <li>Sheet</li>
+                        <li>Project</li>
+                        <li class="active">Article</li>
+                    </ul>
+                </div>
+            </div>
         </nav>
         <main>
             
         </main>
     </body>
+    <script>
+        $(document).ready(function () {
+            Nav.initiate();
+        });
+        
+        var Nav = {
+            $toggle: $("#nav-menu-toggle"),
+            $menu: $("#nav-menu-outer"),
+            initiate: function () {
+                var self = this;
+                self.$toggle.click(function () {
+                    if (self.$menu.hasClass("active")) {
+                        self.$menu.removeClass("active");
+                    }
+                    else {
+                        self.$menu.addClass("active");
+                    }
+                });
+            }
+        }
+    </script>
 </html>

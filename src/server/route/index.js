@@ -1,3 +1,5 @@
+var path = require("path");
+
 module.exports = function (req, res) {
-    res.send("HAHAHAHAHA");
+    res.sendFile(path.resolve(__dirname + "../../../public/index.html"));
 }
