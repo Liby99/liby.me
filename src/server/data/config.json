@@ -2,7 +2,8 @@
     "name": "liby.me",
     "port": 8192,
     "default_page": "index.html",
-    "static_fields": [
+    "404_page": "404.html",
+    "static_field": [
         "/css",
         "/fonts",
         "/img",

@@ -19,8 +19,8 @@ function setRenderEngine(server) {
 
 function setRoute(server) {
     setDefaultPage(server);
-    setPageHandler(server);
     setStaticField(server);
+    setPageHandler(server);
 }
 
 function setDefaultPage(server) {
@@ -29,15 +29,14 @@ function setDefaultPage(server) {
     });
 }
 
-function setPageHandler(server) {
-    require("./server/module/route.js").set(server);
-}
-
 function setStaticField(server) {
-    var fields = config["static_fields"];
-    fields.forEach(function (obj, number) {
+    config["static_field"].forEach(function (obj, number) {
         server.use(obj, express.static(__dirname + "/public/" + obj));
     });
+}
+
+function setPageHandler(server) {
+    require("./server/module/route.js").set(server);
 }
 
 function setAjax(server) {

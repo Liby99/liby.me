@@ -38,7 +38,7 @@ function process(req, res) {
         if (req.query["action"]) {
             
             //Check if the handler has the action
-            if (typeof handler[req.query["action"]] === "function") {
+            if (typeof handler[req.query["action"]]["handle"] === "function") {
                 
                 //Try execute the request
                 try {
@@ -77,7 +77,7 @@ function process(req, res) {
 }
 
 function verify(context, handler, action, callback) {
-    var requirement = handler[req.query.action].requirement;
+    var requirement = handler[action].requirement;
     var request = context.request;
     
     //Loop through the field

@@ -1,21 +1,16 @@
 
 
 module.exports = {
-    get_manga_list: {
+    get: {
         requirement: {
-            cookies: {
-                "UUID": "UUID"
-            },
             body: {
+                "email": "email",
                 "username": "username",
                 "password": "password"
-            },
-            query {
-                "id": "4_digit_number"
             }
         },
         handle: function (context) {
-            
+            context.response.success("All Requirement Fulfilled");
         }
     }
 }

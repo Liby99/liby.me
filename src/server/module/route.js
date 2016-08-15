@@ -3,13 +3,14 @@
  */
  
 var path = require("path");
+var config = require("../data/config.json");
 
 exports.set = function (server) {
     
     /**
      * Regular File router
      */
-    server.get(/\.html(\?.)?/, function (req, res) {
+    server.get(/\.html(\?(.\=.\&)+)?$/, function (req, res) {
         var file = req.path.substring(0, req.path.indexOf(".html"));
         try {
             
@@ -34,7 +35,7 @@ exports.set = function (server) {
                 if (err) {
                     
                     //If there's error finding the file,
-                    res.sendFile("404.html", options, function (err) {
+                    res.sendFile(config["404_page"], options, function (err) {
                         if (err) {
                             
                             //If there's a 404 page error, then send regular failure string
@@ -46,7 +47,7 @@ exports.set = function (server) {
                     });
                 }
                 else {
-                    console.log("Request " + file + ".html send");
+                    console.log("Request " + file + ".html sent");
                 }
             });
         }
