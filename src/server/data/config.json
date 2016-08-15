@@ -2,7 +2,14 @@
     "name": "liby.me",
     "port": 8192,
     "default_page": "index.html",
-    "admin_page": "admin.html",
+    "static_fields": [
+        "/css",
+        "/fonts",
+        "/img",
+        "/js",
+        "/src",
+        "/view"
+    ],
     "mysql_host": "127.0.0.1",
     "mysql_database": "liby.me",
     "mysql_user": "root",

@@ -9,8 +9,8 @@ exports.set = function (server) {
     /**
      * Regular File router
      */
-    server.get("/:file.html", function (req, res) {
-        var file = req.params.file;
+    server.get(/\.html(\?.)?/, function (req, res) {
+        var file = req.path.substring(0, req.path.indexOf(".html"));
         try {
             
             //Check if there's a route written
@@ -50,12 +50,5 @@ exports.set = function (server) {
                 }
             });
         }
-    });
-    
-    /**
-     * Admin file router
-     */
-    server.get("/admin/:file.html", function (req, res) {
-        
     });
 }

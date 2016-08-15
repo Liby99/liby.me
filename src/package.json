@@ -15,5 +15,21 @@
     "website"
   ],
   "author": "Liby Lee",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bufferhelper": "^0.2.1",
+    "client-sessions": "^0.7.0",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-fileupload": "^0.0.5",
+    "fileupload": "^1.0.0",
+    "jquery": "^3.0.0",
+    "jsdom": "^9.2.1",
+    "mysql": "^2.11.1",
+    "node-schedule": "^1.1.0",
+    "ejs": "^2.5.1",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {}
 }

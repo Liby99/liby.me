@@ -13,6 +13,10 @@ function setCookie(server) {
     server.use(require("cookie-parser")());
 }
 
+function setRenderEngine(server) {
+    server.set('view engine', 'ejs');
+}
+
 function setRoute(server) {
     setDefaultPage(server);
     setPageHandler(server);
@@ -30,7 +34,7 @@ function setPageHandler(server) {
 }
 
 function setStaticField(server) {
-    var fields = ["/css", "/js", "/fonts", "/img", "/view"];
+    var fields = config["static_fields"];
     fields.forEach(function (obj, number) {
         server.use(obj, express.static(__dirname + "/public/" + obj));
     });
