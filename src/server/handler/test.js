@@ -7,6 +7,9 @@ module.exports = {
                 "email": "email",
                 "username": "username",
                 "password": "password"
+            },
+            cookies: {
+                "UUID": "UUID"
             }
         },
         handle: function (context) {

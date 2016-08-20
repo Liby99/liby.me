@@ -14,7 +14,9 @@ function setCookie(server) {
 }
 
 function setRenderEngine(server) {
-    server.set('view engine', 'ejs');
+    server.set("views", __dirname + "/public");
+    server.engine(".html", require("ejs").__express);
+    server.set('view engine', "html");
 }
 
 function setRoute(server) {
@@ -52,6 +54,7 @@ function setUpload(server) {
     
     setDateTime();
     setCookie(server);
+    setRenderEngine(server);
     setRoute(server);
     setAjax(server);
     setUpload(server);

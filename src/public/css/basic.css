@@ -8,7 +8,6 @@ body {
     margin: 0;
     padding: 0;
     min-width: 320px;
-    background-color: rgba(240,240,240,1);
 }
 
 ul {
@@ -21,7 +20,7 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    padding: 0;
+    padding: 10px 0;
     margin: 0;
     height: 45px;
     width: 100%;
@@ -88,7 +87,7 @@ nav {
     transition: all 0.2s;
     float: left;
     padding: 0 20px;
-    color: rgba(120,120,120,1);
+    color: rgba(100,100,100,1);
     letter-spacing: 1px;
     cursor: pointer;
 }
@@ -126,7 +125,7 @@ nav {
 
 @media (min-width: 481px) {
     nav {
-        background-color: rgba(255,255,255,0.7);
+        background-color: rgba(255,255,255,0.5);
         backdrop-filter: saturate(180%) blur(20px);
         -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
@@ -138,7 +137,7 @@ nav {
 
 @media (max-width: 480px) {
     #nav-main {
-        background-color: rgba(255,255,255,0.7);
+        background-color: rgba(255,255,255,0.5);
         backdrop-filter: saturate(180%) blur(20px);
         -webkit-backdrop-filter: saturate(180%) blur(20px);
         z-index: 1024;
@@ -148,19 +147,20 @@ nav {
         position: fixed;
         width: 100%;
         margin-top: -500px;
-        background-color: rgba(255,255,255,0.7);
+        background-color: rgba(255,255,255,0.5);
         backdrop-filter: saturate(180%) blur(20px);
         -webkit-backdrop-filter: saturate(180%) blur(20px);
         z-index: 1023;
     }
     
     #nav-menu-outer.active {
-        margin-top: 45px;
+        margin-top: 65px;
     }
     
     #nav-menu {
         float: none;
         width: 100%;
+        padding: 0 20px;
     }
     
     #nav-menu li {
