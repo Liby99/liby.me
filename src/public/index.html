@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="css/basic.css" />
         <script src="js/lib/jquery.js"></script>
     </head>
-    <body>
+    <body style="background-image: url(img/general/create.jpg)">
         <nav>
             <div id="nav-inner">
                 <div id="nav-main">
@@ -34,28 +34,13 @@
             </div>
         </nav>
         <main>
-            <%= text %>
+            
         </main>
     </body>
+    <script src="js/basic.js"></script>
     <script>
         $(document).ready(function () {
             Nav.initiate();
         });
-        
-        var Nav = {
-            $toggle: $("#nav-menu-toggle"),
-            $menu: $("#nav-menu-outer"),
-            initiate: function () {
-                var self = this;
-                self.$toggle.click(function () {
-                    if (self.$menu.hasClass("active")) {
-                        self.$menu.removeClass("active");
-                    }
-                    else {
-                        self.$menu.addClass("active");
-                    }
-                });
-            }
-        }
     </script>
 </html>
