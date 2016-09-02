@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 var crypto = require("../module/crypto.js");
 var util = require("../module/util.js");
 
