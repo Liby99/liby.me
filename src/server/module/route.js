@@ -15,20 +15,22 @@ exports.set = function (server) {
 }
 
 function process(req, res) {
-    var file = req.path.substring(0, req.path.indexOf(".html"));
+    var file = req.path.substring(1, req.path.indexOf(".html"));
     try {
         
         //Check if there's a route written
         var route = require("../route/" + file + ".js");
+        console.log("Route " + file + " Handling Request");
         route(req, res);
     }
     catch (err) {
         
+        //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
             
             //First load the option
             var options = {
-                root: path.resolve(__dirname + "../../../public/"),
+                root: path.resolve(__dirname + "/../../public/"),
                 dotfiles: 'deny',
                 headers: {
                     'x-timestamp': Date.now(),
@@ -38,29 +40,36 @@ function process(req, res) {
             
             //Try send the static file
             res.sendFile(file + ".html", options, function (err) {
+                
+                //Check if there's an error rendering the static file.s
                 if (err) {
                     
-                    //If there's error finding the file,
-                    res.sendFile(config["404_page"], options, function (err) {
-                        if (err) {
-                            
-                            //If there's a 404 page error, then send regular failure string
-                            res.status(404).send("Sorry, There's no such file");
-                        }
-                        else {
-                            console.log("Request " + file + ".html failed. 404 Sent");
-                        }
-                    });
+                    //Then Log the error
+                    console.log(err);
+                    if (file === "404") {
+                        
+                        //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
+                        console.log("404 Page not found. Directly send error message");
+                        res.status(404).send(config["404_message"]);
+                    }
+                    else {
+                        
+                        //If the request err is not 404, then directly send the 404 file.
+                        console.log("File " + file + ".html not found. Redirecting to 404");
+                        res.redirect("404.html");
+                    }
                 }
                 else {
+                    
+                    //Directly Send the html success
                     console.log("Request " + file + ".html sent");
                 }
             });
         }
         else {
             
-            console.log("Error when processing file " + file + ".html:" + err);
-            res.status(500).send("Sorry, the server has an internal error. ");
+            console.log(err);
+            res.send(err);
         }
     }
 }
