@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 
 var crypto = require("../module/crypto.js");
@@ -10,29 +10,29 @@ module.exports = {
     /**
      * Check if the user has logged in
      * @param req, the request object
-     * @callback an integer. 0 for logged in, 1 for not logged in, 2 for internal error
+     * @callback boolean. True for logged in, False for not logged in.
      */
-    logged: function (req, callback) {
+    loggedin: function (req, callback) {
         if (req.cookies.session) {
             mysql.query("SELECT * FROM `admin` WEHRE `session` = ?", [
                 req.cookies.session
             ], function (err, result) {
                 if (!err) {
                     if (result.length > 0) {
-                        callback(0);
+                        callback(true);
                     }
                     else {
-                        callback(1);
+                        callback(false);
                     }
                 }
                 else {
-                    console.log(err);
-                    callback(2);
+                    console.error(err);
+                    callback(false);
                 }
             });
         }
         else {
-            callback(1);
+            callback(false);
         }
     },
     
@@ -43,8 +43,8 @@ module.exports = {
      * @callback an integer. 0 for success, 1 for no such user, 2 for password incorrect, 3 for internal error
      */
     match: function (username, password, callback) {
-        mysql.query("SELECT * FROM `admin` WHERE `username` = ?", [
-            username
+        mysql.query("SELECT * FROM `admin` WHERE ?", [
+            "username": username
         ], function (err, result) {
             if (!err) {
                 if (result.length > 0) {
