@@ -68,6 +68,7 @@ function process(req, res) {
         }
         else {
             
+            console.log("Router Error: ");
             console.log(err);
             res.send(err);
         }

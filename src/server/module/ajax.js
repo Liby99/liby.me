@@ -70,7 +70,9 @@ function process(req, res) {
             res.error(404, "Handler " + req.params[0] + " Not Found");
         }
         else {
+            
             res.error(500, "Internal Server Error");
+            throw err;
         }
     }
 }
