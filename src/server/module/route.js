@@ -56,7 +56,7 @@ function process(req, res) {
                         
                         //If the request err is not 404, then directly send the 404 file.
                         console.log("File " + file + ".html not found. Redirecting to 404");
-                        res.redirect("404.html");
+                        res.redirect("/404.html");
                     }
                 }
                 else {
