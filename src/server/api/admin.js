@@ -9,11 +9,29 @@ var TimeSpan = require("../module/TimeSpan.js");
 
 module.exports = {
     /**
+     * General Verification of the req and res. Directly redirect to login page when not logged in
+     * @param {Request} req
+     * @param {Response} res
+     * @param {Function} callback
+     */
+    verify: function (req, res, callback) {
+        var self = this;
+        this.loggedIn(req, function (logged) {
+            if (logged) {
+                callback();
+            }
+            else {
+                res.redirect("login.html?err=1001");
+            }
+        });
+    },
+    /**
      * Check if the user has logged in
-     * @param req, the request object
+     * @param {Request} req, the request object
      * @callback boolean. True for logged in, False for not logged in.
      */
     loggedIn: function (req, callback) {
+        var self = this;
         if (req.cookies.session) {
             mysql.query("SELECT * FROM `user` WHERE ?", {
                 "session": req.cookies.session
@@ -27,7 +45,16 @@ module.exports = {
                         var ts = new TimeSpan(curr - start);
                         
                         if (ts.getHour() <= 1) {
-                            callback(true);
+                            
+                            //Update the session start time
+                            self.updateSession(result[0]["username"], function (updated) {
+                                if (updated) {
+                                    callback(true);
+                                }
+                                else {
+                                    callback(false);
+                                }
+                            });
                         }
                         else {
                             
@@ -50,9 +77,9 @@ module.exports = {
     },
     /**
      * Check if the user name matches the password
-     * @param username, the login username
-     * @param password, the login password
-     * @callback an integer. 0 for success, 1 for no such user, 2 for password incorrect, 3 for internal error
+     * @param {String} username, the login username
+     * @param {String} password, the login password
+     * @callback 0 for success, 1 for no such user, 2 for password incorrect, 3 for internal error
      */
     match: function (username, password, callback) {
         mysql.query("SELECT * FROM `user` WHERE ?", {
@@ -84,6 +111,7 @@ module.exports = {
      * @callback boolean. True is successfully logged in, and false is not.
      */
     login: function (username, res, callback) {
+        var self = this;
         var session = util.UUID();
         mysql.query("UPDATE `user` SET `session_start` = NOW(), ?", {
             "session": session
@@ -92,7 +120,7 @@ module.exports = {
                 callback(false);
             }
             else {
-                this.setSession(session);
+                self.setSession(res, session);
                 callback(true);
             }
         });
@@ -108,7 +136,7 @@ module.exports = {
      * Set the session in the response
      * @param res, the response to set
      */
-    setSession: function (res) {
+    setSession: function (res, session) {
         res.cookie("session", session, {
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
         });
@@ -119,5 +147,23 @@ module.exports = {
      */
     clearSession: function (res) {
         res.clearCookie("session");
+    },
+    /**
+     * Update the session start time in the database
+     * @param {String} username
+     * @param {Function} callback
+     * @callback boolean
+     */
+    updateSession: function (username, callback) {
+        mysql.query("UPDATE `user` SET `session_start` = NOW() WHERE ?", {
+            "username": username
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
     }
 }
