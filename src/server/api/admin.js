@@ -8,6 +8,7 @@ var util = require("../module/util.js");
 var TimeSpan = require("../module/TimeSpan.js");
 
 module.exports = {
+    passwordRegex: /^[\w\d\-_]{8,20}$/,
     /**
      * General Verification of the req and res. Directly redirect to login page when not logged in
      * @param {Request} req
@@ -158,6 +159,45 @@ module.exports = {
         mysql.query("UPDATE `user` SET `session_start` = NOW() WHERE ?", {
             "username": username
         }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
+    },
+    checkPasswordWithSession: function (session, password, callback) {
+        mysql.query("SELECT `password` FROM `user` WHERE ?", {
+            "session": session
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                if (result.length == 0) {
+                    callback(false);
+                }
+                else {
+                    if (crypto.match(password, result[0]["password"])) {
+                        callback(true);
+                    }
+                    else {
+                        callback(false);
+                    }
+                }
+            }
+        })
+    },
+    isPassword: function (password) {
+        return password.match(this.passwordRegex);
+    },
+    changePassword: function (session, password, callback) {
+        var encrypted = crypto.genEncrypted(password);
+        mysql.query("UPDATE `user` SET `password` = ? WHERE `session` = ?", [
+            encrypted,
+            session
+        ], function (err, result) {
             if (err) {
                 callback(false);
             }

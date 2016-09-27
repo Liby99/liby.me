@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Liby.me - Admin Dashboard</title>
+        <title>Liby.me - Admin Account</title>
         <link rel="stylesheet" href="../css/lib/font-awesome.css" />
         <link rel="stylesheet" href="../css/admin/basic.css" />
         <script src="../js/lib/jquery.js"></script>
@@ -14,9 +14,43 @@
         <main>
             <div id="main-title">Account</div>
             <div id="main-frame">
-                
+                <form id="change-password-form">
+                    <p>Change your password</p>
+                    <input type="password" id="original-password" placeholder="Insert Previous Password" required />
+                    <input type="password" id="new-password" placeholder="Insert Your New Passwords" required />
+                    <input type="password" id="retype-new-password" placeholder="Please Retype Your New Password" required />
+                    <button type="reset">Reset</button>
+                    <button type="submit">Change Password</button>
+                </form>
             </div>
         </main>
     </body>
     <script src="../js/admin/basic.js"></script>
+    <script>
+        $(function () {
+            AccountManage.initiate();
+        });
+        
+        var AccountManage = {
+            initiate: function () {
+                this.initiateChangePasswordForm();
+            },
+            initiateChangePasswordForm: function () {
+                $("#change-password-form").submit(function () {
+                    if ($("#original-password").val() != "" && $("#new-password").val() != "" && $("#retype-new-password").val() != "") {
+                        if ($("#new-password").val() == $("#retype-new-password").val()) {
+                            User.changePassword($("#original-password").val(), $("#new-password").val());
+                        }
+                        else {
+                            alert("Your new password doesn't match");
+                        }
+                    }
+                    else {
+                        alert("Please Completely Fill In the Form");
+                    }
+                    return false;
+                });
+            }
+        }
+    </script>
 </html>

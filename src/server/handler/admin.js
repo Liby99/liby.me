@@ -27,5 +27,34 @@ module.exports = {
     logout: function (req, res) {
         admin.logout(res);
         res.success({});
+    },
+    change_password: function (req, res) {
+        if (admin.isPassword(req.body["new"])) {
+            admin.loggedIn(req, function (logged) {
+                if (logged) {
+                    admin.checkPasswordWithSession(req.cookies["session"], req.body["original"], function (correct) {
+                        if (correct) {
+                            admin.changePassword(req.cookies["session"], req.body["new"], function (result) {
+                                if (result) {
+                                    res.success({});
+                                }
+                                else {
+                                    res.error(4, "Database Error");
+                                }
+                            });
+                        }
+                        else {
+                            res.error(3, "Your Password Is Incorrect");
+                        }
+                    });
+                }
+                else {
+                    res.error(2, "You Have Not Logged In Yet!");
+                }
+            });
+        }
+        else {
+            res.error(1, "The Password Does Not Satisfy the Requirement");
+        }
     }
 }
