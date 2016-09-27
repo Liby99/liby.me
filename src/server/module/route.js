@@ -62,7 +62,7 @@ function process(req, res) {
                 else {
                     
                     //Directly Send the html success
-                    console.log("Request " + file + ".html sent");
+                    console.log("Request " + file + ".html sent statically");
                 }
             });
         }

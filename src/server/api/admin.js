@@ -114,7 +114,7 @@ module.exports = {
     login: function (username, res, callback) {
         var self = this;
         var session = util.UUID();
-        mysql.query("UPDATE `user` SET `session_start` = NOW(), ?", {
+        mysql.query("UPDATE `user` SET `login` = `login` + 1, `session_start` = NOW(), ?", {
             "session": session
         }, function (err, result) {
             if (err) {
