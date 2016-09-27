@@ -23,5 +23,9 @@ module.exports = {
                 res.error(3, "System Error");
             }
         });
+    },
+    logout: function (req, res) {
+        admin.logout(res);
+        res.success({});
     }
 }
