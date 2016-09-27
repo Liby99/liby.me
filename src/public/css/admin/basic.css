@@ -63,7 +63,7 @@ nav {
     display: block;
     transition: all 0.1s;
     border-left: 0px solid rgba(255, 149, 166, 0.8);
-    padding: 0 30px;
+    padding: 0 25px;
     color: inherit;
 }
 
@@ -84,6 +84,8 @@ nav {
 
 .sidebar-section-content li a i {
     width: 20px;
+    margin-right: 5px;
+    text-align: center;
     color: rgba(130, 130, 130, 1);
 }
 
