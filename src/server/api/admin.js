@@ -8,17 +8,12 @@ var util = require("../module/util.js");
 var TimeSpan = require("../module/TimeSpan.js");
 
 module.exports = {
-    
     /**
      * Check if the user has logged in
      * @param req, the request object
      * @callback boolean. True for logged in, False for not logged in.
      */
     loggedIn: function (req, callback) {
-        
-        console.log("Checking the user if he has logged in");
-        console.log("His Session Is: " + req.cookies.session);
-        
         if (req.cookies.session) {
             mysql.query("SELECT * FROM `user` WHERE ?", {
                 "session": req.cookies.session
@@ -41,12 +36,10 @@ module.exports = {
                         }
                     }
                     else {
-                        console.log("There's no user with session " + req.cookies.session);
                         callback(false);
                     }
                 }
                 else {
-                    console.log("Error When Getting User Login Info at " + (new Date()).toString());
                     callback(false);
                 }
             });
@@ -55,7 +48,6 @@ module.exports = {
             callback(false);
         }
     },
-    
     /**
      * Check if the user name matches the password
      * @param username, the login username
@@ -85,31 +77,47 @@ module.exports = {
             }
         }, false);
     },
-    
     /**
-     *
-     * @param  {[type]}   username [description]
-     * @param  {Function} callback [description]
-     * @return {[type]}            [description]
+     * Login the user. Update the session provider (database), and also set the session in the cookie
+     * @param username, the user identifier
+     * @param res the response to set
+     * @callback boolean. True is successfully logged in, and false is not.
      */
-    login: function (username, callback) {
+    login: function (username, res, callback) {
         var session = util.UUID();
         mysql.query("UPDATE `user` SET `session_start` = NOW(), ?", {
             "session": session
         }, function (err, result) {
             if (err) {
-                callback(undefined);
+                callback(false);
             }
             else {
-                callback(session);
+                this.setSession(session);
+                callback(true);
             }
         });
     },
-    
     /**
-     *
+     * Clear the session of the response
+     * @param res, the response to be set
      */
-    logout: function () {
-        
+    logout: function (res) {
+        this.clearSession(res);
+    },
+    /**
+     * Set the session in the response
+     * @param res, the response to set
+     */
+    setSession: function (res) {
+        res.cookie("session", session, {
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+        });
+    },
+    /**
+     * Clear the session in the response
+     * @param res, the response to clear
+     */
+    clearSession: function (res) {
+        res.clearCookie("session");
     }
 }

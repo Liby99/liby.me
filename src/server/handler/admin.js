@@ -4,11 +4,8 @@ module.exports = {
     login: function (req, res) {
         admin.match(req.body["username"], req.body["password"], function (result) {
             if (result == 0) {
-                admin.login(req.body["username"], function (session) {
-                    if (session) {
-                        res.cookie("session", session, {
-                            expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
-                        });
+                admin.login(req.body["username"], res, function (logged) {
+                    if (logged) {
                         res.success({});
                     }
                     else {
