@@ -27,8 +27,9 @@ nav {
     height: 100%;
     width: 220px;
     background-color: rgba(245, 245, 245, 1);
-    line-height: 30px;
+    line-height: 33px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow-y: scroll;
 }
 
 #nav-title {
@@ -63,7 +64,7 @@ nav {
     display: block;
     transition: all 0.1s;
     border-left: 0px solid rgba(255, 149, 166, 0);
-    padding: 0 25px;
+    padding: 0 20px;
     color: inherit;
 }
 
@@ -79,6 +80,7 @@ nav {
 
 .sidebar-section-content li.active a {
     color: rgba(80, 80, 80, 1);
+    background-color: rgba(255, 255, 255, 1);
     border-left: 3px solid rgba(255, 149, 166, 1);
 }
 
