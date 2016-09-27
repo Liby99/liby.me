@@ -22,7 +22,7 @@ module.exports = {
                 callback();
             }
             else {
-                res.redirect("login.html?err=1001");
+                res.redirect("login.html");
             }
         });
     },

@@ -27,9 +27,14 @@ function setRoute(server) {
 }
 
 function setDefaultPage(server) {
+    
     server.get("/", function (req, res) {
         res.redirect("/" + config["default_page"]);
     });
+    
+    server.get("/admin/", function (req, res) {
+        res.redirect("/" + config["admin_default_page"]);
+    })
 }
 
 function setStaticField(server) {

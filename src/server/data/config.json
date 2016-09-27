@@ -2,6 +2,7 @@
     "name": "liby.me",
     "port": 8192,
     "default_page": "index.html",
+    "admin_default_page": "admin/index.html",
     "404_page": "404.html",
     "404_message": "404 Page Not Found",
     "500_message": "500 Server Internal Error",
