@@ -167,6 +167,12 @@ module.exports = {
             }
         });
     },
+    /**
+     * Check if the password correct given the session id
+     * @param {String} session
+     * @param {String} password not encrypted password
+     * @param {Function} callback
+     */
     checkPasswordWithSession: function (session, password, callback) {
         mysql.query("SELECT `password` FROM `user` WHERE ?", {
             "session": session
@@ -189,9 +195,20 @@ module.exports = {
             }
         })
     },
+    /**
+     * Check if the given password maatches the requirement
+     * @param {String} password not encrypted password
+     * @return {Boolean}
+     */
     isPassword: function (password) {
         return password.match(this.passwordRegex);
     },
+    /**
+     * Change the password of the user given session id
+     * @param {String} session
+     * @param {String} password not encrypted password
+     * @param {Function} callback boolean. True if successfully changed, false if not.
+     */
     changePassword: function (session, password, callback) {
         var encrypted = crypto.genEncrypted(password);
         mysql.query("UPDATE `user` SET `password` = ? WHERE `session` = ?", [
