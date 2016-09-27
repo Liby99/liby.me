@@ -27,7 +27,7 @@ nav {
     height: 100%;
     width: 220px;
     background-color: rgba(245, 245, 245, 1);
-    line-height: 35px;
+    line-height: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -62,18 +62,18 @@ nav {
 .sidebar-section-content li a {
     display: block;
     transition: all 0.1s;
-    border-left: 0px solid rgba(255, 149, 166, 0.8);
+    border-left: 0px solid rgba(255, 149, 166, 0);
     padding: 0 25px;
     color: inherit;
 }
 
 .sidebar-section-content li:hover a {
-    border-left: 3px solid rgba(255, 149, 166, 0.8);
+    border-left: 3px solid rgba(255, 149, 166, 0.4);
     background-color: rgba(235, 235, 235, 1);
 }
 
 .sidebar-section-content li:active a {
-    border-left: 3px solid rgba(255, 149, 166, 0.8);
+    border-left: 3px solid rgba(255, 149, 166, 0.6);
     background-color: rgba(225, 225, 225, 1);
 }
 
