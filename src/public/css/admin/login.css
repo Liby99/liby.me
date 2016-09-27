@@ -7,7 +7,7 @@ body {
     background-color: rgba(240, 240, 240, 1);
 }
 
-#login-panel {
+#login-form {
     position: fixed;
     width: 240px;
     height: 200px;
@@ -18,14 +18,14 @@ body {
     border-radius: 10px;
 }
 
-#login-panel p {
+#login-form p {
     display: block;
     text-align: center;
     font-weight: bold;
     margin: 0 0 40px 0;
 }
 
-#login-panel input {
+#login-form input {
     display: block;
     margin-top: 10px;
     line-height: 30px;
@@ -35,7 +35,7 @@ body {
     border-radius: 15px;
 }
 
-#login-panel button {
+#login-form button {
     display: block;
     margin-top: 20px;
     line-height: 30px;

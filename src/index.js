@@ -10,7 +10,8 @@ function setDateTime() {
 }
 
 function setCookie(server) {
-    server.use(require("cookie-parser")());
+    var cookieParser = require("cookie-parser");
+    server.use(cookieParser());
 }
 
 function setRenderEngine(server) {

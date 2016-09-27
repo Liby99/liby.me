@@ -6,8 +6,10 @@ module.exports = {
             if (result == 0) {
                 admin.login(req.body["username"], function (session) {
                     if (session) {
-                        res.cookies.session = session;
-                        res.redirect("index.html");
+                        res.cookie("session", session, {
+                            expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+                        });
+                        res.success({});
                     }
                     else {
                         res.error(4, "Session Log Error");

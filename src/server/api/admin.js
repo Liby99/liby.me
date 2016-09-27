@@ -5,6 +5,7 @@
 var crypto = require("../module/crypto.js");
 var mysql = require("../module/mysql.js");
 var util = require("../module/util.js");
+var TimeSpan = require("../module/TimeSpan.js");
 
 module.exports = {
     
@@ -14,20 +15,38 @@ module.exports = {
      * @callback boolean. True for logged in, False for not logged in.
      */
     loggedIn: function (req, callback) {
+        
+        console.log("Checking the user if he has logged in");
+        console.log("His Session Is: " + req.cookies.session);
+        
         if (req.cookies.session) {
-            mysql.query("SELECT * FROM `user` WEHRE `session` = ?", [
-                req.cookies.session
-            ], function (err, result) {
+            mysql.query("SELECT * FROM `user` WHERE ?", {
+                "session": req.cookies.session
+            }, function (err, result) {
                 if (!err) {
                     if (result.length > 0) {
-                        callback(true);
+                        
+                        //Calculate the expire time
+                        var curr = (new Date()).getTime();
+                        var start = Date.parse(result[0]["session_start"]);
+                        var ts = new TimeSpan(curr - start);
+                        
+                        if (ts.getHour() <= 1) {
+                            callback(true);
+                        }
+                        else {
+                            
+                            //The session has expired
+                            callback(false);
+                        }
                     }
                     else {
+                        console.log("There's no user with session " + req.cookies.session);
                         callback(false);
                     }
                 }
                 else {
-                    console.error(err);
+                    console.log("Error When Getting User Login Info at " + (new Date()).toString());
                     callback(false);
                 }
             });
@@ -79,7 +98,6 @@ module.exports = {
             "session": session
         }, function (err, result) {
             if (err) {
-                console.error(err);
                 callback(undefined);
             }
             else {
