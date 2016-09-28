@@ -20,7 +20,6 @@ function process(req, res) {
         
         //Check if there's a route written
         var route = require("../route/" + file + ".js");
-        console.log("Route " + file + " Handling Request");
         route(req, res);
     }
     catch (err) {
@@ -49,20 +48,13 @@ function process(req, res) {
                     if (file === "404") {
                         
                         //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
-                        console.log("404 Page not found. Directly send error message");
                         res.status(404).send(config["404_message"]);
                     }
                     else {
                         
                         //If the request err is not 404, then directly send the 404 file.
-                        console.log("File " + file + ".html not found. Redirecting to 404");
                         res.redirect("/404.html");
                     }
-                }
-                else {
-                    
-                    //Directly Send the html success
-                    console.log("Request " + file + ".html sent statically");
                 }
             });
         }
@@ -70,7 +62,7 @@ function process(req, res) {
             
             console.log("Router Error: ");
             console.log(err);
-            res.send(err);
+            res.status(500).send(config["500_message"]);
         }
     }
 }
