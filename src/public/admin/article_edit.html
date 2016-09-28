@@ -3,8 +3,12 @@
     <head>
         <title>Liby.me - Admin Edit Article</title>
         <link rel="stylesheet" href="../css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="../css/lib/summernote.css" />
+        <link rel="stylesheet" href="../css/lib/bootstrap.css" />
         <link rel="stylesheet" href="../css/admin/basic.css" />
         <script src="../js/lib/jquery.js"></script>
+        <script src="../js/lib/bootstrap.js"></script>
+        <script src="../js/lib/summernote.js"></script>
         <script>const PAGE = "edit-article"</script>
     </head>
     <body>
@@ -14,11 +18,17 @@
         <main>
             <div id="main-title">Edit Article</div>
             <div id="main-frame">
-                <form id="artwork-upload-form">
-                    
+                <form id="article-edit-form">
+                    <div id="article-content">
+                        <p>asdfasdfad</p>
+                        <p>adsfasdf</p>
+                    </div>
                 </form>
             </div>
         </main>
     </body>
     <script src="../js/admin/basic.js"></script>
+    <script>
+        $("#article-content").summernote();
+    </script>
 </html>

@@ -4,7 +4,7 @@
   "description": "Liby's Personal Website",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node liby.me.js"
   },
   "repository": {
     "type": "git",
