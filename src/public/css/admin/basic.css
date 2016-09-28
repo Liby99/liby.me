@@ -136,5 +136,14 @@ button {
     background-color: rgba(255, 149, 166, 1);
     color: rgba(255, 255, 255, 1);
     padding: 0 20px;
-    margin: 0 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(245, 139, 156, 1);
+}
+
+button:active {
+    background-color: rgba(235, 129, 146, 1);
 }
