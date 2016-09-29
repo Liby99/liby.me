@@ -8,6 +8,7 @@ var util = require("../module/util.js");
 var TimeSpan = require("../module/TimeSpan.js");
 
 module.exports = {
+    debug: true,
     passwordRegex: /^[\w\d\-_]{8,20}$/,
     /**
      * General Verification of the req and res. Directly redirect to login page when not logged in
@@ -22,6 +23,7 @@ module.exports = {
                 callback();
             }
             else {
+                console.log("This guy have not logged in. Redirecting to login");
                 res.redirect("login.html");
             }
         });
@@ -33,12 +35,18 @@ module.exports = {
      */
     loggedIn: function (req, callback) {
         var self = this;
+        
         if (req.cookies.session) {
+            
+            log("Session Cookie Found");
+            
             mysql.query("SELECT * FROM `user` WHERE ?", {
                 "session": req.cookies.session
             }, function (err, result) {
                 if (!err) {
                     if (result.length > 0) {
+                        
+                        log("Session inside database");
                         
                         //Calculate the expire time
                         var curr = (new Date()).getTime();
@@ -47,32 +55,51 @@ module.exports = {
                         
                         if (ts.getHour() <= 1) {
                             
+                            log("Session within one hour");
+                            
                             //Update the session start time
                             self.updateSession(result[0]["username"], function (updated) {
                                 if (updated) {
+                                    
+                                    log("Session Updated");
+                                    
                                     callback(true);
                                 }
                                 else {
+                                    
+                                    log("Session Failed to Update");
+                                    
                                     callback(false);
                                 }
                             });
                         }
                         else {
                             
+                            log("Session expired. Greater than 1 hour");
+                            
                             //The session has expired
                             callback(false);
                         }
                     }
                     else {
+                        
+                        log("Session not in database");
+                        
                         callback(false);
                     }
                 }
                 else {
+                    
+                    log("Database failed to load the session");
+                    
                     callback(false);
                 }
             });
         }
         else {
+            
+            log("No Session inside cookie");
+            
             callback(false);
         }
     },
@@ -222,5 +249,13 @@ module.exports = {
                 callback(true);
             }
         });
+    }
+}
+
+var debug = false;
+
+function log(text) {
+    if (debug) {
+        console.log(text);
     }
 }

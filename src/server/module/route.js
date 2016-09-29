@@ -20,6 +20,7 @@ function process(req, res) {
         
         //Check if there's a route written
         var route = require("../route/" + file + ".js");
+        console.log("Router " + file + " handling request");
         route(req, res);
     }
     catch (err) {
@@ -48,6 +49,7 @@ function process(req, res) {
                     if (file === "404") {
                         
                         //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
+                        console.log("Directly sent static html " + file);
                         res.status(404).send(config["404_message"]);
                     }
                     else {
@@ -55,6 +57,9 @@ function process(req, res) {
                         //If the request err is not 404, then directly send the 404 file.
                         res.redirect("/404.html");
                     }
+                }
+                else {
+                    console.log("Directly sent static html " + file);
                 }
             });
         }

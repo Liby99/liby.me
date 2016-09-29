@@ -150,5 +150,78 @@ module.exports = {
                 res.error(1000, "please Login First");
             }
         });
+    },
+    get_article_comment: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["article"] && req.body["article"] != "") {
+                    Article.exists(req.body["article"], function (exists) {
+                        if (exists) {
+                            Article.getAdminComments(req.body["article"], function (comments) {
+                                if (comments != undefined) {
+                                    res.success(comments);
+                                }
+                                else {
+                                    res.error(3, "Database error");
+                                }
+                            });
+                        }
+                        else {
+                            res.error(2, "Such article does not exist");
+                        }
+                    });
+                }
+                else {
+                    res.error(1, "Article parameter is required");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
+    },
+    delete_comment: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["CUID"] && req.body["CUID"] != "") {
+                    Article.deleteComment(req.body["CUID"], function (success) {
+                        if (success) {
+                            res.success({});
+                        }
+                        else {
+                            res.error(2, "Database Error");
+                        }
+                    });
+                }
+                else {
+                    res.error(1, "CUID is required");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
+    },
+    undelete_comment: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["CUID"] && req.body["CUID"] != "") {
+                    Article.undeleteComment(req.body["CUID"], function (success) {
+                        if (success) {
+                            res.success({});
+                        }
+                        else {
+                            res.error(2, "Database Error");
+                        }
+                    });
+                }
+                else {
+                    res.error(1, "CUID is required");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
     }
 }

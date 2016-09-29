@@ -125,5 +125,53 @@ module.exports = {
                 callback(true);
             }
         });
+    },
+    getAdminComments: function (article, callback) {
+        mysql.query("SELECT * FROM `comment` WHERE ? ORDER BY `date_time` DESC", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(undefined);
+            }
+            else {
+                callback(result);
+            }
+        });
+    },
+    getComments: function (article, callback) {
+        mysql.query("SELECT * FROM `comment` WHERE `private` = 0 AND `deleted` = 0 AND ? ORDER BY `date_time` DESC", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(undefined);
+            }
+            else {
+                callback(result);
+            }
+        });
+    },
+    deleteComment: function (comment, callback) {
+        mysql.query("UPDATE `comment` SET `deleted` = 1 WHERE ?", {
+            "CUID": comment
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
+    },
+    undeleteComment: function (comment, callback) {
+        mysql.query("UPDATE `comment` SET `deleted` = 0 WHERE ?", {
+            "CUID": comment
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        })
     }
 }

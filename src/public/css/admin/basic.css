@@ -111,7 +111,7 @@ main {
 }
 
 form {
-    padding: 20px;
+    padding: 0 20px;
 }
 
 input {
@@ -158,7 +158,8 @@ button:active {
 
 label {
     display: block;
-    margin: 10px 0;
+    margin: 20px 0 10px 0;
+    color: rgba(120, 120, 120, 1);
 }
 
 blockquote {
