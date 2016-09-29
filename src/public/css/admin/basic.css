@@ -11,13 +11,17 @@ body {
 
 a, a:visited {
     color: rgba(255, 149, 166, 1);
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 ul {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+textarea, input {
+    outline: none;
 }
 
 nav {

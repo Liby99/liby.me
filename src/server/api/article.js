@@ -113,5 +113,17 @@ module.exports = {
                 callback(true);
             }
         });
+    },
+    read: function (article, callback) {
+        mysql.query("UPDATE `article` SET `view` = `view` + 1 WHERE ?", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
     }
 }
