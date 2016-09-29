@@ -4,6 +4,7 @@
  
 var path = require("path");
 var config = require("../data/config.json");
+var debug = true;
 
 exports.set = function (server) {
     
@@ -20,7 +21,7 @@ function process(req, res) {
         
         //Check if there's a route written
         var route = require("../route/" + file + ".js");
-        console.log("Router " + file + " handling request");
+        log("Router " + file + " handling request");
         route(req, res);
     }
     catch (err) {
@@ -46,10 +47,11 @@ function process(req, res) {
                     
                     //Then Log the error
                     console.log(err);
+                    
                     if (file === "404") {
                         
                         //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
-                        console.log("Directly sent static html " + file);
+                        log("Directly sent static html " + file);
                         res.status(404).send(config["404_message"]);
                     }
                     else {
@@ -59,7 +61,7 @@ function process(req, res) {
                     }
                 }
                 else {
-                    console.log("Directly sent static html " + file);
+                    log("Directly sent static html " + file);
                 }
             });
         }
@@ -69,5 +71,11 @@ function process(req, res) {
             console.log(err);
             res.status(500).send(config["500_message"]);
         }
+    }
+}
+
+function log(text) {
+    if (debug) {
+        console.log(text);
     }
 }
