@@ -117,7 +117,7 @@ input {
     border-radius: 15px;
     border: 1px solid rgba(230, 230, 230, 1);
     padding: 0 15px;
-    width: calc(100% - 32px);
+    width: calc(100% - 2px);
     margin: 15px 0;
 }
 
@@ -140,10 +140,23 @@ button {
     cursor: pointer;
 }
 
+button.small {
+    line-height: 24px;
+}
+
 button:hover {
     background-color: rgba(245, 139, 156, 1);
 }
 
 button:active {
     background-color: rgba(235, 129, 146, 1);
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+blockquote {
+    font-size: 12px !important;
 }

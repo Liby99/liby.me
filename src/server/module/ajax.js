@@ -12,7 +12,7 @@ var verification = require("./verification.js");
 exports.set = function (server) {
     
     //Using Body Parser
-    server.use(bodyParser.urlencoded({ extended: false }));
+    server.use(bodyParser.urlencoded({ extended: false, limit:"20mb" }));
     server.use(bodyParser.json());
     
     //Using Response Middleware

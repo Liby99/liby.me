@@ -2,13 +2,15 @@
 <html>
     <head>
         <title>Liby.me - Admin Edit Article</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="../css/lib/font-awesome.css" />
-        <link rel="stylesheet" href="../css/lib/summernote.css" />
+        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
         <link rel="stylesheet" href="../css/lib/bootstrap.css" />
         <link rel="stylesheet" href="../css/admin/basic.css" />
         <script src="../js/lib/jquery.js"></script>
         <script src="../js/lib/bootstrap.js"></script>
         <script src="../js/lib/summernote.js"></script>
+        <script src="../js/util.js"></script>
         <script>const PAGE = "edit-article"</script>
     </head>
     <body>
@@ -19,16 +21,169 @@
             <div id="main-title">Edit Article</div>
             <div id="main-frame">
                 <form id="article-edit-form">
-                    <div id="article-content">
-                        <p>asdfasdfad</p>
-                        <p>adsfasdf</p>
+                    <label>Title:</label>
+                    <input type="text" id="article-title" placeholder="Input the Article Title Here" />
+                    <label>Subtitle:</label>
+                    <input type="text" id="article-subtitle" placeholder="Input the Article Subtitle Here" />
+                    <label>Tags: (Divide each tags with ',')</label>
+                    <input type="text" id="article-tags" placeholder="Input the tags here" />
+                    <label>Status:</label>
+                    <select id="article-status" value="0">
+                        <option value="0">Draft</option>
+                        <option value="1">Public</option>
+                        <option value="2">Archived</option>
+                    </select>
+                    <label>Cover Image: (Preferrably 1280 x 720)</label>
+                    <div id="article-cover">
+                        
                     </div>
+                    <label>Content:</label>
+                    <div id="article-content">
+                        
+                    </div>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         </main>
     </body>
     <script src="../js/admin/basic.js"></script>
     <script>
-        $("#article-content").summernote();
+        $(document).ready(function () {
+            ArticleEdit.initiate();
+        })
+        
+        var ArticleEdit = {
+            article: undefined,
+            coverOption: {
+                height: 100,
+                toolbar: [['insert', ['picture']]],
+                popover: {
+                  image: [
+                    ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                    ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                    ['remove', ['removeMedia']]
+                  ],
+                  air: [
+                    ['insert', ['picture']]
+                  ]
+                }
+            },
+            contentOption: {
+                height: 500
+            },
+            initiate: function () {
+                this.initiateSubmit();
+                this.checkParams();
+            },
+            initiateSubmit: function () {
+                var self = this;
+                $("#article-edit-form").submit(function () {
+                    
+                    var title = $("#article-title").val();
+                    var subtitle = $("#article-subtitle").val();
+                    var tags = $("#article-tags").val();
+                    var status = parseInt($("#article-status").val());
+                    var cover = $($("#article-cover").summernote("code")).children("img").attr("src");
+                    var content = $("#article-content").summernote("code");
+                    
+                    if (title == "") {
+                        alert("Please Insert the Article Title");
+                        return false;
+                    }
+                    if (subtitle == "") {
+                        alert("Please Insert the Article Subtitle");
+                        return false;
+                    }
+                    if (tags == "") {
+                        alert("Please Insert the Article Tags");
+                        return false;
+                    }
+                    if (status < 0 && status > 2) {
+                        alert("Please Insert a Valid Status");
+                        return false;
+                    }
+                    if (cover == "") {
+                        alert("Please Add a Cover Image");
+                        return false;
+                    }
+                    if (content == "") {
+                        alert("Please Insert Content");
+                        return false;
+                    }
+                    
+                    $.ajax({
+                        url: "/ajax/admin?action=submit_article",
+                        type: "post",
+                        data: {
+                            "AUID": ((self.article != undefined) ? self.article : ""),
+                            "title": title,
+                            "subtitle": subtitle,
+                            "tags": tags,
+                            "status": status,
+                            "cover": cover,
+                            "content": content
+                        },
+                        success: function (result) {
+                            var data = JSON.parse(result);
+                            if (data["error_code"] == 0) {
+                                alert("Upload Success!");
+                                window.location.href = "article_manage.html";
+                            }
+                            else {
+                                alert(data["error_log"]);
+                            }
+                        },
+                        error: function () {
+                            alert("Server Connection Errors");
+                        }
+                    });
+                    return false;
+                });
+            },
+            checkParams: function () {
+                var params = Utility.getQueryParams();
+                if (params["a"] && params["a"] != "") {
+                    this.article = params["a"];
+                    this.getArticleData(params["a"]);
+                }
+                else {
+                    this.newArticle();
+                }
+            },
+            getArticleData: function (article) {
+                var self = this;
+                $.ajax({
+                    url: "/ajax/admin?action=get_article",
+                    type: "post",
+                    data: { "article": article },
+                    success: function (result) {
+                        var data = JSON.parse(result);
+                        if (data["error_code"] == 0) {
+                            self.renderArticle(data["content"]);
+                        }
+                        else {
+                            alert(data["error_log"]);
+                            window.location.href = "article_manage.html";
+                        }
+                    },
+                    error: function () {
+                        alert("Server Connection Error");
+                        window.location.href = "article_manage.html";
+                    }
+                });
+            },
+            renderArticle: function (article) {
+                $("#article-title").val(article["title"]);
+                $("#article-subtitle").val(article["subtitle"]);
+                $("#article-tags").val(article["tags"]);
+                $("#article-status").val(article["status"]);
+                $("#article-cover").summernote('code', "<p><img src=\"" + article["cover"] + "\" /></p>");
+                $("#article-content").summernote('code', article["content"]);
+            },
+            newArticle: function () {
+                $('#article-cover').summernote(this.coverOption);
+                $("#article-content").summernote(this.contentOption);
+            }
+        }
     </script>
 </html>
