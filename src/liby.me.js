@@ -63,7 +63,7 @@ function setUpload(server) {
     var server = express();
     
     setDateTime();
-    setCache();
+    //setCache();
     setCookie(server);
     setRenderEngine(server);
     setRoute(server);
