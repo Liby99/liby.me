@@ -34,7 +34,7 @@ function setDefaultPage(server) {
     
     server.get("/admin/", function (req, res) {
         res.redirect("/" + config["admin_default_page"]);
-    })
+    });
 }
 
 function setStaticField(server) {

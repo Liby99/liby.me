@@ -22,7 +22,9 @@ function process(req, res) {
         //Check if there's a route written
         var route = require("../route/" + file + ".js");
         log("Router " + file + " handling request");
-        route(req, res);
+        route(req, res, /*function (data) {
+            res.render(data);
+        }*/);
     }
     catch (err) {
         

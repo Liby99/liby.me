@@ -141,17 +141,19 @@
                 });
             },
             checkParams: function () {
+                var self = this;
                 var params = Utility.getQueryParams();
                 if (params["a"] && params["a"] != "") {
                     this.article = params["a"];
-                    this.getArticleData(params["a"]);
+                    this.getArticleData(params["a"], function (article) {
+                        self.renderArticle(article);
+                    });
                 }
                 else {
                     this.newArticle();
                 }
             },
-            getArticleData: function (article) {
-                var self = this;
+            getArticleData: function (article, callback) {
                 $.ajax({
                     url: "/ajax/admin?action=get_article",
                     type: "post",
@@ -159,7 +161,7 @@
                     success: function (result) {
                         var data = JSON.parse(result);
                         if (data["error_code"] == 0) {
-                            self.renderArticle(data["content"]);
+                            callback(data["content"]);
                         }
                         else {
                             alert(data["error_log"]);

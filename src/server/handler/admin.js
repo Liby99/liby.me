@@ -224,5 +224,11 @@ module.exports = {
                 res.error(1000, "Please login first");
             }
         });
+    },
+    get_project: function (req, res) {
+        
+    },
+    submit_project: function (req, res) {
+        
     }
 }

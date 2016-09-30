@@ -1,8 +1,8 @@
-var admin = require("../../api/admin.js");
+var Admin = require("../../api/admin.js");
 var Article = require("../../api/article.js");
 
 module.exports = function (req, res) {
-    admin.verify(req, res, function () {
+    Admin.verify(req, res, function () {
         Article.getAdminArticles(function (result) {
             if (result) {
                 res.render("admin/article_manage", {
