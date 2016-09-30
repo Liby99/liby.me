@@ -9,6 +9,10 @@ function setDateTime() {
     require("./server/module/datetime.js")();
 }
 
+function setCache(server) {
+    server.enable('view cache');
+}
+
 function setCookie(server) {
     var cookieParser = require("cookie-parser");
     server.use(cookieParser());
@@ -59,6 +63,7 @@ function setUpload(server) {
     var server = express();
     
     setDateTime();
+    setCache();
     setCookie(server);
     setRenderEngine(server);
     setRoute(server);
