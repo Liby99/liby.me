@@ -1,7 +1,7 @@
 var Admin = require("../../api/admin.js");
 
-module.exports = function (req, res) {
+module.exports = function (req, res, callback) {
     Admin.verify(req, res, function () {
-        res.render("admin/project_edit");
+        callback({});
     });
 }

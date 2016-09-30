@@ -1,10 +1,10 @@
-var admin = require("../../api/admin.js");
-var database = require("../../api/database.js");
+var Admin = require("../../api/admin.js");
+var Message = require("../../api/message.js");
 
-module.exports = function (req, res) {
-    admin.verify(req, res, function () {
-        database.getMessages(function (messages) {
-            res.render("admin/message", {
+module.exports = function (req, res, callback) {
+    Admin.verify(req, res, function () {
+        Message.getMessages(function (messages) {
+            callback({
                 "messages": messages
             });
         });
