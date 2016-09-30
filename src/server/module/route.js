@@ -23,7 +23,23 @@ function process(req, res) {
         var route = require("../route/" + file + ".js");
         log("Router " + file + " handling request");
         route(req, res, function (data) {
-            res.render(file, data);
+            
+            //Render the data and the file
+            res.render(file, data, function (err, html) {
+                
+                //Check if there's error when rendering
+                if (err) {
+                    
+                    console.log("Renderer Error: ");
+                    console.log(err);
+                    res.redirect("/error.html?err=500");
+                }
+                else {
+                    
+                    //If correct, then send html directly
+                    res.status(200).send(html);
+                }
+            });
         });
     }
     catch (err) {
@@ -59,7 +75,7 @@ function process(req, res) {
                     else {
                         
                         //If the request err is not 404, then directly send the 404 file.
-                        res.redirect("/404.html");
+                        res.redirect("/error.html?err=404");
                     }
                 }
                 else {
@@ -71,7 +87,7 @@ function process(req, res) {
             
             console.log("Router Error: ");
             console.log(err);
-            res.status(500).send(config["500_message"]);
+            res.redirect("/error.html?err=500");
         }
     }
 }
