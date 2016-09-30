@@ -1,25 +1,10 @@
-/**
- *
- */
-
 var mysql = require("../module/mysql.js");
 
 module.exports = {
-    /**
-     * [get_top_10_artworks description]
-     * @param {Function} callback
-     * @return {[type]}
-     */
-    getTop10Artworks: function (callback) {
-        
-    },
-    getArtworkOfYear: function (year, callback) {
-        
-    },
     getMessages: function (callback) {
         mysql.query("SELECT `username`, `email`, `date_time`, `content`  FROM `message` ORDER BY `date_time` DESC", {}, function (err, result) {
             if (err) {
-                callback(false);
+                callback(undefined);
             }
             else {
                 callback(result);
