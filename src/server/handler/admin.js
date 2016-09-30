@@ -7,6 +7,7 @@ module.exports = {
             if (result == 0) {
                 Admin.login(req.body["username"], res, function (logged) {
                     if (logged) {
+                        console.log("User " + req.body["username"] + " now logged in the admin system. ");
                         res.success({});
                     }
                     else {

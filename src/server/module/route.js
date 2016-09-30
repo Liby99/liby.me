@@ -4,7 +4,7 @@
  
 var path = require("path");
 var config = require("../data/config.json");
-var debug = true;
+var debug = false;
 
 exports.set = function (server) {
     

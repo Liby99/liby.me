@@ -62,7 +62,6 @@ module.exports = {
                                 if (updated) {
                                     
                                     log("Session Updated");
-                                    
                                     callback(true);
                                 }
                                 else {

@@ -9,6 +9,11 @@
         <script src="../js/util.js"></script>
         <script>const PAGE = "article-comment"</script>
         <style>
+            main {
+                position: fixed;
+                width: calc(100% - 220px);
+            }
+            
             #main-frame {
                 position: fixed;
                 width: calc(100% - 260px);
@@ -32,7 +37,7 @@
             
             #article-list-holder {
                 height: calc(100% - 40px);
-                overflow-x: visible;
+                overflow-x: hidden;
                 overflow-y: scroll;
             }
             
@@ -78,17 +83,25 @@
                 font-weight: bold;
             }
             
-            #article-list li .article-date {
-                color: rgba(150, 150, 150, 1);
+            #article-list li .article-info {
                 font-size: 11px;
+                color: rgba(150, 150, 150, 1);
             }
             
-            #article-list li .article-date i {
+            #article-list li .article-info .article-date {
+                color: rgba(150, 150, 150, 1);
+                font-size: 11px;
+                margin-right: 5px;
+            }
+            
+            #article-list li .article-info i {
+                margin-left: 5px;
+                font-size: 10px;
                 color: rgba(150, 150, 150, 1);
             }
             
             #article-list li .article-comment-amount {
-                margin-top: -10px;
+                margin-top: -8px;
                 margin-right: 5px;
                 float: right;
                 line-height: 16px;
@@ -192,8 +205,8 @@
                                     <span class="article-title">
                                         <%= article["title"] %>
                                     </span>
-                                    <span class="article-date">
-                                        <%= (new Date(Date.parse(article["date_time"]))).toDateString() %>
+                                    <span class="article-info">
+                                        <span class="article-date"><%= (new Date(Date.parse(article["date_time"]))).toDateString() %></span>
                                         <% if (article["status"] == 0) { %>
                                             | <i class="fa fa-pencil"></i>
                                         <% } else if (article["status"] == 2) { %>

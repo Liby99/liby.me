@@ -80,6 +80,7 @@ module.exports = {
                 callback(false);
             }
             else {
+                console.log("Article " + title + " got updated. ");
                 callback(true);
             }
         });
@@ -97,6 +98,7 @@ module.exports = {
                 callback(false);
             }
             else {
+                console.log("New article " + title + " created. ");
                 callback(true);
             }
         });
@@ -135,6 +137,23 @@ module.exports = {
             }
             else {
                 callback(result);
+            }
+        });
+    },
+    newComment: function (article, username, email, isPrivate, content, callback) {
+        mysql.query("INSERT INTO `comment` SET `CUID` = UUID(), `date_time` = NOW(), ?", {
+            "AUID": article,
+            "username": username,
+            "email": email,
+            "private": isPrivate ? 1 : 0,
+            "content": content
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                console.log("New comment is written by " + username + " on " + (new Date()).toString());
+                callback(true);
             }
         });
     },
