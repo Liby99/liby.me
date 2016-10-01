@@ -1,5 +1,6 @@
 var Admin = require("../api/admin.js");
 var Article = require("../api/article.js");
+var Project = require("../api/project.js");
 
 module.exports = {
     login: function (req, res) {
@@ -226,9 +227,83 @@ module.exports = {
         });
     },
     get_project: function (req, res) {
-        
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["project"] && req.body["project"] != "") {
+                    Project.getAdminProjectData(req.body["project"], function (project) {
+                        if (project) {
+                            res.success(project);
+                        }
+                        else {
+                            res.error(2, "Database error");
+                        }
+                    })
+                }
+                else {
+                    res.error(1, "project parameter is required");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
     },
     submit_project: function (req, res) {
-        
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["PUID"] != "") {
+                    Project.updateProject(req.body["PUID"], req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["cover"], function (success) {
+                        if (success) {
+                            console.log("Updated project " + req.body["name"]);
+                            res.success({});
+                        }
+                        else {
+                            res.error(1, "Error when updating project " + req.body["name"]);
+                        }
+                    });
+                }
+                else {
+                    Project.newProject(req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["cover"], function (success) {
+                        if (success) {
+                            console.log("Inserted new project " + req.body["name"]);
+                            res.success({});
+                        }
+                        else {
+                            res.error(1, "Error when inserting new project");
+                        }
+                    });
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
+    },
+    change_project_status: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["project"] && req.body["project"] != "") {
+                    if (req.body["status"] && req.body["status"] >= 0 && req.body["status"] <= 2) {
+                        Project.changeStatus(req.body["project"], req.body["status"], function (success) {
+                            if (success) {
+                                res.success({});
+                            }
+                            else {
+                                res.error(3, "Database error");
+                            }
+                        })
+                    }
+                    else {
+                        res.error(2, "Status parameter not valid");
+                    }
+                }
+                else {
+                    res.error(1, "Parameter project is required");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
     }
 }

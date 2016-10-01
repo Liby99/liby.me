@@ -77,10 +77,11 @@
                     var author = $("#project-author").val();
                     var url = $("#project-url").val();
                     var status = parseInt($("#project-status").val());
+                    var cover = "";
                     
                     //Try to check if the data satisties the requirement
                     try {
-                        var cover = $($("#article-cover").summernote("code")).children("img").attr("src");
+                        cover = $($("#project-cover").summernote("code")).children("img").attr("src");
                     }
                     catch (err) {
                         alert("Please insert an image");
@@ -107,7 +108,8 @@
                             "name": name,
                             "author": author,
                             "url": url,
-                            "status": status
+                            "status": status,
+                            "cover": cover
                         },
                         success: function (result) {
                             var data = JSON.parse(result);

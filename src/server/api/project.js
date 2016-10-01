@@ -79,7 +79,7 @@ module.exports = {
             }
         });
     },
-    updateProjectStatus: function (project, status, callback) {
+    changeStatus: function (project, status, callback) {
         mysql.query("UPDATE `project` SET `status` = ? WHERE `PUID` = ?", [
             status,
             project

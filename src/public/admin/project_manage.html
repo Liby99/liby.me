@@ -95,6 +95,10 @@
                                 alert(data["error_log"]);
                                 window.location.reload();
                             }
+                        },
+                        error: function () {
+                            alert("Server connection error");
+                            window.location.reload();
                         }
                     })
                 });
