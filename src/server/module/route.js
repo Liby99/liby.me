@@ -66,7 +66,7 @@ function process(req, res) {
                     //Then Log the error
                     console.log(err);
                     
-                    if (file === "404") {
+                    if (file === "error") {
                         
                         //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
                         log("Directly sent static html " + file);
