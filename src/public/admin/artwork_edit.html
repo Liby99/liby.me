@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me - Admin Upload Artwork</title>
+        <link rel="stylesheet" href="../css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
+        <link rel="stylesheet" href="../css/lib/bootstrap.css" />
+        <link rel="stylesheet" href="../css/admin/basic.css" />
+        <script src="../js/lib/jquery.js"></script>
+        <script src="../js/lib/bootstrap.js"></script>
+        <script src="../js/lib/summernote.js"></script>
+        <script src="../js/util.js"></script>
+        <script>const PAGE = "edit-artwork"</script>
+    </head>
+    <body>
+        <nav>
+            <% include view/sidebar.html %>
+        </nav>
+        <main>
+            <div id="main-title">Upload Artwork</div>
+            <div id="main-frame">
+                <form id="artwork-edit-form">
+                    <label>Title: </label>
+                    <input id="artwork-title" type="text" placeholder="Please insert the artwork title" />
+                    <label>Subtitle: </label>
+                    <input id="artwork-subtitle" type="text" placeholder="Please insert the artwork subtitle" />
+                    <label>Status: </label>
+                    <select>
+                        <option>Draft</option>
+                        <option>Public</option>
+                        <option>Archived</option>
+                    </select>
+                    <label>Type: </label>
+                    <select>
+                        <option>3D Rendering</option>
+                        <option>Special Effects</option>
+                        <option>Video Clips</option>
+                        <option>Graphics Design</option>
+                        <option>3D Model</option>
+                        <option>Instrument</option>
+                        <option>Music Sheet</option>
+                    </select>
+                    <label>Source Type: </label>
+                    <select>
+                        <option>None</option>
+                        <option>Image</option>
+                        <option>Video</option>
+                        <option>3D Object</option>
+                        <option>Pdf</option>
+                    </select>
+                    <label>Source: (Google Drive, Vimeo, etc.)</label>
+                    <input id="artwork-source" type="text" placeholder="Please insert the artwork source url. Empty if no source" />
+                    <label>Softwares: (Divide each software with ,)</label>
+                    <input id="artwork-softwares" type="text" placeholder="Please insert the artwork software" />
+                    <label>Tags: (Divide each tag with ,)</label>
+                    <input id="artwork-tags" type="text" placeholder="Please insert the artwork tag" />
+                    <label>Cover: (Preferrably 1280 * 720)</label>
+                    <div id="artwork-cover">
+                        <!-- Cover Summernote comes here -->
+                    </div>
+                    <label>Thumbnail: (200 * 200)</label>
+                    <div id="artwork-thumbnail">
+                        <!-- Thumbnail Summernote comes here -->
+                    </div>
+                    <label>Description</label>
+                    <div id="artwork-description">
+                        <!-- Description Summernote comes here -->
+                    </div>
+                </form>
+            </div>
+        </main>
+    </body>
+    <script src="../js/admin/basic.js"></script>
+    <script>
+        $(function () {
+            ArtworkEdit.initiate();
+        });
+        
+        var ArtworkEdit = {
+            artwork: undefined,
+            imageOption: {
+                height: 100,
+                toolbar: [['insert', ['picture']]],
+                popover: {
+                  image: [
+                    ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                    ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                    ['remove', ['removeMedia']]
+                  ],
+                  air: [
+                    ['insert', ['picture']]
+                  ]
+                }
+            },
+            descriptionOption: {
+                height: 500
+            },
+            initiate: function () {
+                this.initiateSubmit();
+                this.checkParams();
+            },
+            initiateSubmit: function () {
+                var self = this;
+                $("#artwork-edit-form").submit(function () {
+                    
+                    $.ajax({
+                        url: "/ajax/admin?action=submit_artwork",
+                        type: "post",
+                        data: {
+                            "AUID": ((self.article != undefined) ? self.article : ""),
+                            "title": title,
+                            "subtitle": subtitle,
+                            "tags": tags,
+                            "status": status,
+                            "cover": cover,
+                            "content": content
+                        },
+                        success: function (result) {
+                            var data = JSON.parse(result);
+                            if (data["error_code"] == 0) {
+                                alert("Upload Success!");
+                                window.location.href = "article_manage.html";
+                            }
+                            else {
+                                alert(data["error_log"]);
+                            }
+                        },
+                        error: function () {
+                            alert("Server Connection Errors");
+                        }
+                    });
+                    return false;
+                });
+            },
+            checkParams: function () {
+                var self = this;
+                var params = Utility.getQueryParams();
+                if (params["a"] && params["a"] != "") {
+                    this.article = params["a"];
+                    this.getArtworkData(params["a"], function (artwork) {
+                        self.renderArtwork(article);
+                    });
+                }
+                else {
+                    this.newArtwork();
+                }
+            },
+            getArtworkData: function (artwork, callback) {
+                $.ajax({
+                    url: "/ajax/admin?action=get_artwork",
+                    type: "post",
+                    data: {
+                        "artwork": artwork
+                    },
+                    success: function (result) {
+                        var data = JSON.parse(result);
+                        if (data["error_code"] == 0) {
+                            callback(data["content"]);
+                        }
+                        else {
+                            alert(data["error_log"]);
+                            window.location.href = "artwork_manage.html";
+                        }
+                    },
+                    error: function () {
+                        alert("Server Connection Error");
+                        window.location.href = "artwork_manage.html";
+                    }
+                });
+            },
+            renderArtwork: function (artwork) {
+                $("#artwork-title").val(artwork["title"]);
+                $("#artwork-subtitle").val(artwork["subtitle"]);
+                $("#artwork-tags").val(artwork["tags"]);
+                $("#artwork-status").val(artwork["status"]);
+                $("#artwork-cover").summernote('code', "<p><img src=\"" + artwork["cover"] + "\" /></p>");
+                $("#artwork-thumbnail").summernote('code', "<p><img src=\"" + artwork["thumbnail"] + "\" /></p>");
+                $("#artwork-description").summernote('code', artwork["description"]);
+            },
+            newArtwork: function () {
+                $("#artwork-cover").summernote(this.imageOption);
+                $("#artwork-thumbnail").summernote(this.imageOption);
+                $("#artwork-description").summernote(this.descriptionOption);
+            }
+        }
+    </script>
+</html>
