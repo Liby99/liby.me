@@ -15,7 +15,9 @@
         <main>
             <div id="main-title">Manage Article</div>
             <div id="main-frame">
-                <% if (articles.length == 0) {%>
+                <% if (articles == undefined) { %>
+                    <div class="empty">数据库错误</div>
+                <% } else if (articles.length == 0) {%>
                     <div class="empty">空</div>
                 <% } else { %>
                     <table id="article-table">

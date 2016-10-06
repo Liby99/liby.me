@@ -14,7 +14,46 @@
         <main>
             <div id="main-title">Manage Artwork</div>
             <div id="main-frame">
-                
+                <% if (artworks == undefined) { %>
+                    <div class="empty">数据库错误</div>
+                <% } else if (artworks.length == 0) { %>
+                    <div class="empty">空</div>
+                <% } else { %>
+                    <table id="artwork-table">
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Subtitle</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        <% artworks.forEach(function (artwork) { %>
+                            <tr class="artwork" id="<%= artwork["PUID"] %>">
+                                <td><%= artwork["id"] %></td>
+                                <td><%= artwork["title"] %></td>
+                                <td><%= artwork["subtitle"] %></td>
+                                <td><%= artwork["type"] %></td>
+                                <td><%= artwork["date_time"] %></td>
+                                <td>
+                                    <select class="artwork-status" value="<%= artwork["status"] %>">
+                                        <option value="0" <%= (artwork["status"] == 0 ? "selected" : "") %>>Draft</option>
+                                        <option value="1" <%= (artwork["status"] == 1 ? "selected" : "") %>>Public</option>
+                                        <option value="2" <%= (artwork["status"] == 2 ? "selected" : "") %>>Archived</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="artwork-edit small">Edit</button>
+                                </td>
+                                <td>
+                                    <button class="artwork-delete small">Delete</button>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </table>
+                <% } %>
             </div>
         </main>
     </body>
