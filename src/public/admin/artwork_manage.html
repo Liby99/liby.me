@@ -31,7 +31,7 @@
                             <th>Delete</th>
                         </tr>
                         <% artworks.forEach(function (artwork) { %>
-                            <tr class="artwork" id="<%= artwork["PUID"] %>">
+                            <tr class="artwork" id="<%= artwork["AUID"] %>">
                                 <td><%= artwork["id"] %></td>
                                 <td><%= artwork["title"] %></td>
                                 <td><%= artwork["subtitle"] %></td>
@@ -58,4 +58,66 @@
         </main>
     </body>
     <script src="../js/admin/basic.js"></script>
+    <script>
+        $(function () {
+            ArtworkManage.initiate();
+        })
+        
+        var ArtworkManage = {
+            initiate: function () {
+                this.initiateStatus();
+                this.initiateDelete();
+                this.initiateEdit();
+            },
+            initiateStatus: function () {
+                $(".artwork-status").change(function () {
+                    var AUID = $(this).parent().parent().attr("id");
+                    var status = parseInt($(this).val());
+                    $.ajax({
+                        url: "/ajax/admin?action=change_artwork_status",
+                        type: "post",
+                        data: { "artwork": AUID, "status": status },
+                        success: function (result) {
+                            var data = JSON.parse(result);
+                            if (data["error_code"] != 0) {
+                                alert(data["error_log"]);
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            },
+            initiateDelete: function () {
+                $(".artwork-delete").click(function () {
+                    if (confirm("Do you really want to delete this artwork?")) {
+                        var AUID = $(this).parent().parent().attr("id");
+                        $.ajax({
+                            url: "/ajax/admin?action=delete_artwork",
+                            type: "post",
+                            data: { "artwork": AUID },
+                            success: function (result) {
+                                var data = JSON.parse(result);
+                                if (data["error_code"] != 0) {
+                                    alert(data["error_log"]);
+                                    window.location.reload();
+                                }
+                                else {
+                                    window.location.reload();
+                                }
+                            },
+                            error: function () {
+                                alert("Server connection error");
+                            }
+                        });
+                    }
+                });
+            },
+            initiateEdit: function () {
+                $(".artwork-edit").click(function () {
+                    var AUID = $(this).parent().parent().attr("id");
+                    window.location.href = "artwork_edit.html?a=" + AUID;
+                });
+            }
+        }
+    </script>
 </html>

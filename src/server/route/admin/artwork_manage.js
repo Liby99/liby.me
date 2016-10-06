@@ -6,8 +6,8 @@ module.exports = function (req, res, callback) {
         Artwork.getAdminArtworks(function (artworks) {
             
             //Modify the type to type string
-            for (var artwork in artworks) {
-                artwork["type"] = getTypeString(artwork["type"]);
+            for (var i = 0; i < artworks.length; i++) {
+                artworks[i]["type"] = Artwork.getTypeString(artworks[i]["type"]);
             }
             
             //Callback the data
@@ -16,18 +16,4 @@ module.exports = function (req, res, callback) {
             });
         });
     });
-}
-
-function getTypeString(type) {
-    switch (type) {
-        case 0: return "3D Rendering";
-        case 1: return "Special Effects";
-        case 2: return "Video Clips";
-        case 3: return "Photography";
-        case 4: return "Graphics Design";
-        case 5: return "3D Model";
-        case 6: return "Instrument";
-        case 7: return "Music Sheet";
-        case 8: return "Development";
-    }
 }

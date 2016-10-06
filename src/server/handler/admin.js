@@ -1,6 +1,7 @@
 var Admin = require("../api/admin.js");
 var Article = require("../api/article.js");
 var Project = require("../api/project.js");
+var Artwork = require("../api/artwork.js");
 
 module.exports = {
     login: function (req, res) {
@@ -291,7 +292,7 @@ module.exports = {
                             else {
                                 res.error(3, "Database error");
                             }
-                        })
+                        });
                     }
                     else {
                         res.error(2, "Status parameter not valid");
@@ -299,6 +300,129 @@ module.exports = {
                 }
                 else {
                     res.error(1, "Parameter project is required");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
+    },
+    get_artwork: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["artwork"]) {
+                    Artwork.getAdminArtworkData(req.body["artwork"], function (data) {
+                        if (data) {
+                            res.success(data);
+                        }
+                        else {
+                            res.error(2, "Database error or no such artwork");
+                        }
+                    });
+                }
+                else {
+                    res.error(1, "Artwork Id is required to get the data");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
+    },
+    submit_artwork: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["AUID"] != "") {
+                    Artwork.updateArtwork(req.body["AUID"],
+                                          req.body["title"],
+                                          req.body["subtitle"],
+                                          req.body["status"],
+                                          req.body["type"],
+                                          req.body["source_type"],
+                                          req.body["source_url"],
+                                          req.body["softwares"],
+                                          req.body["tags"],
+                                          req.body["cover"],
+                                          req.body["thumbnail"],
+                                          req.body["description"], function (success) {
+                        if (success) {
+                            console.log("Updating artwork " + req.body["title"] + " successed!");
+                            res.success({});
+                        }
+                        else {
+                            res.error(3, "Database error");
+                        }
+                    })
+                }
+                else {
+                    Artwork.newArtwork(req.body["title"],
+                                       req.body["subtitle"],
+                                       req.body["status"],
+                                       req.body["type"],
+                                       req.body["source_type"],
+                                       req.body["source_url"],
+                                       req.body["softwares"],
+                                       req.body["tags"],
+                                       req.body["cover"],
+                                       req.body["thumbnail"],
+                                       req.body["description"], function (success) {
+                        if (success) {
+                            console.log("Inserted new artwork " + req.body["title"]);
+                            res.success({});
+                        }
+                        else {
+                            res.error(3, "Database error");
+                        }
+                    });
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
+    },
+    change_artwork_status: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["artwork"] && req.body["artwork"] != "") {
+                    if (req.body["status"] && req.body["status"] >= 0 && req.body["status"] <= 2) {
+                        Artwork.changeArtworkStatus(req.body["artwork"], req.body["status"], function (success) {
+                            if (success) {
+                                res.success({});
+                            }
+                            else {
+                                res.error(3, "Database Error");
+                            }
+                        });
+                    }
+                    else {
+                        res.error(2, "status is required here");
+                    }
+                }
+                else {
+                    res.error(1, "Artwork id is required here");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        });
+    },
+    delete_artwork: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["artwork"] && req.body["artwork"] != "") {
+                    Artwork.deleteArtwork(req.body["artwork"], function (success) {
+                        if (success) {
+                            res.success({});
+                        }
+                        else {
+                            res.error(2, "Database error");
+                        }
+                    });
+                }
+                else {
+                    res.error(1, "Artwork id is required here");
                 }
             }
             else {

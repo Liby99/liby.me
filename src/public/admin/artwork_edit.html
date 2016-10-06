@@ -25,13 +25,13 @@
                     <label>Subtitle: </label>
                     <input id="artwork-subtitle" type="text" placeholder="Please insert the artwork subtitle" />
                     <label>Status: </label>
-                    <select>
-                        <option>Draft</option>
-                        <option>Public</option>
-                        <option>Archived</option>
+                    <select id="artwork-status">
+                        <option value="0">Draft</option>
+                        <option value="1">Public</option>
+                        <option value="2">Archived</option>
                     </select>
                     <label>Type: </label>
-                    <select>
+                    <select id="artwork-type">
                         <option value="0">3D Rendering</option>
                         <option value="1">Special Effects</option>
                         <option value="2">Video Clips</option>
@@ -43,12 +43,13 @@
                         <option value="8">Development</option>
                     </select>
                     <label>Source Type: </label>
-                    <select>
-                        <option>None</option>
-                        <option>Image</option>
-                        <option>Video</option>
-                        <option>3D Object</option>
-                        <option>Pdf</option>
+                    <select id="artwork-source-type">
+                        <option value="0">None</option>
+                        <option value="1">Image</option>
+                        <option value="2">Video</option>
+                        <option value="3">3D Object</option>
+                        <option value="4">Pdf</option>
+                        <option value="5">Source Code</option>
                     </select>
                     <label>Source: (Google Drive, Vimeo, etc.)</label>
                     <input id="artwork-source" type="text" placeholder="Please insert the artwork source url. Empty if no source" />
@@ -68,6 +69,7 @@
                     <div id="artwork-description">
                         <!-- Description Summernote comes here -->
                     </div>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         </main>
@@ -84,14 +86,14 @@
                 height: 100,
                 toolbar: [['insert', ['picture']]],
                 popover: {
-                  image: [
-                    ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                    ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                    ['remove', ['removeMedia']]
-                  ],
-                  air: [
-                    ['insert', ['picture']]
-                  ]
+                    image: [
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    air: [
+                        ['insert', ['picture']]
+                    ]
                 }
             },
             descriptionOption: {
@@ -109,19 +111,24 @@
                         url: "/ajax/admin?action=submit_artwork",
                         type: "post",
                         data: {
-                            "AUID": ((self.article != undefined) ? self.article : ""),
-                            "title": title,
-                            "subtitle": subtitle,
-                            "tags": tags,
-                            "status": status,
-                            "cover": cover,
-                            "content": content
+                            "AUID": ((self.artwork != undefined) ? self.artwork : ""),
+                            "title": $("#artwork-title").val(),
+                            "subtitle": $("#artwork-subtitle").val(),
+                            "status": parseInt($("#artwork-status").val()),
+                            "type": parseInt($("#artwork-type").val()),
+                            "source_type": parseInt($("#artwork-source-type").val()),
+                            "source_url": $("#artwork-source-url").val(),
+                            "softwares": $("#artwork-softwares").val(),
+                            "tags": $("#artwork-tags").val(),
+                            "cover": $($("#artwork-cover").summernote("code")).children("img").attr("src"),
+                            "thumbnail": $($("#artwork-thumbnail").summernote("code")).children("img").attr("src"),
+                            "description": $("#artwork-description").summernote("code")
                         },
                         success: function (result) {
                             var data = JSON.parse(result);
                             if (data["error_code"] == 0) {
                                 alert("Upload Success!");
-                                window.location.href = "article_manage.html";
+                                window.location.href = "artwork_manage.html";
                             }
                             else {
                                 alert(data["error_log"]);
@@ -138,9 +145,9 @@
                 var self = this;
                 var params = Utility.getQueryParams();
                 if (params["a"] && params["a"] != "") {
-                    this.article = params["a"];
+                    this.artwork = params["a"];
                     this.getArtworkData(params["a"], function (artwork) {
-                        self.renderArtwork(article);
+                        self.renderArtwork(artwork);
                     });
                 }
                 else {
@@ -173,8 +180,12 @@
             renderArtwork: function (artwork) {
                 $("#artwork-title").val(artwork["title"]);
                 $("#artwork-subtitle").val(artwork["subtitle"]);
-                $("#artwork-tags").val(artwork["tags"]);
                 $("#artwork-status").val(artwork["status"]);
+                $("#artwork-type").val(artwork["type"]);
+                $("#artwork-source-type").val(artwork["source_type"]);
+                $("#artwork-source-url").val(artwork["source_url"]);
+                $("#artwork-softwares").val(artwork["softwares"]);
+                $("#artwork-tags").val(artwork["tags"]);
                 $("#artwork-cover").summernote('code', "<p><img src=\"" + artwork["cover"] + "\" /></p>");
                 $("#artwork-thumbnail").summernote('code', "<p><img src=\"" + artwork["thumbnail"] + "\" /></p>");
                 $("#artwork-description").summernote('code', artwork["description"]);
