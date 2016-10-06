@@ -27,6 +27,7 @@
                             <th>Type</th>
                             <th>Date</th>
                             <th>Status</th>
+                            <th>View</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -44,6 +45,7 @@
                                         <option value="2" <%= (artwork["status"] == 2 ? "selected" : "") %>>Archived</option>
                                     </select>
                                 </td>
+                                <td><%= artwork["view"] %></td>
                                 <td>
                                     <button class="artwork-edit small">Edit</button>
                                 </td>
