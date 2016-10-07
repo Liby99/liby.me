@@ -29,7 +29,6 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    padding: 10px 0;
     margin: 0;
     height: 45px;
     width: 100%;
@@ -71,21 +70,19 @@ nav {
     opacity: 1;
 }
 
-#nav-logo img {
-    display: block;
-    float: left;
-    height: 30px;
-    width: 30px;
-}
-
 #nav-logo span {
     display: block;
     float: left;
-    line-height: 30px;
-    margin-left: 15px;
-    font-size: 14px;
-    color: rgba(80,80,80,1);
-    letter-spacing: 1px;
+    line-height: 25px;
+    background-color: rgba(20, 20, 20, 1);
+    color: rgba(255, 255, 255, 1);
+    width: 25px;
+    margin-top: 2.5px;
+    text-align: center;
+}
+
+#nav-logo span + span {
+    margin-left: 5px;
 }
 
 #nav-menu-outer {
@@ -187,4 +184,17 @@ nav {
     #nav-menu-toggle {
         display: block;
     }
+}
+
+main {
+    padding-top: 40px;
+}
+
+footer {
+    margin-top: 10px;
+    background-color: rgba(245, 245, 245, 1);
+    font-size: 11px;
+    color: rgba(120, 120, 120, 1);
+    text-align: center;
+    line-height: 40px;
 }

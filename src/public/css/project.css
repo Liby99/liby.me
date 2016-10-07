@@ -1,22 +1,24 @@
 #project-list {
     width: 1024px;
     margin: auto;
-    margin-top: 80px;
+    margin-top: 5px;
+    display: flex;
+    flex-flow: wrap;
 }
 
 .project {
-    float: left;
+    margin-top: 5px;
     margin-right: 5px;
-    width: calc(50% - 5px);
     height: 200px;
+    width: calc(50% - 5px);
     background-size: cover;
     background-position: center;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .project a {
     transition: all 0.5s;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.8);
     opacity: 0;
     display: block;
     width: 100%;
