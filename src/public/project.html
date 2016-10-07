@@ -6,16 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
         <link rel="stylesheet" href="css/basic.css" />
-        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/project.css" />
         <script src="js/lib/jquery.js"></script>
-        <script>const PAGE = "me";</script>
+        <script>const PAGE = "project";</script>
     </head>
     <body>
         <nav>
             <% include view/navbar.html %>
         </nav>
         <main>
-            
+            <ul id="project-list">
+                <% projects.forEach(function (project) { %>
+                    <li class="project" style="background-image: url(<%= project["cover"] %>)">
+                        <a target="_blank" href="<%= project["url"] %>">
+                            <%= project["name"] %> - <%= project["author"] %>
+                        </a>
+                    </li>
+                <% }) %>
+            </ul>
         </main>
         <footer></footer>
     </body>
