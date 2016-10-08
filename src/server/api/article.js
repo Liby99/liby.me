@@ -28,13 +28,26 @@ module.exports = {
             }
         });
     },
-    getArticles: function (callback) {
-        mysql.query("SELECT `AUID`, `username`, `date_time`, `cover`, `title`, `subtitle`, `tags`, SUBSTRING(`content`, 1, 200) AS `content`, `view`, `comment` FROM `article` WHERE `status` = 1 ORDER BY `date_time` DESC", {}, function (err, result) {
+    getArticles: function (start, callback) {
+        mysql.query("SELECT `AUID`, `username`, `date_time`, `cover`, `title`, `subtitle`, `tags`, SUBSTRING(`content`, 1, 200) AS `content`, `view`, `comment` "
+                  + "FROM `article` WHERE `status` = 1 "
+                  + "ORDER BY `date_time` DESC "
+                  + "LIMIT " + start + ", 10", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
             else {
                 callback(result);
+            }
+        });
+    },
+    getArticleAmount: function (callback) {
+        mysql.query("SELECT COUNT(`id`) AS `count` FROM `article` WHERE `status` = 1", {}, function (err, result) {
+            if (err) {
+                callback(-1);
+            }
+            else {
+                callback(result[0]["count"]);
             }
         });
     },

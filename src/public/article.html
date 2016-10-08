@@ -16,57 +16,100 @@
             <% include view/navbar.html %>
         </nav>
         <main>
-            <section id="first-article-section">
-                <a href="#" id="first-article" style="background-image: url(<%= articles[0]["cover"] %>)">
-                    <div class="article-mask">
-                        <div class="inner">
-                            <div id="first-article-titles">
-                                <div id="first-article-title"><%= articles[0]["title"] %></div>
-                                <div id="first-article-subtitle"><%= articles[0]["subtitle"] %></div>
-                            </div>
-                            <div id="first-article-info">
-                                <div id="first-article-tags">
-                                    <% articles[0]["tags"].split(", ").forEach(function (str) { %>
-                                        <span class="tag"><%= str %></span>
-                                    <% }); %>
+            <% if (page == 1) { %>
+                <section id="first-article-section">
+                    <a href="post.html?a=<%= articles[0]["AUID"] %>" id="first-article" style="background-image: url(<%= articles[0]["cover"] %>)">
+                        <div class="article-mask">
+                            <div class="inner" id="<%= articles[0]["AUID"] %>">
+                                <div id="first-article-titles">
+                                    <div id="first-article-title"><%= articles[0]["title"] %></div>
+                                    <div id="first-article-subtitle"><%= articles[0]["subtitle"] %></div>
                                 </div>
-                                <div id="first-article-data">
-                                    <%= articles[0]["username"] %> |
-                                    <%= articles[0]["date_time"].toString().substring(0, 10) %> |
-                                    <i class="fa fa-eye"></i>
-                                    <%= articles[0]["view"] %> |
-                                    <i class="fa fa-comments"></i>
-                                    <%= articles[0]["comment"] %>
+                                <div id="first-article-info">
+                                    <div id="first-article-tags">
+                                        <% articles[0]["tags"].split(", ").forEach(function (str) { %>
+                                            <span class="tag"><%= str %></span>
+                                        <% }); %>
+                                    </div>
+                                    <div id="first-article-data">
+                                        <%= articles[0]["username"] %> |
+                                        <%= articles[0]["date_time"].toString().substring(0, 10) %> |
+                                        <i class="fa fa-eye"></i>
+                                        <%= articles[0]["view"] %> |
+                                        <i class="fa fa-comments"></i>
+                                        <%= articles[0]["comment"] %>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </section>
+                    </a>
+                </section>
+            <% } else { %>
+                <section id="page-title-section">
+                    <div class="inner">Page <%= page %> / <%= max_page %>. Articles <%= (page - 1) * 10 + 1 %> - <%= (page - 1) * 10 + articles.length %></div>
+                </section>
+            <% } %>
             <section id="article-list-section">
                 <ul id="article-list">
-                    <% articles.forEach(function (article, index) { %>
-                        <% if (index != 0) { %>
-                            <li class="article">
-                                <a href="/article.html?a=<%= article["AUID"] %>">
-                                    <div class="article-cover" style="background-image: url(<%= article["cover"] %>)"></div>
-                                    <div class="article-info">
-                                        <div class="article-title"><%= article["title"] %></div>
-                                        <div class="article-subtitle"><%= article["subtitle"] %></div>
-                                        <div class="article-data">
-                                            <%= article["username"] %> |
-                                            <%= article["date_time"].toString().substring(0, 10) %> |
-                                            <i class="fa fa-eye"></i>
-                                            <%= article["view"] %> |
-                                            <i class="fa fa-comments"></i>
-                                            <%= article["comment"] %>
-                                        </div>
-                                        <div class="article-content"><%- article["content"].replace(/\<[^\>]*\>/g, "") %>...</div>
+                    <% for (var i = (page == 1) ? 1 : 0; i < articles.length; i++) { %>
+                        <li class="article" id="<%= articles[i]["AUID"] %>">
+                            <a href="/article_post.html?a=<%= articles[i]["AUID"] %>">
+                                <div class="article-cover" style="background-image: url(<%= articles[i]["cover"] %>)"></div>
+                                <div class="article-info">
+                                    <div class="article-title"><%= articles[i]["title"] %></div>
+                                    <div class="article-subtitle"><%= articles[i]["subtitle"] %></div>
+                                    <div class="article-data">
+                                        <%= articles[i]["username"] %> |
+                                        <%= articles[i]["date_time"].toString().substring(0, 10) %> |
+                                        <i class="fa fa-eye"></i>
+                                        <%= articles[i]["view"] %> |
+                                        <i class="fa fa-comments"></i>
+                                        <%= articles[i]["comment"] %>
                                     </div>
-                                </a>
+                                    <div class="article-content"><%- articles[i]["content"].replace(/\<[^\>]*\>/g, "") %>...</div>
+                                </div>
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </section>
+            <section id="pagination-section">
+                <ul id="pagination">
+                    <% if (page != 1) { %>
+                        <li class="page-btn op">
+                            <a href="article.html?p=<%= page - 1 %>">Prev</a>
+                        </li>
+                    <% } %>
+                    <% if (max_page <= 5) { %>
+                        <% for (var i = 1; i <= max_page; i++) { %>
+                            <li class="page-btn<%= (i == page) ? " active" : "" %>">
+                                <a href="article.html?p=<%= i %>"><%= i %></a>
                             </li>
                         <% } %>
-                    <% }) %>
+                    <% } else { %>
+                        <% if (middle || right) { %>
+                            <li class="page-btn">
+                                <a href="article.html?p=1">1</a>
+                            </li>
+                            ...
+                        <% } %>
+                        <% for (var i = start; i <= start + 4; i++) { %>
+                            <li class="page-btn<%= (i == page) ? " active" : "" %>">
+                                <a href="article.html?p=<%= i %>"><%= i %></a>
+                            </li>
+                        <% } %>
+                        <% if (left || middle) { %>
+                            ...
+                            <li class="page-btn">
+                                <a href="article.html?p=<%= max_page %>"><%= max_page %></a>
+                            </li>
+                        <% } %>
+                    <% } %>
+                    <% if (page != max_page) { %>
+                        <li class="page-btn op">
+                            <a href="article.html?p=<%= page + 1 %>">Next</a>
+                        </li>
+                    <% } %>
                 </ul>
             </section>
         </main>

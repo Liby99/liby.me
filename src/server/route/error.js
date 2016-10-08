@@ -11,7 +11,7 @@ module.exports = function (req, res, callback) {
         case "500":
             callback({
                 "error_code": 500,
-                "error_log": config["500_message"]
+                "error_log": req.query["log"] ? req.query["log"] : config["500_message"]
             });
             break;
         default:

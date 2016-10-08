@@ -36,8 +36,8 @@
 
 #first-article-titles {
     margin: 0 20px;
-    padding: 20px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 20px 0 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 #first-article-title {
@@ -74,6 +74,20 @@
     color: rgba(230, 230, 230, 1);
 }
 
+#page-title-section {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+#page-title-section .inner {
+    padding: 10px;
+    font-size: 11px;
+    text-align: right;
+    color: rgba(150, 150, 150, 1);
+}
+
 #article-list-section {
     width: 100%;
     max-width: 1024px;
@@ -82,6 +96,10 @@
 
 #article-list {
     margin-top: 30px;
+}
+
+#page-title-section + #article-list-section > #article-list {
+    margin-top: 0;
 }
 
 .article {
@@ -144,6 +162,52 @@
     line-height: 18px;
     font-size: 11px;
     color: rgba(130, 130, 130, 1);
+}
+
+#pagination-section {
+    padding: 30px 0 0 0;
+}
+
+#pagination {
+    text-align: center;
+}
+
+.page-btn {
+    display: inline-block;
+    margin: 0 3px;
+}
+
+.page-btn.op {
+    margin: 0 10px;
+}
+
+.page-btn a {
+    display: block;
+    border-radius: 15px;
+    height: 30px;
+    line-height: 30px;
+    min-width: 30px;
+    text-align: center;
+    color: rgba(120, 120, 120, 1);
+    background-color: rgba(245, 245, 245, 1);
+}
+
+.page-btn.op a {
+    padding: 0 10px;
+}
+
+.page-btn a:hover {
+    background-color: rgba(237, 237, 237, 1);
+}
+
+.page-btn a:active {
+    background-color: rgba(230, 230, 230, 1);
+}
+
+.page-btn.active a {
+    color: rgba(255, 149, 166, 1);
+    border: 1px solid rgba(255, 149, 166, 1);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 @media (max-width: 1024px) {
