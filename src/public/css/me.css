@@ -1,3 +1,16 @@
+section .section-title {
+    text-align: center;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+section hr {
+    width: 60px;
+    height: 2px;
+    border: none;
+    background-color: rgba(255, 149, 166, 1);
+}
+
 #banner-section {
     height: 400px;
     background-size: cover;
@@ -183,19 +196,6 @@
     padding: 80px 0;
 }
 
-section hr {
-    width: 60px;
-    height: 2px;
-    border: none;
-    background-color: rgba(255, 149, 166, 1);
-}
-
-section .section-title {
-    text-align: center;
-    font-weight: normal;
-    font-size: 20px;
-}
-
 #project-intro {
     margin: 40px auto;
     text-align: center;
@@ -218,13 +218,18 @@ section .section-title {
 }
 
 .project a {
+    transition: all 0.2s;
     padding: 10px;
     display: block;
     line-height: 20px;
 }
 
 .project a:hover {
-    background-color: rgba(250, 250, 250, 0.5);
+    background-color: rgba(240, 240, 240, 0.3);
+}
+
+.project a:active {
+    background-color: rgba(240, 240, 240, 0.5);
 }
 
 .project-cover {

@@ -77,7 +77,10 @@ var Friend = {
         }
         this.$list.width(width);
     },
-    initiateScrolling: function () {
-        
+    initiateResize: function () {
+        var self = this;
+        $(window).resize(function () {
+            self.initiateSize;
+        })
     }
 }
