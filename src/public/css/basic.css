@@ -8,7 +8,7 @@ body {
     margin: 0;
     padding: 0;
     min-width: 320px;
-    background-color: rgba(255,255,255,1);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 a, a:visited {
@@ -32,6 +32,8 @@ nav {
     margin: 0;
     height: 45px;
     width: 100%;
+    z-index: 1024;
+    background-color: rgba(255, 255, 255, 1);
 }
 
 #nav-inner {
@@ -106,7 +108,7 @@ nav {
 }
 
 #nav-menu li a:hover {
-    color: rgba(44,44,44,1);
+    color: rgba(44, 44, 44, 1);
 }
 
 #nav-menu li a:active {
@@ -114,7 +116,7 @@ nav {
 }
 
 #nav-menu li a.active {
-    color: rgba(255, 68, 130, 1);
+    color: rgba(255, 149, 166, 1);
 }
 
 #nav-menu-toggle {
@@ -129,7 +131,7 @@ nav {
     margin: 8px auto 0;
     width: 20px;
     height: 2px;
-    background-color: rgba(80,80,80,1);
+    background-color: rgba(80, 80, 80, 1);
 }
 
 .nav-menu-toggle-bar + .nav-menu-toggle-bar {
@@ -137,12 +139,6 @@ nav {
 }
 
 @media (min-width: 481px) {
-    nav {
-        background-color: rgba(255,255,255,0.5);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-    }
-    
     #nav-main {
         height: 0;
     }
@@ -150,9 +146,6 @@ nav {
 
 @media (max-width: 480px) {
     #nav-main {
-        background-color: rgba(255,255,255,0.5);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
         z-index: 1024;
     }
     
@@ -160,25 +153,27 @@ nav {
         position: fixed;
         width: 100%;
         margin-top: -500px;
-        background-color: rgba(255,255,255,0.5);
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        background-color: rgba(255,255,255,1);
         z-index: 1023;
     }
     
     #nav-menu-outer.active {
-        margin-top: 65px;
+        margin-top: 45px;
     }
     
     #nav-menu {
         float: none;
-        width: 100%;
-        padding: 0 20px;
+        padding: 0;
     }
     
     #nav-menu li {
         float: none;
-        width: 100%;
+        width: auto;
+        line-height: 40px;
+    }
+    
+    #nav-menu li a {
+        padding: 0 15px;
     }
     
     #nav-menu-toggle {
@@ -188,11 +183,12 @@ nav {
 
 main {
     padding-top: 40px;
+    z-index: 0;
 }
 
 footer {
     margin-top: 10px;
-    background-color: rgba(245, 245, 245, 1);
+    /*border-top: 1px solid rgba(230, 230, 230, 1);*/
     font-size: 11px;
     color: rgba(120, 120, 120, 1);
     text-align: center;

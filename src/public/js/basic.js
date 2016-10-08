@@ -4,6 +4,7 @@ var Nav = {
     initiate: function () {
         this.initiateNav();
         this.initiateNavToggle();
+        this.initiateTitle();
     },
     initiateNavToggle: function () {
         var self = this;
@@ -18,5 +19,11 @@ var Nav = {
     },
     initiateNav: function () {
         $("#nav-" + PAGE).children("a").addClass("active");
+    },
+    initiateTitle: function () {
+        if (PAGE != "index") {
+            var name = PAGE.substring(0, 1).toUpperCase() + PAGE.substring(1);
+            $("title").html($("title").html() + " - " + name);
+        }
     }
 }
