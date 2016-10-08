@@ -29,7 +29,7 @@ module.exports = {
         });
     },
     getArticles: function (callback) {
-        mysql.query("SELECT `AUID`, `username`, `date_time`, `cover`, `title`, `subtitle`, `tags`, SUBSTRING(`content`, 0, 100), `view` FROM `article` WHERE `status` = 1 ORDER BY `date_time` DESC", {}, function (err, result) {
+        mysql.query("SELECT `AUID`, `username`, `date_time`, `cover`, `title`, `subtitle`, `tags`, SUBSTRING(`content`, 1, 200) AS `content`, `view`, `comment` FROM `article` WHERE `status` = 1 ORDER BY `date_time` DESC", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }

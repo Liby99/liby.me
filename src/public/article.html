@@ -5,8 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
         <link rel="stylesheet" href="css/basic.css" />
-        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/article.css" />
         <script src="js/lib/jquery.js"></script>
         <script>const PAGE = "article";</script>
     </head>
@@ -15,9 +16,61 @@
             <% include view/navbar.html %>
         </nav>
         <main>
-            
+            <section id="first-article-section">
+                <a href="#" id="first-article" style="background-image: url(<%= articles[0]["cover"] %>)">
+                    <div class="article-mask">
+                        <div class="inner">
+                            <div id="first-article-titles">
+                                <div id="first-article-title"><%= articles[0]["title"] %></div>
+                                <div id="first-article-subtitle"><%= articles[0]["subtitle"] %></div>
+                            </div>
+                            <div id="first-article-info">
+                                <div id="first-article-tags">
+                                    <% articles[0]["tags"].split(", ").forEach(function (str) { %>
+                                        <span class="tag"><%= str %></span>
+                                    <% }); %>
+                                </div>
+                                <div id="first-article-data">
+                                    <%= articles[0]["username"] %> |
+                                    <%= articles[0]["date_time"].toString().substring(0, 10) %> |
+                                    <i class="fa fa-eye"></i>
+                                    <%= articles[0]["view"] %> |
+                                    <i class="fa fa-comments"></i>
+                                    <%= articles[0]["comment"] %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </section>
+            <section id="article-list-section">
+                <ul id="article-list">
+                    <% articles.forEach(function (article, index) { %>
+                        <% if (index != 0) { %>
+                            <li class="article">
+                                <a href="/article.html?a=<%= article["AUID"] %>">
+                                    <div class="article-cover" style="background-image: url(<%= article["cover"] %>)"></div>
+                                    <div class="article-info">
+                                        <div class="article-title"><%= article["title"] %></div>
+                                        <div class="article-subtitle"><%= article["subtitle"] %></div>
+                                        <div class="article-data">
+                                            <%= article["username"] %> |
+                                            <%= article["date_time"].toString().substring(0, 10) %> |
+                                            <i class="fa fa-eye"></i>
+                                            <%= article["view"] %> |
+                                            <i class="fa fa-comments"></i>
+                                            <%= article["comment"] %>
+                                        </div>
+                                        <div class="article-content"><%- article["content"].replace(/\<[^\>]*\>/g, "") %>...</div>
+                                    </div>
+                                </a>
+                            </li>
+                        <% } %>
+                    <% }) %>
+                </ul>
+            </section>
         </main>
-        <footer></footer>
+        <footer>Copyright &copy; 2016 Liby.me. All rights reserved.</footer>
     </body>
     <script src="js/basic.js"></script>
 </html>
