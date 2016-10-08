@@ -213,13 +213,13 @@ section hr {
 
 .project {
     float: left;
-    width: 25%;
+    width: 33.33333%;
     text-align: center;
 }
 
 .project a {
     transition: all 0.2s;
-    padding: 10px;
+    padding: 20px;
     display: block;
     line-height: 20px;
 }
@@ -286,12 +286,16 @@ section hr {
 }
 
 #friend-list {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 120px;
 }
 
 #friend-list a {
-    float: left;
-    width: 20%;
+    display: block;
+    width: 16.6666%;
     min-width: 160px;
     height: 80px;
     line-height: 80px;
@@ -378,6 +382,10 @@ section hr {
     .project-cover {
         height: 160px;
     }
+    
+    .project.hidable {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
@@ -458,10 +466,6 @@ section hr {
     
     .project {
         width: 100%;
-    }
-    
-    .project.hidable {
-        display: none;
     }
     
     .project-cover {

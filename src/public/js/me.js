@@ -71,11 +71,16 @@ var Friend = {
     },
     initiateSize: function () {
         var friends = this.$list.children();
-        var width = 0;
-        for (var i = 0; i < friends.length; i++) {
-            width += friends.eq(i).width();
+        if (friends.eq(0).width() == 160) {
+            var width = 0;
+            for (var i = 0; i < friends.length; i++) {
+                width += friends.eq(i).width();
+            }
+            this.$list.width(width);
         }
-        this.$list.width(width);
+        else {
+            this.$list.css("width", "auto");
+        }
     },
     initiateResize: function () {
         var self = this;

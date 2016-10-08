@@ -11,8 +11,8 @@ module.exports = {
             }
         });
     },
-    getFourProjects: function (callback) {
-        mysql.query("SELECT `name`, `author`, `url`, `cover` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 4", {}, function (err, result) {
+    getThreeProjects: function (callback) {
+        mysql.query("SELECT `name`, `author`, `url`, `cover` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
