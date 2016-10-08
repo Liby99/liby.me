@@ -1,0 +1,21 @@
+#banner-section {
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+}
+
+#me-section {
+    
+}
+
+@media (max-width: 768px) {
+    #banner-section {
+        height: 300px;
+    }
+}
+
+@media (max-width: 425px) {
+    #banner-section {
+        height: 200px;
+    }
+}
