@@ -26,6 +26,24 @@ ul {
     padding: 0;
 }
 
+textarea {
+    display: block;
+    resize: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+input, button {
+    padding: 0;
+    display: block;
+}
+
+textarea, input, button {
+    outline: none;
+}
+
 nav {
     position: fixed;
     top: 0;

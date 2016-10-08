@@ -1,5 +1,6 @@
 $(function () {
     Skill.initiate();
+    Friend.initiate();
 });
 
 var Skill = {
@@ -9,9 +10,9 @@ var Skill = {
     $skillHeaders: $(".skill-header"),
     $skills: $(".skill"),
     initiate: function () {
-        //this.initiateHover();
-        this.initiateHeaderClick();
-        //this.initiateScheduler();
+        this.initiateHeaderHover();
+        this.initiateHover();
+        this.initiateScheduler();
         this.initiateSkillTree();
     },
     initiateHover: function () {
@@ -22,9 +23,9 @@ var Skill = {
             self.runScheduler();
         });
     },
-    initiateHeaderClick: function () {
+    initiateHeaderHover: function () {
         var self = this;
-        $(".skill-header").click(function () {
+        $(".skill-header").hover(function () {
             var id = $(this).attr("data-id");
             self.open(id);
         });
@@ -60,5 +61,23 @@ var Skill = {
         this.currSkill = id;
         this.$skillHeaders.eq(id).addClass("active").siblings().removeClass("active");
         this.$skills.eq(id).addClass("active").siblings().removeClass("active");
+    }
+}
+
+var Friend = {
+    $list: $("#friend-list"),
+    initiate: function () {
+        this.initiateSize();
+    },
+    initiateSize: function () {
+        var friends = this.$list.children();
+        var width = 0;
+        for (var i = 0; i < friends.length; i++) {
+            width += friends.eq(i).width();
+        }
+        this.$list.width(width);
+    },
+    initiateScrolling: function () {
+        
     }
 }

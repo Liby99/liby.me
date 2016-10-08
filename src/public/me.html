@@ -26,7 +26,7 @@
                 <div id="me-intro">
                     Liby is a current undergraduate of University of California - San Diego,
                     majoring in Mathematics & Computer Science and minor in Art.
-                    He is also a student graduated from Shenzhen Middle School.
+                    He is also a student graduated from Shenzhen Middle School in China.
                     His skill varies from developing, 3D rendering and modeling, designing, art and music.
                     He is also a huge fan of Apple, Sony, console games, Japanese Anime <del>and Lolikon</del>.
                     <a href="#">His Resume</a>.
@@ -274,10 +274,49 @@
                 </ul>
             </section>
             <section id="project-section">
-                
+                <h2 class="section-title" id="project-title">Projects</h2>
+                <hr />
+                <p id="project-intro">
+                    Liby is grown out of many projects he has participated to. He loves doing
+                    projects, so that he could really utilize what he has learnt, while also
+                    contribute to the communities he belongs to and loves.
+                </p>
+                <ul id="project-list">
+                    <% projects.forEach(function (project, index) { %>
+                        <li class="project<%= index > 1 ? " hidable" : ""%>">
+                            <a target="_blank" href="<%= project["url"] %>">
+                                <div class="project-cover" style="background-image: url(<%= project["cover"] %>)"></div>
+                                <div class="project-name"><%= project["name"] %></div>
+                                <div class="project-author"><%= project["author"] %></div>
+                            </a>
+                        </li>
+                    <% }); %>
+                </ul>
+                <a id="more-project" href="project.html">More Project</a>
             </section>
             <section id="friend-section">
-                
+                <h2 class="section-title" id="friend-title">Links</h2>
+                <hr />
+                <div id="friend-list-outer">
+                    <div id="friend-list">
+                        <a target="_blank" href="http://lyzde.com" style="background-image: url(img/friend/tonny.png)"></a>
+                        <a target="_blank" href="http://ethern.me" style="background-image: url(img/friend/ethern.png)"></a>
+                        <a target="_blank" href="http://hey.uhow.live" style="background-image: url(img/friend/barry.png)"></a>
+                        <a target="_blank" href="http://enddle.me">Enddle.me</a>
+                        <a target="_blank" href="http://zinsser.me">Zinsser.me</a>
+                    </div>
+                </div>
+            </section>
+            <section id="message-section">
+                <h2 class="section-title" id="message-title">Message</h2>
+                <hr />
+                <form id="message-form">
+                    <p>Say Hi!</p>
+                    <input type="text" id="message-name" placeholder="Your name" />
+                    <input type="text" id="message-email" placeholder="Your email" />
+                    <textarea id="message-content" placeholder="Message content"></textarea>
+                    <button type="submit">Submit</button>
+                </form>
             </section>
         </main>
         <footer>

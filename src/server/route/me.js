@@ -1,3 +1,9 @@
+var Project = require("../api/project.js");
+
 module.exports = function (req, res, callback) {
-    callback({});
+    Project.getFourProjects(function (projects) {
+        callback({
+            "projects": projects
+        })
+    });
 }
