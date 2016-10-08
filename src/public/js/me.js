@@ -1,6 +1,7 @@
 $(function () {
     Skill.initiate();
     Friend.initiate();
+    Message.initiate();
 });
 
 var Skill = {
@@ -87,5 +88,51 @@ var Friend = {
         $(window).resize(function () {
             self.initiateSize;
         })
+    }
+}
+
+var Message = {
+    $form: $("#message-form"),
+    $inputName: $("#message-name"),
+    $inputEmail: $("#message-email"),
+    $inputContent: $("#message-content"),
+    initiate: function () {
+        this.initiateSubmit();
+    },
+    initiateSubmit: function () {
+        var self = this;
+        self.$form.submit(function () {
+            var name = self.$inputName.val();
+            var email = self.$inputEmail.val();
+            var content = self.$inputContent.val();
+            $.ajax({
+                url: "/ajax/message?action=submit_message",
+                type: "post",
+                data: {
+                    "name": name,
+                    "email": email,
+                    "content": content
+                },
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    if (data["error_code"] == 0) {
+                        alert("Message sent!");
+                        self.clearMessage();
+                    }
+                    else {
+                        alert(data["error_log"]);
+                    }
+                },
+                error: function () {
+                    alert("Server connection error");
+                }
+            });
+            return false;
+        });
+    },
+    clearMessage: function () {
+        this.$inputName.val("");
+        this.$inputEmail.val("");
+        this.$inputContent.val("");
     }
 }

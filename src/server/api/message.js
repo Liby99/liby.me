@@ -11,8 +11,8 @@ module.exports = {
             }
         });
     },
-    addMessage: function (username, email, content, callback) {
-        mysql.query("INSERT INTO `message` SET `date_time` = NOW(), `read` = 0, ?", {
+    newMessage: function (username, email, content, callback) {
+        mysql.query("INSERT INTO `message` SET `MUID` = UUID(), `date_time` = NOW(), `read` = 0, ?", {
             "username": username,
             "email": email,
             "content": content
