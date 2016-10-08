@@ -42,6 +42,9 @@
 
 #first-article-title {
     font-size: 24px;
+    line-height: 32px;
+    height: 32px;
+    overflow: hidden;
 }
 
 #first-article-subtitle {
@@ -118,6 +121,9 @@
 
 .article-title {
     font-size: 16px;
+    line-height: 20px;
+    height: 20px;
+    overflow: hidden;
 }
 
 .article-subtitle {
@@ -133,5 +139,72 @@
 
 .article-content {
     margin-top: 10px;
+    height: 54px;
+    overflow: hidden;
+    line-height: 18px;
+    font-size: 11px;
     color: rgba(130, 130, 130, 1);
+}
+
+@media (max-width: 1024px) {
+    #first-article {
+        height: 420px;
+    }
+    
+    #first-article .inner {
+        padding-top: 200px;
+    }
+    
+    .article {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #first-article {
+        height: 360px;
+    }
+    
+    #first-article .inner {
+        padding-top: 180px;
+    }
+    
+    .article {
+        padding: 30px 20px;
+        height: 100px;
+    }
+    
+    .article-cover {
+        width: 180px;
+        height: 100px;
+    }
+    
+    .article-info {
+        margin-left: 180px;
+        padding-left: 20px;
+        width: calc(100% - 200px)
+    }
+    
+    .article-subtitle {
+        display: none;
+    }
+}
+
+@media (max-width: 425px) {
+    .article {
+        padding: 20px;
+        height: auto;
+    }
+    
+    .article-cover {
+        margin: 0;
+        float: none;
+        width: 100%;
+    }
+    
+    .article-info {
+        margin-left: 0;
+        padding: 20px 0;
+        width: auto;
+    }
 }
