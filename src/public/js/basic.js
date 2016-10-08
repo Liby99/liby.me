@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    Nav.initiate();
+});
+
 var Nav = {
     $toggle: $("#nav-menu-toggle"),
     $menu: $("#nav-menu-outer"),
