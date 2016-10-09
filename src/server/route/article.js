@@ -5,13 +5,13 @@ module.exports = function (req, res, callback) {
         Article.getArticleAmount(function (amount) {
             if (amount >= 0) {
                 var page = parseInt(req.query["p"]);
-                var maxPage = Math.ceil(amount / 10.0);
+                var maxPage = Math.ceil(amount / 5.0);
                 var left = page <= 3;
                 var middle = page > 3 && page < maxPage - 2;
                 var right = page >= maxPage - 2;
                 var start = left ? 1 : middle ? page - 2 : maxPage - 4;
                 if (!isNaN(page) && page > 0 && page <= maxPage) {
-                    Article.getArticles((page - 1) * 10, function (articles) {
+                    Article.getArticles((page - 1) * 5, function (articles) {
                         if (articles) {
                             callback({
                                 "page": page,

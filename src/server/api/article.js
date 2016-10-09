@@ -1,6 +1,7 @@
 var mysql = require("../module/mysql.js");
 
 module.exports = {
+    PAGE_ARTICLE_AMOUNT: 5,
     exists: function (article, callback) {
         mysql.query("SELECT `id` FROM `article` WHERE ?", {
             "AUID": article
@@ -32,7 +33,7 @@ module.exports = {
         mysql.query("SELECT `AUID`, `username`, `date_time`, `cover`, `title`, `subtitle`, `tags`, SUBSTRING(`content`, 1, 200) AS `content`, `view`, `comment` "
                   + "FROM `article` WHERE `status` = 1 "
                   + "ORDER BY `date_time` DESC "
-                  + "LIMIT " + start + ", 10", {}, function (err, result) {
+                  + "LIMIT " + start + ", " + this.PAGE_ARTICLE_AMOUNT, {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }

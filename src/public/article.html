@@ -44,11 +44,10 @@
                         </div>
                     </a>
                 </section>
-            <% } else { %>
-                <section id="page-title-section">
-                    <div class="inner">Page <%= page %> / <%= max_page %>. Articles <%= (page - 1) * 10 + 1 %> - <%= (page - 1) * 10 + articles.length %></div>
-                </section>
             <% } %>
+            <section id="page-title-section">
+                <div class="inner">Page <%= page %> / <%= max_page %>. Articles <%= (page - 1) * 5 + 1 %> - <%= (page - 1) * 5 + articles.length %></div>
+            </section>
             <section id="article-list-section">
                 <ul id="article-list">
                     <% for (var i = (page == 1) ? 1 : 0; i < articles.length; i++) { %>

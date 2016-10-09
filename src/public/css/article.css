@@ -75,14 +75,13 @@
 }
 
 #page-title-section {
-    max-width: 1024px;
+    max-width: 984px;
     margin: 0 auto;
     padding: 0 20px;
-    width: 100%;
 }
 
 #page-title-section .inner {
-    padding: 10px;
+    padding: 15px;
     font-size: 11px;
     text-align: right;
     color: rgba(150, 150, 150, 1);
@@ -92,14 +91,6 @@
     width: 100%;
     max-width: 1024px;
     margin: 0 auto;
-}
-
-#article-list {
-    margin-top: 30px;
-}
-
-#page-title-section + #article-list-section > #article-list {
-    margin-top: 0;
 }
 
 .article {
@@ -165,7 +156,7 @@
 }
 
 #pagination-section {
-    padding: 30px 0 0 0;
+    padding: 30px 0 10px 0;
 }
 
 #pagination {
@@ -174,7 +165,7 @@
 
 .page-btn {
     display: inline-block;
-    margin: 0 3px;
+    margin: 0 1px;
 }
 
 .page-btn.op {
@@ -183,10 +174,10 @@
 
 .page-btn a {
     display: block;
-    border-radius: 15px;
-    height: 30px;
-    line-height: 30px;
-    min-width: 30px;
+    border-radius: 13px;
+    height: 24px;
+    line-height: 24px;
+    min-width: 24px;
     text-align: center;
     color: rgba(120, 120, 120, 1);
     background-color: rgba(245, 245, 245, 1);
@@ -264,6 +255,7 @@
         margin: 0;
         float: none;
         width: 100%;
+        height: 120px;
     }
     
     .article-info {
