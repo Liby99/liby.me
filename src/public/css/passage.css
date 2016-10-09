@@ -107,6 +107,12 @@
     color: rgba(120, 120, 120, 1);
 }
 
+#article-content h1, #article-content h2, #article-content h3, #article-content h4, #article-content h5, #article-content h6 {
+    padding: 20px 0;
+    color: rgba(66, 66, 66, 1);
+    border-bottom: 1px solid rgba(230, 230, 230, 1);
+}
+
 #article-content p {
     margin: 20px 0;
     font-size: 12px;
@@ -121,8 +127,23 @@
     font-family: 'Menlo';
 }
 
+#article-content blockquote {
+    margin: 0;
+    padding: 10px 20px;
+    font-size: 12px;
+    border-left: 3px solid rgba(200, 200, 200, 1);
+    font-style: italic;
+}
+
 #article-content img {
-    width: 100%;
+    max-width: 100%;
+}
+
+#article-content ul, #article-content ol {
+    line-height: 20px;
+    margin: 15px 0;
+    padding: 0 40px;
+    list-style: disc;
 }
 
 #comment-section, #link-section {
