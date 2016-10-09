@@ -74,9 +74,9 @@
 }
 
 #article-info-inner {
-    padding: 12px 30px;
+    padding: 20px 30px;
     text-align: right;
-    border-right: 2px solid rgba(230, 230, 230, 1);
+    border-right: 1px solid rgba(230, 230, 230, 1);
 }
 
 #article-user, #article-data {
@@ -104,8 +104,13 @@
 #article-content {
     padding: 0 30px;
     width: calc(70% - 60px);
-    line-height: 22px;
     color: rgba(120, 120, 120, 1);
+}
+
+#article-content p {
+    margin: 20px 0;
+    font-size: 12px;
+    line-height: 24px !important;
 }
 
 #article-content img {
