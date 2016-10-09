@@ -56,12 +56,13 @@ module.exports = {
             }
         });
     },
-    updateProject: function (project, name, author, url, status, cover, callback) {
-        mysql.query("UPDATE `project` SET `name` = ?, `author` = ?, `url` = ?, `status` = ?, `cover` = ? WHERE `PUID` = ?", [
+    updateProject: function (project, name, author, url, status, dateTime, cover, callback) {
+        mysql.query("UPDATE `project` SET `name` = ?, `author` = ?, `url` = ?, `status` = ?, `date_time` = ?, `cover` = ? WHERE `PUID` = ?", [
             name,
             author,
             url,
             status,
+            dateTime,
             cover,
             project
         ], function (err, result) {
@@ -73,12 +74,13 @@ module.exports = {
             }
         })
     },
-    newProject: function (name, author, url, status, cover, callback) {
-        mysql.query("INSERT INTO `project` SET `PUID` = UUID(), `date_time` = NOW(), ?", {
+    newProject: function (name, author, url, status, dateTime, cover, callback) {
+        mysql.query("INSERT INTO `project` SET `PUID` = UUID(), ?", {
             "name": name,
             "author": author,
             "url": url,
             "status": status,
+            "date_time": dateTime,
             "cover": cover
         }, function (err, result) {
             if (err) {

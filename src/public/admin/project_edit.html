@@ -81,6 +81,7 @@
                     var author = $("#project-author").val();
                     var url = $("#project-url").val();
                     var status = parseInt($("#project-status").val());
+                    var dateTime = $("#project-date-time").val();
                     var cover = "";
                     
                     //Try to check if the data satisties the requirement
@@ -113,6 +114,7 @@
                             "author": author,
                             "url": url,
                             "status": status,
+                            "date_time": dateTime,
                             "cover": cover
                         },
                         success: function (result) {

@@ -117,7 +117,7 @@ module.exports = {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
                 if (req.body["AUID"] == "") {
-                    Article.newArticle(req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["cover"], req.body["content"], function (success) {
+                    Article.newArticle(req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["date_time"], req.body["cover"], req.body["content"], function (success) {
                         if (success) {
                             res.success({});
                         }
@@ -130,7 +130,7 @@ module.exports = {
                     Article.exists(req.body["AUID"], function (exists) {
                         if (exists != undefined) {
                             if (exists) {
-                                Article.updateArticle(req.body["AUID"], req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["cover"], req.body["content"], function (success) {
+                                Article.updateArticle(req.body["AUID"], req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["date_time"], req.body["cover"], req.body["content"], function (success) {
                                     if (success) {
                                         res.success({});
                                     }
@@ -253,7 +253,7 @@ module.exports = {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
                 if (req.body["PUID"] != "") {
-                    Project.updateProject(req.body["PUID"], req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["cover"], function (success) {
+                    Project.updateProject(req.body["PUID"], req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["date_time"], req.body["cover"], function (success) {
                         if (success) {
                             console.log("Updated project " + req.body["name"]);
                             res.success({});
@@ -264,7 +264,7 @@ module.exports = {
                     });
                 }
                 else {
-                    Project.newProject(req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["cover"], function (success) {
+                    Project.newProject(req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["date_time"], req.body["cover"], function (success) {
                         if (success) {
                             console.log("Inserted new project " + req.body["name"]);
                             res.success({});
@@ -337,6 +337,7 @@ module.exports = {
                                           req.body["title"],
                                           req.body["subtitle"],
                                           req.body["status"],
+                                          req.body["date_time"],
                                           req.body["type"],
                                           req.body["source_type"],
                                           req.body["source_url"],
@@ -358,6 +359,7 @@ module.exports = {
                     Artwork.newArtwork(req.body["title"],
                                        req.body["subtitle"],
                                        req.body["status"],
+                                       req.body["date_time"],
                                        req.body["type"],
                                        req.body["source_type"],
                                        req.body["source_url"],

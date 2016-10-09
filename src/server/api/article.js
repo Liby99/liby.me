@@ -114,12 +114,13 @@ module.exports = {
             }
         });
     },
-    updateArticle: function (AUID, title, subtitle, tags, status, cover, content, callback) {
-        mysql.query("UPDATE `article` SET `update_date_time` = NOW(), `title` = ?, `subtitle` = ?, `tags` = ?, `status` = ?, `cover` = ?, `content` = ? WHERE `AUID` = ?", [
+    updateArticle: function (AUID, title, subtitle, tags, status, dateTime, cover, content, callback) {
+        mysql.query("UPDATE `article` SET `update_date_time` = NOW(), `title` = ?, `subtitle` = ?, `tags` = ?, `status` = ?, `date_time` = ?, `cover` = ?, `content` = ? WHERE `AUID` = ?", [
             title,
             subtitle,
             tags,
             status,
+            dateTime,
             cover,
             content,
             AUID
@@ -133,12 +134,13 @@ module.exports = {
             }
         });
     },
-    newArticle: function (title, subtitle, tags, status, cover, content, callback) {
-        mysql.query("INSERT INTO `article` SET `AUID` = UUID(), `date_time` = NOW(), `update_date_time` = NOW(), ?", {
+    newArticle: function (title, subtitle, tags, status, dateTime, cover, content, callback) {
+        mysql.query("INSERT INTO `article` SET `AUID` = UUID(), update_date_time` = NOW(), ?", {
             "title": title,
             "subtitle": subtitle,
             "tags": tags,
             "status": status,
+            "date_time": dateTime,
             "cover": cover,
             "content": content
         }, function (err, result) {

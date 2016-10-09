@@ -38,11 +38,12 @@ module.exports = {
             }
         });
     },
-    newArtwork: function (title, subtitle, status, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
-        mysql.query("INSERT INTO `artwork` SET `AUID` = UUID(), `date_time` = NOW(), ?", {
+    newArtwork: function (title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
+        mysql.query("INSERT INTO `artwork` SET `AUID` = UUID(), ?", {
             "title": title,
             "subtitle": subtitle,
             "status": status,
+            "date_time": dateTime,
             "type": type,
             "source_type": sourceType,
             "source_url": sourceUrl,
@@ -60,11 +61,12 @@ module.exports = {
             }
         });
     },
-    updateArtwork: function (artwork, title, subtitle, status, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
-        mysql.query("UPDATE `artwork` SET `title` = ?, `subtitle` = ?, `status` = ?, `type` = ?, `source_type` = ?, `source_url` = ?, `softwares` = ?, `tags` = ?, `cover` = ?, `thumbnail` = ?, `description` = ? WHERE `AUID` = ?", [
+    updateArtwork: function (artwork, title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
+        mysql.query("UPDATE `artwork` SET `title` = ?, `subtitle` = ?, `status` = ?, `date_time` = ?, `type` = ?, `source_type` = ?, `source_url` = ?, `softwares` = ?, `tags` = ?, `cover` = ?, `thumbnail` = ?, `description` = ? WHERE `AUID` = ?", [
             title,
             subtitle,
             status,
+            dateTime,
             type,
             sourceType,
             sourceUrl,
@@ -72,7 +74,8 @@ module.exports = {
             tags,
             cover,
             thumbnail,
-            description
+            description,
+            artwork
         ], function (err, result) {
             if (err) {
                 callback(false);

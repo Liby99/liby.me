@@ -87,6 +87,7 @@
                     var subtitle = $("#article-subtitle").val();
                     var tags = $("#article-tags").val();
                     var status = parseInt($("#article-status").val());
+                    var dateTime = $("#article-date-time").val();
                     var cover = $($("#article-cover").summernote("code")).children("img").attr("src");
                     var content = $("#article-content").summernote("code");
                     
@@ -124,6 +125,7 @@
                             "subtitle": subtitle,
                             "tags": tags,
                             "status": status,
+                            "date_time": dateTime,
                             "cover": cover,
                             "content": content
                         },

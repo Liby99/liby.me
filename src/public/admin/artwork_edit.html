@@ -56,7 +56,7 @@
                         <option value="5">Source Code</option>
                     </select>
                     <label>Source: (Google Drive, Vimeo, etc.)</label>
-                    <input id="artwork-source" type="text" placeholder="Please insert the artwork source url. Empty if no source" />
+                    <input id="artwork-source-url" type="text" placeholder="Please insert the artwork source url. Empty if no source" />
                     <label>Softwares: (Divide each software with ,)</label>
                     <input id="artwork-softwares" type="text" placeholder="Please insert the artwork software" />
                     <label>Tags: (Divide each tag with ,)</label>
@@ -119,6 +119,7 @@
                             "title": $("#artwork-title").val(),
                             "subtitle": $("#artwork-subtitle").val(),
                             "status": parseInt($("#artwork-status").val()),
+                            "date_time": $("#artwork-date-time").val(),
                             "type": parseInt($("#artwork-type").val()),
                             "source_type": parseInt($("#artwork-source-type").val()),
                             "source_url": $("#artwork-source-url").val(),
@@ -186,7 +187,7 @@
                 $("#artwork-subtitle").val(artwork["subtitle"]);
                 $("#artwork-status").val(artwork["status"]);
                 $("#artwork-date-time").datetimepicker({
-                    "value": artwork["status"]
+                    "value": artwork["date_time"]
                 });
                 $("#artwork-type").val(artwork["type"]);
                 $("#artwork-source-type").val(artwork["source_type"]);
@@ -198,7 +199,7 @@
                 $("#artwork-description").summernote('code', artwork["description"]);
             },
             newArtwork: function () {
-                $("#artwork-date-time").datetimepicker();
+                $("#artwork-date-time").datetimepicker({});
                 $("#artwork-cover").summernote(this.imageOption);
                 $("#artwork-thumbnail").summernote(this.imageOption);
                 $("#artwork-description").summernote(this.descriptionOption);
