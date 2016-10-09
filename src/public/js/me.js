@@ -117,7 +117,7 @@ var Message = {
                     var data = JSON.parse(result);
                     if (data["error_code"] == 0) {
                         alert("Message sent!");
-                        self.clearMessage();
+                        window.location.reload();
                     }
                     else {
                         alert(data["error_log"]);
