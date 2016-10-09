@@ -1,12 +1,12 @@
 * {
     font-family: Dosis, 'Open Sans', Arial, sans-serif;
-    font-size: 12px;
 }
 
 body {
     margin: 0;
     padding: 0;
     min-width: 320px;
+    font-size: 12px;
     background-color: rgba(255, 255, 255, 1);
     color: rgba(60, 60, 60, 1);
 }
