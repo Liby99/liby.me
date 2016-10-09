@@ -292,6 +292,10 @@
         content: "";
         display: block;
     }
+    
+    #article-link .article {
+        height: 140px;
+    }
 }
 
 @media (max-width: 425px) {

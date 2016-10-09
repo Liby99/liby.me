@@ -26,11 +26,6 @@
                                     <div id="first-article-subtitle"><%= articles[0]["subtitle"] %></div>
                                 </div>
                                 <div id="first-article-info">
-                                    <div id="first-article-tags">
-                                        <% articles[0]["tags"].split(", ").forEach(function (str) { %>
-                                            <span class="tag"><%= str %></span>
-                                        <% }); %>
-                                    </div>
                                     <div id="first-article-data">
                                         <%= articles[0]["username"] %> |
                                         <%= articles[0]["date_time"].toString().substring(0, 10) %> |
@@ -38,6 +33,11 @@
                                         <%= articles[0]["view"] %> |
                                         <i class="fa fa-comments"></i>
                                         <%= articles[0]["comment"] %>
+                                    </div>
+                                    <div id="first-article-tags">
+                                        <% articles[0]["tags"].split(", ").forEach(function (str) { %>
+                                            <span class="tag"><%= str %></span>
+                                        <% }); %>
                                     </div>
                                 </div>
                             </div>
