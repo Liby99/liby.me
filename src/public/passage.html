@@ -38,10 +38,10 @@
                 <div id="article-info">
                     <div id="article-info-inner">
                         <div id="article-user"><%= article["username"] %></div>
-                        <div id="article-date">
-                            <%= article["date_time"].toString().substring(0, 10) %> |
-                            <i class="fa fa-eye"></i><%= article["view"] %> |
-                            <i class="fa fa-comments"></i><%= article["comment"] %>
+                        <div id="article-data">
+                            <span id="article-date"><%= article["date_time"].toString().substring(0, 10) %></span>
+                            <span id="article-view"><i class="fa fa-eye"></i><%= article["view"] %></span>
+                            <span id="article-comment"><i class="fa fa-comments"></i><%= article["comment"] %></span>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                             <a href="passage.html?a=<%= prev_article["AUID"] %>" style="background-image: url(<%= prev_article["cover"] %>)">
                                 <div class="inner">
                                     <div class="article-nav">
-                                        <i class="fa fa-angle-left"></i>Previous - <%= prev_article["title"] %>
+                                        <span><i class="fa fa-angle-left"></i>Previous</span><%= prev_article["title"] %>
                                     </div>
                                 </div>
                             </a>
@@ -103,7 +103,7 @@
                             <a href="passage.html?a=<%= next_article["AUID"] %>" style="background-image: url(<%= next_article["cover"] %>)">
                                 <div class="inner">
                                     <div class="article-nav">
-                                        <%= next_article["title"] %> - Next<i class="fa fa-angle-right"></i>
+                                        <%= next_article["title"] %><span>Next<i class="fa fa-angle-right"></i></span>
                                     </div>
                                 </div>
                             </a>

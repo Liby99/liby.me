@@ -79,22 +79,26 @@
     border-right: 2px solid rgba(230, 230, 230, 1);
 }
 
-#article-user, #article-date {
+#article-user, #article-data {
     line-height: 22px;
     color: rgba(130, 130, 130, 1);
-    letter-spacing: 1px;
 }
 
 #article-user {
     font-weight: bold;
+    letter-spacing: 1px;
 }
 
-#article-date {
+#article-data {
     color: rgba(160, 160, 160, 1);
 }
 
-#article-date i {
+#article-data i {
     margin-right: 5px;
+}
+
+#article-view::before, #article-comment::before {
+    content: " | ";
 }
 
 #article-content {
@@ -256,8 +260,8 @@
     font-size: 18px;
 }
 
-#article-link .article .inner .article-title {
-    
+#previous-article .inner .article-nav span::after, #next-article .inner .article-nav span::before {
+    content: " – ";
 }
 
 @media (max-width: 1024px) {
@@ -271,9 +275,91 @@
 }
 
 @media (max-width: 768px) {
+    #article-info {
+        width: 25%;
+    }
     
+    #article-content {
+        width: calc(75% - 40px);
+        padding: 0 20px;
+    }
+    
+    #article-info-inner {
+        padding: 20px;
+    }
+    
+    #article-view::before {
+        content: "";
+        display: block;
+    }
 }
 
 @media (max-width: 425px) {
+    #cover {
+        height: 240px;
+    }
     
+    #cover .inner {
+        padding-top: 40px;
+    }
+    
+    #text-section {
+        margin-top: 0;
+        margin-bottom: 10px;
+        flex-flow: column;
+    }
+    
+    #article-info {
+        width: 100%;
+    }
+    
+    #article-info-inner {
+        border: none;
+        border-bottom: 1px solid rgba(230, 230, 230, 1);
+        text-align: center;
+    }
+    
+    #article-view, #article-comment {
+        display: inline;
+    }
+
+    #article-view::before, #article-comment::before {
+        content: " | ";
+        display: inline;
+    }
+    
+    #comments {
+        margin: 20px 0;
+    }
+    
+    #comment-form {
+        margin: 20px 0;
+    }
+    
+    #article-content {
+        width: auto;
+        padding: 20px;
+    }
+    
+    #article-link {
+        margin: 10px 0;
+        padding: 0;
+        padding-left: 10px;
+        width: auto;
+        display: block;
+        height: 80px;
+    }
+    
+    #article-link .article {
+        float: left;
+        margin: 0;
+        margin-right: 10px;
+        width: calc(50% - 10px);
+        height: 100%;
+    }
+    
+    #previous-article .inner .article-nav span::after, #next-article .inner .article-nav span::before {
+        display: block;
+        content: "";
+    }
 }

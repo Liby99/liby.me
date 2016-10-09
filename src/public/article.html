@@ -75,8 +75,8 @@
             <section id="pagination-section">
                 <ul id="pagination">
                     <% if (page != 1) { %>
-                        <li class="page-btn op">
-                            <a href="article.html?p=<%= page - 1 %>">Prev</a>
+                        <li class="page-btn op" id="page-prev">
+                            <a href="article.html?p=<%= page - 1 %>"><i class="fa fa-angle-left"></i>Prev</a>
                         </li>
                     <% } %>
                     <% if (max_page <= 5) { %>
@@ -105,8 +105,8 @@
                         <% } %>
                     <% } %>
                     <% if (page != max_page) { %>
-                        <li class="page-btn op">
-                            <a href="article.html?p=<%= page + 1 %>">Next</a>
+                        <li class="page-btn op" id="page-next">
+                            <a href="article.html?p=<%= page + 1 %>">Next <i class="fa fa-angle-right"></i></a>
                         </li>
                     <% } %>
                 </ul>

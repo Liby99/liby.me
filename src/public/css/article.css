@@ -95,8 +95,6 @@
 
 .article {
     transition: all 0.2s;
-    padding: 50px 30px;
-    height: 130px;
     border-bottom: 1px solid rgba(230, 230, 230, 1);
     cursor: pointer;
 }
@@ -110,6 +108,9 @@
 }
 
 .article a {
+    display: block;
+    padding: 50px 30px;
+    height: 130px;
     color: rgba(44, 44, 44, 1);
 }
 
@@ -195,7 +196,23 @@
     background-color: rgba(230, 230, 230, 1);
 }
 
+.page-btn.op a i {
+    font-size: 14px;
+}
+
+#page-prev i {
+    margin-right: 5px;
+}
+
+#page-next i {
+    margin-left: 5px;
+}
+
 .page-btn.active a {
+    height: 22px;
+    width: 22px;
+    min-width: 22px;
+    line-height: 22px;
     color: rgba(255, 149, 166, 1);
     border: 1px solid rgba(255, 149, 166, 1);
     background-color: rgba(255, 255, 255, 1);
@@ -210,7 +227,7 @@
         padding-top: 200px;
     }
     
-    .article {
+    .article a {
         padding: 30px 20px;
     }
 }
@@ -224,7 +241,7 @@
         padding-top: 180px;
     }
     
-    .article {
+    .article a {
         padding: 30px 20px;
         height: 100px;
     }
@@ -246,7 +263,7 @@
 }
 
 @media (max-width: 425px) {
-    .article {
+    .article a {
         padding: 20px;
         height: auto;
     }
@@ -262,5 +279,13 @@
         margin-left: 0;
         padding: 20px 0;
         width: auto;
+    }
+    
+    .page-btn {
+        display: none;
+    }
+    
+    .page-btn.op {
+        display: inline-block;
     }
 }
