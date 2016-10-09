@@ -3,11 +3,13 @@
     <head>
         <title>Liby.me - Admin Upload Artwork</title>
         <link rel="stylesheet" href="../css/lib/font-awesome.css" />
-        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
         <link rel="stylesheet" href="../css/lib/bootstrap.css" />
+        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
+        <link rel="stylesheet" href="../css/lib/datetimepicker.css" />
         <link rel="stylesheet" href="../css/admin/basic.css" />
         <script src="../js/lib/jquery.js"></script>
         <script src="../js/lib/bootstrap.js"></script>
+        <script src="../js/lib/datetimepicker.js"></script>
         <script src="../js/lib/summernote.js"></script>
         <script src="../js/util.js"></script>
         <script>const PAGE = "edit-artwork"</script>
@@ -24,6 +26,8 @@
                     <input id="artwork-title" type="text" placeholder="Please insert the artwork title" />
                     <label>Subtitle: </label>
                     <input id="artwork-subtitle" type="text" placeholder="Please insert the artwork subtitle" />
+                    <label>Date time: </label>
+                    <input id="artwork-date-time" type="text" placeholder="Please insert the artwork date time" />
                     <label>Status: </label>
                     <select id="artwork-status">
                         <option value="0">Draft</option>
@@ -181,6 +185,9 @@
                 $("#artwork-title").val(artwork["title"]);
                 $("#artwork-subtitle").val(artwork["subtitle"]);
                 $("#artwork-status").val(artwork["status"]);
+                $("#artwork-date-time").datetimepicker({
+                    "value": artwork["status"]
+                });
                 $("#artwork-type").val(artwork["type"]);
                 $("#artwork-source-type").val(artwork["source_type"]);
                 $("#artwork-source-url").val(artwork["source_url"]);
@@ -191,6 +198,7 @@
                 $("#artwork-description").summernote('code', artwork["description"]);
             },
             newArtwork: function () {
+                $("#artwork-date-time").datetimepicker();
                 $("#artwork-cover").summernote(this.imageOption);
                 $("#artwork-thumbnail").summernote(this.imageOption);
                 $("#artwork-description").summernote(this.descriptionOption);

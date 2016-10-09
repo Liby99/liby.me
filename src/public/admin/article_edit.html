@@ -4,11 +4,13 @@
         <title>Liby.me - Admin Edit Article</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="../css/lib/font-awesome.css" />
-        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
         <link rel="stylesheet" href="../css/lib/bootstrap.css" />
+        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
+        <link rel="stylesheet" href="../css/lib/datetimepicker.css" />
         <link rel="stylesheet" href="../css/admin/basic.css" />
         <script src="../js/lib/jquery.js"></script>
         <script src="../js/lib/bootstrap.js"></script>
+        <script src="../js/lib/datetimepicker.js"></script>
         <script src="../js/lib/summernote.js"></script>
         <script src="../js/util.js"></script>
         <script>const PAGE = "edit-article"</script>
@@ -25,6 +27,8 @@
                     <input type="text" id="article-title" placeholder="Input the Article Title Here" />
                     <label>Subtitle:</label>
                     <input type="text" id="article-subtitle" placeholder="Input the Article Subtitle Here" />
+                    <label>Date time: </label>
+                    <input type="text" id="article-date-time" placeholder="Article date time" />
                     <label>Tags: (Divide each tags with ',')</label>
                     <input type="text" id="article-tags" placeholder="Input the tags here" />
                     <label>Status:</label>
@@ -179,10 +183,14 @@
                 $("#article-subtitle").val(article["subtitle"]);
                 $("#article-tags").val(article["tags"]);
                 $("#article-status").val(article["status"]);
+                $("#article-date-time").datetimepicker({
+                    "value": article["date_time"]
+                });
                 $("#article-cover").summernote('code', "<p><img src=\"" + article["cover"] + "\" /></p>");
                 $("#article-content").summernote('code', article["content"]);
             },
             newArticle: function () {
+                $("#article-date-time").datetimepicker();
                 $('#article-cover').summernote(this.coverOption);
                 $("#article-content").summernote(this.contentOption);
             }

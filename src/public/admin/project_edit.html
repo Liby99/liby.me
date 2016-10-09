@@ -3,11 +3,13 @@
     <head>
         <title>Liby.me - Admin Edit Project</title>
         <link rel="stylesheet" href="../css/lib/font-awesome.css" />
-        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
         <link rel="stylesheet" href="../css/lib/bootstrap.css" />
+        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
+        <link rel="stylesheet" href="../css/lib/datetimepicker.css" />
         <link rel="stylesheet" href="../css/admin/basic.css" />
         <script src="../js/lib/jquery.js"></script>
         <script src="../js/lib/bootstrap.js"></script>
+        <script src="../js/lib/datetimepicker.js"></script>
         <script src="../js/lib/summernote.js"></script>
         <script src="../js/util.js"></script>
         <script>const PAGE = "edit-project"</script>
@@ -24,6 +26,8 @@
                     <input id="project-name" type="text" placeholder="Project Name" />
                     <label>Author: </label>
                     <input id="project-author" type="text" placeholder="Project Author" />
+                    <label>Date Time: </label>
+                    <input id="project-date-time" type="text" placeholder="Project date time" />
                     <label>URL: </label>
                     <input id="project-url" type="text" placeholder="Project URL" />
                     <label>Status: </label>
@@ -168,9 +172,13 @@
                 $("#project-author").val(project["author"]);
                 $("#project-url").val(project["url"]);
                 $("#project-status").val(project["status"]);
+                $("#project-date-time").datetimepicker({
+                    "value": project["date_time"]
+                });
                 $("#project-cover").summernote("code", "<p><img src=\"" + project["cover"] + "\" /></p>");
             },
             newProject: function () {
+                $("#project-date-time").datetimepicker();
                 $("#project-cover").summernote(this.coverOption);
             }
         }
