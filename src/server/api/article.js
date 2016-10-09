@@ -3,7 +3,7 @@ var mysql = require("../module/mysql.js");
 module.exports = {
     PAGE_ARTICLE_AMOUNT: 5,
     exists: function (article, callback) {
-        mysql.query("SELECT `id` FROM `article` WHERE ?", {
+        mysql.query("SELECT `id` FROM `article` WHERE `status` = 1 AND ?", {
             "AUID": article
         }, function (err, result) {
             if (err) {
@@ -60,7 +60,7 @@ module.exports = {
                 callback(undefined);
             }
             else {
-                callback(result);
+                callback(result[0]);
             }
         });
     },
@@ -77,6 +77,40 @@ module.exports = {
             }
             else {
                 callback(undefined);
+            }
+        });
+    },
+    getNextArticle: function (article, callback) {
+        mysql.query("SELECT `AUID`, `title`, `cover` FROM `article` WHERE `date_time` > (SELECT `date_time` FROM `article` WHERE ?) AND `status` = 1 ORDER BY `date_time` ASC LIMIT 1", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(undefined);
+            }
+            else {
+                if (result.length > 0) {
+                    callback(result[0]);
+                }
+                else {
+                    callback(undefined);
+                }
+            }
+        });
+    },
+    getPreviousArticle: function (article, callback) {
+        mysql.query("SELECT `AUID`, `title`, `cover` FROM `article` WHERE `date_time` < (SELECT `date_time` FROM `article` WHERE ?) AND `status` = 1 ORDER BY `date_time` DESC LIMIT 1", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(undefined);
+            }
+            else {
+                if (result.length > 0) {
+                    callback(result[0]);
+                }
+                else {
+                    callback(undefined);
+                }
             }
         });
     },
@@ -142,6 +176,18 @@ module.exports = {
             }
         });
     },
+    comment: function (article, callback) {
+        mysql.query("UPDATE `article` SET `comment` = `comment` + 1 WHERE ?", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
+    },
     getAdminComments: function (article, callback) {
         mysql.query("SELECT * FROM `comment` WHERE ? ORDER BY `date_time` DESC", {
             "AUID": article
@@ -154,20 +200,26 @@ module.exports = {
             }
         });
     },
-    newComment: function (article, username, email, isPrivate, content, callback) {
-        mysql.query("INSERT INTO `comment` SET `CUID` = UUID(), `date_time` = NOW(), ?", {
-            "AUID": article,
-            "username": username,
-            "email": email,
-            "private": isPrivate ? 1 : 0,
-            "content": content
-        }, function (err, result) {
-            if (err) {
-                callback(false);
+    newComment: function (article, username, email, content, callback) {
+        this.comment(article, function (success) {
+            if (success) {
+                mysql.query("INSERT INTO `comment` SET `CUID` = UUID(), `date_time` = NOW(), ?", {
+                    "AUID": article,
+                    "username": username,
+                    "email": email,
+                    "content": content
+                }, function (err, result) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        console.log("New comment is written by " + username + " on " + (new Date()).toString());
+                        callback(true);
+                    }
+                });
             }
             else {
-                console.log("New comment is written by " + username + " on " + (new Date()).toString());
-                callback(true);
+                callback(false);
             }
         });
     },

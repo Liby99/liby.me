@@ -5,7 +5,7 @@ module.exports = function (req, res, callback) {
         case "404":
             callback({
                 "error_code": 404,
-                "error_log": config["404_message"]
+                "error_log": req.query["log"] ? req.query["log"] : config["404_message"]
             });
             break;
         case "500":

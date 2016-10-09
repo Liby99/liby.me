@@ -93,7 +93,7 @@ var Friend = {
 
 var Message = {
     $form: $("#message-form"),
-    $inputName: $("#message-name"),
+    $inputUsername: $("#message-username"),
     $inputEmail: $("#message-email"),
     $inputContent: $("#message-content"),
     initiate: function () {
@@ -102,14 +102,14 @@ var Message = {
     initiateSubmit: function () {
         var self = this;
         self.$form.submit(function () {
-            var name = self.$inputName.val();
+            var username = self.$inputUsername.val();
             var email = self.$inputEmail.val();
             var content = self.$inputContent.val();
             $.ajax({
                 url: "/ajax/message?action=submit_message",
                 type: "post",
                 data: {
-                    "name": name,
+                    "username": username,
                     "email": email,
                     "content": content
                 },

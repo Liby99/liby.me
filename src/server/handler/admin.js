@@ -67,7 +67,7 @@ module.exports = {
                 if (req.body["article"] && req.body["article"] != "") {
                     Article.getAdminArticle(req.body["article"], function (result) {
                         if (result) {
-                            res.success(result[0]);
+                            res.success(result);
                         }
                         else {
                             res.error(2, "Database Error");

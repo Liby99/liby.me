@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <link rel="stylesheet" href="css/passage.css" />
+        <script src="js/lib/jquery.js"></script>
+        <script src="js/util.js"></script>
+        <script>const PAGE = "<%= article["title"] %>";</script>
+    </head>
+    <body>
+        <nav>
+            <% include view/navbar.html %>
+        </nav>
+        <main>
+            <section id="cover-section">
+                <div id="cover" style="background-image: url(<%= article["cover"] %>)">
+                    <div class="cover-mask">
+                        <div class="inner">
+                            <div id="article-titles">
+                                <div id="article-title"><%= article["title"] %></div>
+                                <div id="article-subtitle"><%= article["subtitle"] %></div>
+                            </div>
+                            <div id="article-tags">
+                                <% article["tags"].split(", ").forEach(function (str) { %>
+                                    <span class="tag"><%= str %></span>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="text-section">
+                <div id="article-info">
+                    <div id="article-info-inner">
+                        <div id="article-user"><%= article["username"] %></div>
+                        <div id="article-date">
+                            <%= article["date_time"].toString().substring(0, 10) %> |
+                            <i class="fa fa-eye"></i><%= article["view"] %> |
+                            <i class="fa fa-comments"></i><%= article["comment"] %>
+                        </div>
+                    </div>
+                </div>
+                <div id="article-content">
+                    <%- article["content"] %>
+                </div>
+            </section>
+            <section id="comment-section">
+                <% if (comments.length > 0) { %>
+                    <div id="comments">
+                        <div id="comment-title">Comments (<%= comments.length %>)</div>
+                        <ul id="comment-list">
+                            <% comments.forEach(function (comment) { %>
+                                <li class="comment">
+                                    <div class="comment-info">
+                                        <span class="comment-username"><%= comment["username"] %></span>
+                                        -
+                                        <span class="comment-date"><%= comment["date_time"] %></span>
+                                    </div>
+                                    <div class="comment-content">
+                                        <%= comment["content"] %>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                <% } %>
+                <form id="comment-form">
+                    <div id="comment-form-title">
+                        <% if (comments.length == 0) { %>
+                            Be the first one to comment
+                        <% } else { %>
+                            Write a comment
+                        <% } %>
+                    </div>
+                    <div id="comment-form-user-info">
+                        <input type="text" id="comment-form-username" placeholder="Your name" />
+                        <input type="text" id="comment-form-email" placeholder="Your email" />
+                    </div>
+                    <textarea id="comment-form-content" placeholder="Comments"></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+            <section id="link-section">
+                <ul id="article-link">
+                    <li class="article" id="previous-article">
+                        <% if (prev_article) { %>
+                            <a href="passage.html?a=<%= prev_article["AUID"] %>" style="background-image: url(<%= prev_article["cover"] %>)">
+                                <div class="inner">
+                                    <div class="article-nav">
+                                        <i class="fa fa-angle-left"></i>Previous - <%= prev_article["title"] %>
+                                    </div>
+                                </div>
+                            </a>
+                        <% } %>
+                    </li>
+                    <li class="article" id="next-article">
+                        <% if (next_article) { %>
+                            <a href="passage.html?a=<%= next_article["AUID"] %>" style="background-image: url(<%= next_article["cover"] %>)">
+                                <div class="inner">
+                                    <div class="article-nav">
+                                        <%= next_article["title"] %> - Next<i class="fa fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        <% } %>
+                    </li>
+                </ul>
+            </section>
+        </main>
+        <footer>Copyright &copy; 2016 Liby.me. All rights reserved.</footer>
+    </body>
+    <script src="js/basic.js"></script>
+    <script src="js/article.js"></script>
+</html>
