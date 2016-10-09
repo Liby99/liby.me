@@ -113,6 +113,14 @@
     line-height: 24px !important;
 }
 
+#article-content pre {
+    padding: 20px;
+    line-height: 20px;
+    border-left: 1px solid rgba(200, 200, 200, 1);
+    background-color: rgba(245, 245, 245, 1);
+    font-family: 'Menlo';
+}
+
 #article-content img {
     width: 100%;
 }
