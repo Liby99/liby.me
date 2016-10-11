@@ -42,6 +42,16 @@ module.exports = {
             }
         });
     },
+    getLatestArticles: function (callback) {
+        mysql.query("SELECT `AUID`, `cover`, `title`, `subtitle` FROM `article` ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
+            if (err) {
+                callback(undefined);
+            }
+            else {
+                callback(result);
+            }
+        });
+    },
     getArticleAmount: function (callback) {
         mysql.query("SELECT COUNT(`id`) AS `count` FROM `article` WHERE `status` = 1", {}, function (err, result) {
             if (err) {
