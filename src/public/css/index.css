@@ -1,0 +1,122 @@
+#hovering-board {
+    width: 100%;
+    height: 720px;
+    overflow: hidden;
+}
+
+#hovering-board-inner {
+    padding: 50px 100px;
+    width: 2400px;
+}
+
+#hovering-board-row-1, #hovering-board-row-3 {
+    display: flex;
+}
+
+#hovering-board-row-2 {
+    display: flex;
+}
+
+#hovering-board-row-2-col-2 {
+    width: 50%;
+}
+
+#hovering-board-row-2-col-1, #hovering-board-row-2-col-3 {
+    width: 25%;
+    display: flex;
+    flex-flow: column;
+}
+
+#hovering-board-row-2-col-1-ul, #hovering-board-row-2-col-3-ul {
+    display: flex;
+    flex-flow: column;
+}
+
+#hovering-board-bottom-placeholder {
+    height: 100px;
+}
+
+#spotlight {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#spotlight-inner {
+    padding-top: 150px;
+    text-align: center;
+}
+
+#spotlight-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 45px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#spotlight-icon img {
+    width: 100%;
+    height: 100%;
+}
+
+#spotlight-name {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#spotlight-formal-name {
+    font-size: 12px;
+    color: rgba(150, 150, 150, 1);
+}
+
+#spotlight-description {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: rgba(100, 100, 100, 1);
+}
+
+#spotlight-explore {
+    margin-top: 10px;
+    transition: all 0.2s;
+    display: inline-block;
+    line-height: 30px;
+    border-radius: 2px;
+    padding: 0 30px;
+    border: 1px solid rgba(255, 149, 166, 1);
+}
+
+#spotlight-explore:hover {
+    background-color: rgba(255, 149, 166, 0.1);
+}
+
+#hovering-board-row-1 .artwork, #hovering-board-row-3 .artwork {
+    width: 25%;
+}
+
+.artwork {
+    padding: 5px;
+    height: 270px;
+}
+
+.artwork a {
+    display: block;
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.artwork .inner {
+    transition: all 0.4s;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.artwork a:hover .inner {
+    background-color: rgba(255, 255, 255, 0.05);
+}

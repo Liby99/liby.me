@@ -15,36 +15,53 @@
             <%- include('view/navbar.html') %>
         </nav>
         <main>
-            <div id="hovering-board">
-                <div id="hovering-board-inner">
-                    <ul id="hovering-board-row-1">
-                        <% for (var i = 0; i < 4; i++) { %>
-                            <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
-                        <% } %>
-                    </ul>
-                    <ul id="hovering-board-row-2">
-                        <li id="hovering-board-row-2-col-1">
-                            <% for (var i = 4; i < 6; i++) { %>
+            <section id="hovering-board-section">
+                <div id="hovering-board" data-tracking="1">
+                    <div id="hovering-board-inner">
+                        <ul id="hovering-board-row-1">
+                            <% for (var i = 0; i < 4; i++) { %>
                                 <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
                             <% } %>
-                        </li>
-                        <li id="hovering-board-row-2-col-2">
-                            
-                        </li>
-                        <li id="hovering-board-row-2-col-3">
-                            <% for (var i = 6; i < 8; i++) { %>
+                        </ul>
+                        <ul id="hovering-board-row-2">
+                            <li id="hovering-board-row-2-col-1">
+                                <ul id="hovering-board-row-2-col-1-ul">
+                                    <% for (var i = 4; i < 6; i++) { %>
+                                        <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                                    <% } %>
+                                </ul>
+                            </li>
+                            <li id="hovering-board-row-2-col-2">
+                                <div id="spotlight">
+                                    <div id="spotlight-inner">
+                                        <div id="spotlight-icon">
+                                            <img src="img/general/icon.jpg" />
+                                        </div>
+                                        <div id="spotlight-name">Liby Lee</div>
+                                        <div id="spotlight-formal-name">Ziyang Li</div>
+                                        <p id="spotlight-description">A Curious, Dedicated and Creative Individual</p>
+                                        <a id="spotlight-explore" href="me.html">Explore</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li id="hovering-board-row-2-col-3">
+                                <ul id="hovering-board-row-2-col-3-ul">
+                                    <% for (var i = 6; i < 8; i++) { %>
+                                        <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                                    <% } %>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul id="hovering-board-row-3">
+                            <% for (var i = 8; i < 12; i++) { %>
                                 <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
                             <% } %>
-                        </li>
-                    </ul>
-                    <ul id="hovering-board-row-3">
-                        <% for (var i = 8; i < 12; i++) { %>
-                            <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
-                        <% } %>
-                    </ul>
+                        </ul>
+                        <div id="hovering-board-bottom-placeholder"></div>
+                    </div>
                 </div>
-            </div>
-            <div id="new-article">
+            </section>
+            <section id="new-article-section">
                 <ul id="new-article-list">
                     <li class="article">
                         <a>
@@ -52,11 +69,35 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+                <p>adfasd</p>
+            </section>
         </main>
         <footer>
             <%- include('view/footer.html') %>
         </footer>
     </body>
     <script src="js/basic.js"></script>
+    <script src="js/index.js"></script>
 </html>
