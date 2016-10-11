@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
         <link rel="stylesheet" href="css/basic.css" />
         <link rel="stylesheet" href="css/index.css" />
         <script src="js/lib/jquery.js"></script>
@@ -62,6 +63,10 @@
                 </div>
             </section>
             <section id="new-article-section">
+                <p id="new-article-title">
+                    Latest Articles:
+                    <a id="new-article-more" href="article.html">More <i class="fa fa-angle-right"></i></a>
+                </p>
                 <ul id="new-article-list">
                     <% articles.forEach(function (article) { %>
                         <li class="article">
