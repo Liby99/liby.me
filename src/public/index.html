@@ -57,41 +57,23 @@
                                 <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
                             <% } %>
                         </ul>
-                        <div id="hovering-board-bottom-placeholder"></div>
+                        <div class="hovering-board-placeholder"></div>
                     </div>
                 </div>
             </section>
             <section id="new-article-section">
                 <ul id="new-article-list">
-                    <li class="article">
-                        <a>
-                            
-                        </a>
-                    </li>
+                    <% articles.forEach(function (article) { %>
+                        <li class="article">
+                            <a href="passage.html?a=<%= article["AUID"] %>" style="background-image: url(<%= article["cover"] %>)">
+                                <div class="inner">
+                                    <div class="title"><%= article["title"] %></div>
+                                    <div class="subtitle"><%= article["subtitle"] %></div>
+                                </div>
+                            </a>
+                        </li>
+                    <% }) %>
                 </ul>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
-                <p>adfasd</p>
             </section>
         </main>
         <footer>
