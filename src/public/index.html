@@ -16,7 +16,14 @@
         </nav>
         <main>
             <div id="hovering-board">
-                
+                <div id="hovering-board-inner">
+                    <ul id="hovering-board-row-1">
+                        <%- include("view/", {title:"your_title"}) %>
+                    </ul>
+                    <ul id="hovering-board-row-2">
+                        
+                    </ul>
+                </div>
             </div>
             <div id="new-article">
                 <ul id="new-article-list">
@@ -28,7 +35,9 @@
                 </ul>
             </div>
         </main>
-        <footer></footer>
+        <footer>
+            <% include view/footer.html %>
+        </footer>
     </body>
     <script src="js/basic.js"></script>
 </html>
