@@ -7,7 +7,7 @@ $(function () {
 var Skill = {
     currSkill: 0,
     schedule: undefined,
-    interval: 5 * 1000,
+    interval: 8 * 1000,
     $skillHeaders: $(".skill-header"),
     $skills: $(".skill"),
     initiate: function () {
@@ -61,7 +61,8 @@ var Skill = {
     open: function (id) {
         this.currSkill = id;
         this.$skillHeaders.eq(id).addClass("active").siblings().removeClass("active");
-        this.$skills.eq(id).addClass("active").siblings().removeClass("active");
+        this.$skills.eq(id).addClass("active").siblings().removeClass("active").find(".progress-bar").addClass("hidden");
+        this.$skills.eq(id).find(".progress-bar").removeClass("hidden");
     }
 }
 

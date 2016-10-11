@@ -1,3 +1,7 @@
+body {
+    perspective: 1px;
+}
+
 section .section-title {
     text-align: center;
     font-weight: normal;
@@ -12,9 +16,18 @@ section hr {
 }
 
 #banner-section {
-    height: 400px;
+    height: 500px;
+    transform-style: preserve-3d;
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
+}
+
+#banner-background {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translate3D(-50%, -1020px, -1px) scale(2);
 }
 
 #me-section {
@@ -88,9 +101,12 @@ section hr {
 #skill-section {
     overflow: hidden;
     height: 400px;
+    background-color: rgba(66, 66, 66, 1);
 }
 
 #skill-header-list {
+    position: absolute;
+    width: 100%;
     height: 50px;
     z-index: 128;
 }
@@ -121,32 +137,46 @@ section hr {
 }
 
 #skill-list {
-    z-index: 127;
-    margin-top: -50px;
+    z-index: 126;
+    position: absolute;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
 }
 
 .skill {
-    display: none;
+    transition: all 0.5s;
+    margin-left: 100%;
+    width: 100%;
     height: 400px;
     background-position: center;
     background-size: cover;
+    background-attachment: fixed;
     color: rgba(240, 240, 240, 1);
+    opacity: 1;
+    z-index: 127;
 }
 
 .skill.active {
-    display: block;
-    height: 400px;
+    margin-left: 0;
+}
+
+.skill + .skill {
+    margin-top: -400px;
 }
 
 .skill .inner {
+    transition: all 0.5s;
     height: inherit;
     padding: 0 50px;
     background-color: rgba(36, 24, 15, 0.7);
+    z-index: 128;
 }
 
 .skill .inner .intro {
+    position: absolute;
     float: left;
-    padding: 50px 0;
+    padding: 100px 0 50px;
     width: 350px;
 }
 
@@ -156,7 +186,7 @@ section hr {
 
 .skill .inner .skill-tree {
     float: right;
-    padding: 80px 0 0 50px;
+    padding: 130px 0 0 50px;
     width: calc(100% - 400px);
 }
 
@@ -181,9 +211,15 @@ section hr {
 }
 
 .skill .inner .skill-tree .skill-tree-item .progress-outer .progress-bar {
+    transition: all 1s;
+    transition-delay: 0.3s;
     display: block;
     height: 2px;
-    background-color: rgba(255, 149, 166, 1);
+    background-color: rgba(255, 109, 136, 1);
+}
+
+.skill .inner .skill-tree .skill-tree-item .progress-outer .progress-bar.hidden {
+    width: 0px !important;
 }
 
 #project-section {
@@ -395,14 +431,34 @@ section hr {
     }
     
     #skill-section {
+        position: relative;
         height: auto;
+    }
+    
+    #skill-header-list, #skill-list, .skill {
+        position: relative;
+    }
+    
+    #skill-list {
+        height: auto;
+    }
+    
+    .skill {
+        margin-top: -50px;
+        position: relative;
+        height: 400px;
     }
     
     .skill.active {
         height: auto;
     }
     
+    .skill + .skill {
+        margin-top: -400px;
+    }
+    
     .skill .inner .intro {
+        position: relative;
         float: none;
         width: 100%;
         padding: 80px 0 30px 0;
