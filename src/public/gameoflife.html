@@ -783,6 +783,17 @@
             content[presetX + i][presetY + j] = true;
         }
         
+        function drawLine(x1, y1, x2, y2) {
+            for (var i = 0; i < 1000; i++) {
+                x1 += Math.round((x2 - x1) / 1000 * i);
+                y1 += Math.round((y2 - y1) / 1000 * i);
+                if (inRange(x1) && inRange(y1)) {
+                    put(x1, y1);
+                }
+            }
+            render();
+        }
+        
         //初始化窗口数据及Event Handler
         function initiateWindow () {
             //初始化调参部分的
@@ -854,13 +865,29 @@
                 toggleOption();
             });
             
+            var dragging = false;
+            
             //点击游戏界面的时候，根据当前编辑工具（绘制或擦除）来决定绘制或擦除点击位置的细胞。
-            $("#game_of_life").click(function (event) {
+            $("#game_of_life").mousedown(function (event) {
                 stop();
-                var i = Math.floor(event.offsetX / size);
-                var j = Math.floor(event.offsetY / size);
-                content[i][j] = painting;
-                render();
+                dragging = true;
+            });
+            
+            //点击游戏界面的时候，根据当前编辑工具（绘制或擦除）来决定绘制或擦除点击位置的细胞。
+            $("#game_of_life").mouseup(function (event) {
+                stop();
+                dragging = false;
+            });
+            
+            //点击游戏界面的时候，根据当前编辑工具（绘制或擦除）来决定绘制或擦除点击位置的细胞。
+            $("#game_of_life").mousemove(function (event) {
+                if (dragging) {
+                    stop();
+                    var i = Math.floor(event.offsetX / size);
+                    var j = Math.floor(event.offsetY / size);
+                    content[i][j] = painting;
+                    render();
+                }
             });
             
             //按下速度滑动条触发的方法。
