@@ -12,13 +12,15 @@
     </head>
     <body>
         <nav>
-            <% include view/navbar.html %>
+            <%- include('view/navbar.html') %>
         </nav>
         <main>
             <div id="hovering-board">
                 <div id="hovering-board-inner">
                     <ul id="hovering-board-row-1">
-                        <%- include("view/", {title:"your_title"}) %>
+                        <% for (var i = 0; i < 4; i++) { %>
+                            <%- include('view/index_artwork.html', { artwork: artworks[0] }) %>
+                        <% } %>
                     </ul>
                     <ul id="hovering-board-row-2">
                         
@@ -36,7 +38,7 @@
             </div>
         </main>
         <footer>
-            <% include view/footer.html %>
+            <%- include('view/footer.html') %>
         </footer>
     </body>
     <script src="js/basic.js"></script>
