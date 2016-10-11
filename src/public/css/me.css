@@ -65,6 +65,10 @@ section hr {
     line-height: 20px;
 }
 
+#me-resume {
+    margin-top: 20px;
+}
+
 #me-media {
     margin-top: 20px;
     display: inline-flex;
@@ -100,7 +104,7 @@ section hr {
 
 #skill-section {
     overflow: hidden;
-    height: 400px;
+    height: 420px;
     background-color: rgba(66, 66, 66, 1);
 }
 
@@ -118,7 +122,7 @@ section hr {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    background-color: rgba(250, 250, 250, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
 }
 
@@ -140,7 +144,7 @@ section hr {
     z-index: 126;
     position: absolute;
     width: 100%;
-    height: 400px;
+    height: 420px;
     overflow: hidden;
 }
 
@@ -148,10 +152,9 @@ section hr {
     transition: all 0.5s;
     margin-left: 100%;
     width: 100%;
-    height: 400px;
+    height: 420px;
     background-position: center;
     background-size: cover;
-    background-attachment: fixed;
     color: rgba(240, 240, 240, 1);
     opacity: 1;
     z-index: 127;
@@ -162,11 +165,12 @@ section hr {
 }
 
 .skill + .skill {
-    margin-top: -400px;
+    margin-top: -420px;
 }
 
 .skill .inner {
     transition: all 0.5s;
+    display: flex;
     height: inherit;
     padding: 0 50px;
     background-color: rgba(36, 24, 15, 0.7);
@@ -174,8 +178,6 @@ section hr {
 }
 
 .skill .inner .intro {
-    position: absolute;
-    float: left;
     padding: 100px 0 50px;
     width: 350px;
 }
@@ -185,13 +187,12 @@ section hr {
 }
 
 .skill .inner .skill-tree {
-    float: right;
     padding: 130px 0 0 50px;
     width: calc(100% - 400px);
 }
 
 .skill .inner .skill-tree .skill-tree-item {
-    text-align: center;
+    text-align: right;
     line-height: 30px;
 }
 
@@ -435,7 +436,7 @@ section hr {
         height: auto;
     }
     
-    #skill-header-list, #skill-list, .skill {
+    #skill-list, .skill {
         position: relative;
     }
     
@@ -446,7 +447,9 @@ section hr {
     .skill {
         margin-top: -50px;
         position: relative;
+        padding-top: 50px;
         height: 400px;
+        overflow: hidden;
     }
     
     .skill.active {
@@ -454,7 +457,11 @@ section hr {
     }
     
     .skill + .skill {
-        margin-top: -400px;
+        margin-top: -450px;
+    }
+    
+    .skill .inner {
+        display: block;
     }
     
     .skill .inner .intro {
@@ -508,8 +515,20 @@ section hr {
         padding: 80px 0 30px 0;
     }
     
-    .skill .inner .skill-tree {
-        display: none;
+    .skill .inner .skill-tree .skill-tree-item {
+        text-align: left;
+        display: flex;
+    }
+    
+    .skill .inner .skill-tree .skill-tree-item .name {
+        width: 30%;
+        height: 30px;
+        overflow: hidden;
+        margin-right: 0;
+    }
+    
+    .skill .inner .skill-tree .skill-tree-item .progress-outer {
+        width: 70%;
     }
     
     #project-intro {
@@ -523,5 +542,9 @@ section hr {
     
     .project-cover {
         height: 150px;
+    }
+    
+    #message-section {
+        padding-bottom: 10px;
     }
 }
