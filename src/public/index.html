@@ -19,11 +19,28 @@
                 <div id="hovering-board-inner">
                     <ul id="hovering-board-row-1">
                         <% for (var i = 0; i < 4; i++) { %>
-                            <%- include('view/index_artwork.html', { artwork: artworks[0] }) %>
+                            <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
                         <% } %>
                     </ul>
                     <ul id="hovering-board-row-2">
-                        
+                        <li id="hovering-board-row-2-col-1">
+                            <% for (var i = 4; i < 6; i++) { %>
+                                <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                            <% } %>
+                        </li>
+                        <li id="hovering-board-row-2-col-2">
+                            
+                        </li>
+                        <li id="hovering-board-row-2-col-3">
+                            <% for (var i = 6; i < 8; i++) { %>
+                                <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                            <% } %>
+                        </li>
+                    </ul>
+                    <ul id="hovering-board-row-3">
+                        <% for (var i = 8; i < 12; i++) { %>
+                            <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                        <% } %>
                     </ul>
                 </div>
             </div>
