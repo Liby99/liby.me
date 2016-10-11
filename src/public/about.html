@@ -7,9 +7,8 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
         <link rel="stylesheet" href="css/lib/font-awesome.css" />
         <link rel="stylesheet" href="css/basic.css" />
-        <link rel="stylesheet" href="css/me.css" />
         <script src="js/lib/jquery.js"></script>
-        <script>const PAGE = "me";</script>
+        <script>const PAGE = "about";</script>
         <style>
             main {
                 text-align: center;
@@ -17,7 +16,7 @@
                 margin: 0 auto;
             }
             
-            .header {
+            #header {
                 margin: 60px 0;
                 font-size: 16px;
             }
@@ -26,6 +25,10 @@
                 position: fixed;
                 bottom: 0;
             }
+            
+            li {
+                line-height: 24px;
+            }
         </style>
     </head>
     <body>
@@ -33,35 +36,40 @@
             <% include view/navbar.html %>
         </nav>
         <main>
-            <p class="header">2016 Liby.me</p>
+            <p id="header">2016 Liby.me</p>
             <p>
-                Front-end website designed completely by Liby Lee (Ziyang Li, as his formal name), with
-                no external library used except <a target="_blank" href="https://jquery.com">JQuery</a>
-                and <a target="_blank" href="http://fontawesome.io">Font Awesome Icon Library</a>.
+                Liby.me website is designed and developed with front-end and back-end completely
+                by Liby Lee (Ziyang Li, as his formal name). This website front-end includes front-stage
+                pages: <a target="_blank" href="index.html">Liby.me</a>, and back-stage:
+                <a target="_blank" href="/admin/">Liby.me Admin Panel</a>. The back-end is built solely
+                on ExpressJs of NodeJs. Further dependencies I used to develop this site is listed below.
             </p>
             <p>
-                There's also a backstage of this website: <a target="_blank" href="/admin">Admin Panel</a>.
-                Dependency includes <a target="_blank" href="https://jquery.com">JQuery</a>,
-                <a target="_blank" href="http://fontawesome.io">Font Awesome Icon Library</a>,
-                <a target="_blank" href="http://summernote.org">Summer note</a> and
-                <a target="_blank" href="http://xdsoft.net/jqplugins/datetimepicker/">DateTimePicker</a>
-            </p>
-            <p>
-                Back-end website framework is built by Liby Lee (Ziyang Li, as his formal name) above
-                <a target="_blank" href="http://expressjs.com">Express JS</a> of
-                <a target="_blank" href="http://nodejs.org">NodeJs</a>. Database integration of
-                <a target="_blank" href="http://mysql.com">MySql</a>, server-side wrapping of
-                <a target="_blank" href="https://www.nginx.com">NGINX</a>.
-            </p>
-            <p>
-                This website is developed with a tremendous enjoyment. Here appreciate to all of my
+                This website is developed with a fully enjoyment. Here appreciate to all of my
                 friends and my family who gave words and encouraged me. Thanks you so much.
-            </p>
-            <p>
-                If you have any concern about this, please email to
+                If you have any concern, please email to
                 <a href="mailto:liby99@icloud.com">liby99@icloud.com</a> or just directly send me private
                 messages in the bottom of <a href="me.html">Me</a> page.
             </p>
+            <p>
+                我在开发这个网站的时候觉得非常的开心，在此感谢所有我的朋友和家人和他们提供的建议。如果您有任何疑问，请发送邮件到
+                <a href="mailto:liby99@icloud.com">liby99@icloud.com</a>，或者直接前往
+                <a href="me.html">这个页面</a>的底端给我发送站内私信。也十分感谢您的来访
+            </p>
+            <ul>
+                <li><a target="_blank" href="https://jquery.com">JQuery</a> - Front-end Framework</li>
+                <li><a target="_blank" href="http://fontawesome.io">Font Awesome Icon Library</a> - Icons</li>
+                <li><a target="_blank" href="http://summernote.org">Summer note</a> - Blog Html Generator</li>
+                <li><a target="_blank" href="http://xdsoft.net/jqplugins/datetimepicker/">DateTimePicker</a> - To pick date more conviniently</li>
+                <li><a target="_blank" href="http://www.embeddedjs.com">ejs</a> - HTML Rendering</li>
+                <li><a target="_blank" href="https://github.com/expressjs/body-parser">Body Parser</a> - Help parse the post data</li>
+                <li><a target="_blank" href="https://github.com/expressjs/cookie-parser">Cookie Parser</a> - Help parse the cookies</li>
+                <li><a target="_blank" href="http://expressjs.com">Express JS</a> - Back-end basic framework based on NodeJs</li>
+                <li><a target="_blank" href="http://nodejs.org">NodeJs</a> - Back-end framework</li>
+                <li><a target="_blank" href="http://mysql.com">MySql</a> - Database</li>
+                <li><a target="_blank" href="https://www.nginx.com">NGINX</a> - Server Application</li>
+                <li><a target="_blank" href="https://www.centos.org">CentOS 6.5</a> - Server System</li>
+            </ul>
         </main>
         <footer>
             <% include view/footer.html %>
