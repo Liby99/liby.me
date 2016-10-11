@@ -219,8 +219,6 @@ main {
 }
 
 footer {
-    margin-top: 10px;
-    /*border-top: 1px solid rgba(230, 230, 230, 1);*/
     font-size: 11px;
     color: rgba(120, 120, 120, 1);
     text-align: center;
