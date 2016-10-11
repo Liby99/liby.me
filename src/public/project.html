@@ -17,7 +17,7 @@
         <main>
             <ul id="project-list">
                 <% projects.forEach(function (project) { %>
-                    <li class="project" style="background-image: url(<%= project["cover"] %>)">
+                    <li class="project" style="background-image: url(<%= project["cover"] %>)" title="<%= project["name"] %>">
                         <a target="_blank" href="<%= project["url"] %>">
                             <%= project["name"] %> - <%= project["author"] %>
                         </a>
