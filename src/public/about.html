@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <link rel="stylesheet" href="css/me.css" />
+        <script src="js/lib/jquery.js"></script>
+        <script>const PAGE = "me";</script>
+        <style>
+            main {
+                text-align: center;
+                max-width: 540px;
+                margin: 0 auto;
+            }
+            
+            .header {
+                margin: 60px 0;
+                font-size: 16px;
+            }
+            
+            footer {
+                position: fixed;
+                bottom: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <% include view/navbar.html %>
+        </nav>
+        <main>
+            <p class="header">2016 Liby.me</p>
+            <p>
+                Front-end website designed completely by Liby Lee (Ziyang Li, as his formal name), with
+                no external library used except <a target="_blank" href="https://jquery.com">JQuery</a>
+                and <a target="_blank" href="http://fontawesome.io">Font Awesome Icon Library</a>.
+            </p>
+            <p>
+                There's also a backstage of this website: <a target="_blank" href="/admin">Admin Panel</a>.
+                Dependency includes <a target="_blank" href="https://jquery.com">JQuery</a>,
+                <a target="_blank" href="http://fontawesome.io">Font Awesome Icon Library</a>,
+                <a target="_blank" href="http://summernote.org">Summer note</a> and
+                <a target="_blank" href="http://xdsoft.net/jqplugins/datetimepicker/">DateTimePicker</a>
+            </p>
+            <p>
+                Back-end website framework is built by Liby Lee (Ziyang Li, as his formal name) above
+                <a target="_blank" href="http://expressjs.com">Express JS</a> of
+                <a target="_blank" href="http://nodejs.org">NodeJs</a>. Database integration of
+                <a target="_blank" href="http://mysql.com">MySql</a>, server-side wrapping of
+                <a target="_blank" href="https://www.nginx.com">NGINX</a>.
+            </p>
+            <p>
+                This website is developed with a tremendous enjoyment. Here appreciate to all of my
+                friends and my family who gave words and encouraged me. Thanks you so much.
+            </p>
+            <p>
+                If you have any concern about this, please email to
+                <a href="mailto:liby99@icloud.com">liby99@icloud.com</a> or just directly send me private
+                messages in the bottom of <a href="me.html">Me</a> page.
+            </p>
+        </main>
+        <footer>
+            <% include view/footer.html %>
+        </footer>
+    </body>
+</html>
