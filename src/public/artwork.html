@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
         <link rel="stylesheet" href="css/basic.css" />
         <link rel="stylesheet" href="css/artwork.css" />
         <script src="js/lib/jquery.js"></script>
@@ -15,25 +16,57 @@
             <% include view/navbar.html %>
         </nav>
         <main>
-            <div id="artwork-year-content">
-                <ul id="artwork-month-list">
-                    <% var month = 0; %>
-                    <% artworks.forEach(function (artwork) { %>
-                        <% if (Date.parse(artwork["date_time"]).getMonth() > month) { %>
-                            <li class="artwork-month">
-                                <div class="artwork-month-title"><%= artwork["date_time"] %></div>
-                                <ul class="artwork-list">
+            <div id="hovering-board">
+                <div id="hovering-board-inner">
+                    <a id="prev-year-button" <%= has_prev_year ? "href=artwork.html?y=" + (year - 1) : "" %> >
+                        <% if (has_prev_year) { %>
+                            <i class="fa fa-angle-left"></i> <%= year - 1 %>
+                        <% } else { %>
+                            Nothing Before
                         <% } %>
-                                    <li class="artwork">
-                                        
-                                    </li>
-                        <% if (Date.parse(artwork["date_time"]).getMonth() > month) { %>
-                                </ul>
-                            </li>
+                    </a>
+                    <a id="curr-year-button"><%= year %></a>
+                    <div id="artwork-year-content">
+                        <% var month = -1; %>
+                        <% var id = 0; %>
+                        <% artworks.forEach(function (artwork, index) { %>
+                            <% var currMonth = (new Date(Date.parse(artwork["date_time"]))).getMonth() %>
+                            <% if (currMonth > month) { %>
+                                <% id = 0; %>
+                                <% if (index != 0) { %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                <% } %>
+                                <div class="artwork-month">
+                                    <div class="artwork-month-circle"></div>
+                                    <div class="artwork-month-title"><%= artwork["short_month"] %></div>
+                                    <ul class="artwork-list">
+                            <% } %>
+                            <% if (id == 0) { %>
+                                <li class="artwork-column">
+                            <% } %>
+                                        <div class="artwork" id="<%= artwork["AUID"] %>">
+                                            <a href="work.html?a=<%= artwork["AUID"] %>" style="background-image: url(<%= artwork["thumbnail"] %>)"></a>
+                                        </div>
+                            <% if (id++ == 3) { %>
+                                <% id = 0; %>
+                                </li>
+                            <% } %>
+                            <% month = currMonth; %>
+                        <% }); %>
+                        <% if (artworks.length > 0) { %>
+                            </div>
                         <% } %>
-                        <% month = Date.parse(artwork["date_time"]).getMonth(); %>
-                    <% }) %>
-                </ul>
+                    </div>
+                    <a id="next-year-button" <%= has_next_year ? "href=artwork.html?y=" + (year + 1) : "" %> >
+                        <% if (has_next_year) { %>
+                            <%= year + 1 %> <i class="fa fa-angle-right"></i>
+                        <% } else { %>
+                            Future Awaits
+                        <% } %>
+                    </a>
+                </div>
             </div>
         </main>
         <footer>
@@ -41,4 +74,5 @@
         </footer>
     </body>
     <script src="js/basic.js"></script>
+    <script src="js/artwork.js"></script>
 </html>

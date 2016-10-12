@@ -1,3 +1,7 @@
+body {
+    background-color: rgba(24, 24, 24, 1);
+}
+
 footer {
     position: fixed;
     bottom: 0;
@@ -5,50 +9,169 @@ footer {
 
 #hovering-board {
     position: fixed;
-    height: calc(100% - 85px);
-    max-height: 720px;
+    height: 560px;
+    top: 50%;
+    margin-top: -280px;
     width: 100%;
-    overflow: hidden;
+}
+
+#hovering-board-inner {
+    display: flex;
+}
+
+#prev-year-button, #next-year-button, #curr-year-button {
+    transition: all 0.1s;
+    display: block;
+    width: 240px;
+    height: 100%;
+    line-height: 560px;
+    text-align: center;
+    font-size: 16px;
+    color: rgba(245, 245, 245, 0.7);
+    cursor: pointer;
+}
+
+#curr-year-button {
+    color: rgba(245, 245, 245, 1);
+    display: none;
+}
+
+#prev-year-button i, #next-year-button i {
+    font-size: 18px;
+}
+
+#prev-year-button:hover, #next-year-button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#prev-year-button:active, #next-year-button:active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#artwork-year-content {
+    padding: 10px 20px;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+.artwork-month {
+    margin-left: 7px;
+}
+
+.artwork-month-circle {
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 149, 166, 1);
+    margin-left: -7px;
+    margin-top: 42px;
+}
+
+.artwork-month-title {
+    line-height: 45px;
+    border-bottom: 1px solid rgba(255, 149, 166, 1);
+    color: rgba(255, 149, 166, 1);
+}
+
+.artwork-list {
+    display: flex;
+    flex-flow: row;
+    padding: 10px 20px;
+}
+
+.artwork-column {
+    padding: 5px 0 5px 5px;
+}
+
+.artwork {
+    display: flex;
+    margin-top: 5px;
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.artwork a {
+    transition: all 0.2s;
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 2px;
+}
+
+.artwork:hover a {
+    width: 95%;
+    height: 95%;
+}
+
+.artwork:active a {
+    width: 92%;
+    height: 92%;
 }
 
 #hovering-board.mobile {
     overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
-#hovering-board-inner {
-    height: 100%;
-    background-color: rgba(24, 24, 24, 1);
-}
-
-#artwork-year {
-    display: flex;
-    flex-flow: row;
-}
-
-#artwork-year-content {
-    height: 100%;
-}
-
-#artwork-month-list {
-    height: 100%;
-    display: flex;
-    flex-flow: row;
-}
-
-.artwork-month {
-    height: 100%;
-}
-
-.artwork-list {
-    height: 100%;
-    display: flex;
-    flex-flow: column-wrap;
+@media (max-width: 768px) {
+    #hovering-board {
+        height: 560px;
+        margin-top: -260px;
+    }
     
+    #hovering-board-inner {
+        height: 560px;
+    }
+    
+    #prev-year-button, #next-year-button, #curr-year-button {
+        position: fixed;
+        top: 50px;
+        height: 45px;
+        line-height: 45px;
+        left: 0;
+        width: 33.3333%;
+        text-align: center;
+        font-size: 12px;
+    }
+    
+    #prev-year-button i, #next-year-button i {
+        font-size: 14px;
+    }
+    
+    #next-year-button {
+        left: 66.6666%;
+    }
+    
+    #curr-year-button {
+        display: block;
+        left: 33.3333%;
+    }
+    
+    .artwork {
+        width: 100px;
+        height: 100px;
+    }
 }
 
-.artwork {
-    margin: 10px;
-    width: 100px;
-    height: 100px;
-    background-color: rgba(255, 255, 255, 1);
+@media (max-width: 320px) {
+    #hovering-board {
+        height: 500px;
+        margin-top: -200px;
+    }
+    
+    #hovering-board-inner {
+        height: 500px;
+    }
+    
+    .artwork {
+        width: 80px;
+        height: 80px;
+    }
 }

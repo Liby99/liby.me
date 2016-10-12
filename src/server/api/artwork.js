@@ -21,6 +21,35 @@ module.exports = {
             }
         });
     },
+    getArtworksOfYear: function (year, callback) {
+        mysql.query("SELECT `AUID`, `thumbnail`, `date_time` FROM `artwork` WHERE `status` = 1 AND YEAR(`date_time`) = ? ORDER BY `date_time` ASC", [
+            year
+        ], function (err, result) {
+            if (err) {
+                callback(undefined);
+            }
+            else {
+                callback(result);
+            }
+        });
+    },
+    hasArtworksOfYear: function (year, callback) {
+        mysql.query("SELECT COUNT(`id`) AS `count` FROM `artwork` WHERE `status` = 1 AND YEAR(`date_time`) = ?", [
+            year
+        ], function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                if (result[0]["count"] == 0) {
+                    callback(false);
+                }
+                else {
+                    callback(true);
+                }
+            }
+        });
+    },
     getAdminArtworkData: function (artwork, callback) {
         mysql.query("SELECT * FROM `artwork` WHERE ?", {
             "AUID": artwork
