@@ -1,0 +1,54 @@
+footer {
+    position: fixed;
+    bottom: 0;
+}
+
+#hovering-board {
+    position: fixed;
+    height: calc(100% - 85px);
+    max-height: 720px;
+    width: 100%;
+    overflow: hidden;
+}
+
+#hovering-board.mobile {
+    overflow-x: scroll;
+}
+
+#hovering-board-inner {
+    height: 100%;
+    background-color: rgba(24, 24, 24, 1);
+}
+
+#artwork-year {
+    display: flex;
+    flex-flow: row;
+}
+
+#artwork-year-content {
+    height: 100%;
+}
+
+#artwork-month-list {
+    height: 100%;
+    display: flex;
+    flex-flow: row;
+}
+
+.artwork-month {
+    height: 100%;
+}
+
+.artwork-list {
+    height: 100%;
+    display: flex;
+    flex-flow: column-wrap;
+    
+}
+
+.artwork {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 1);
+}

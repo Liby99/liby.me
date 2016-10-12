@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
         <link rel="stylesheet" href="css/basic.css" />
-        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/artwork.css" />
         <script src="js/lib/jquery.js"></script>
         <script>const PAGE = "artwork";</script>
     </head>
@@ -15,7 +15,26 @@
             <% include view/navbar.html %>
         </nav>
         <main>
-            
+            <div id="artwork-year-content">
+                <ul id="artwork-month-list">
+                    <% var month = 0; %>
+                    <% artworks.forEach(function (artwork) { %>
+                        <% if (Date.parse(artwork["date_time"]).getMonth() > month) { %>
+                            <li class="artwork-month">
+                                <div class="artwork-month-title"><%= artwork["date_time"] %></div>
+                                <ul class="artwork-list">
+                        <% } %>
+                                    <li class="artwork">
+                                        
+                                    </li>
+                        <% if (Date.parse(artwork["date_time"]).getMonth() > month) { %>
+                                </ul>
+                            </li>
+                        <% } %>
+                        <% month = Date.parse(artwork["date_time"]).getMonth(); %>
+                    <% }) %>
+                </ul>
+            </div>
         </main>
         <footer>
             <% include view/footer.html %>
