@@ -126,7 +126,6 @@ function HoveringBoard(holder, board, offset) {
      */
     function refreshBoardPosition(x, y) {
         board.css("margin-left", x + "px");
-        board.css("margin-top", y + offset + "px");
     }
 
     /**
