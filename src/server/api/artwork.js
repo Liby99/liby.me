@@ -67,6 +67,22 @@ module.exports = {
             }
         });
     },
+    getArtworkData: function (artwork, callback) {
+        this.getAdminArtworkData(artwork, function (result) {
+            if (result) {
+                if (result.status == 1) {
+                    delete result.status
+                    callback(result);
+                }
+                else {
+                    callback(undefined);
+                }
+            }
+            else {
+                callback(undefined);
+            }
+        })
+    },
     newArtwork: function (title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
         mysql.query("INSERT INTO `artwork` SET `AUID` = UUID(), ?", {
             "title": title,

@@ -8,6 +8,7 @@ var Artwork = {
     $holder: $("#hovering-board"),
     $board: $("#hovering-board-inner"),
     $content: $("#artwork-year-content"),
+    $artwork: $("#artwork-section"),
     hoverBoard: undefined,
     initiate: function () {
         if (isMobile()) {
@@ -39,20 +40,44 @@ var Artwork = {
     initiateHoveringBoard: function () {
         this.hoverBoard = new HoveringBoard(this.$holder, this.$board);
     },
-    toggle: function () {
-        if (this.$section.hasClass("collapsed")) {
-            this.$section.removeClass("collapsed");
-            Artwork.initiateSize(this.YEAR_BUTTON_WIDTH);
-            Artwork.hoverBoard.refresh();
-        }
-        else {
-            this.$section.addClass("collapsed");
-            Artwork.initiateSize(this.YEAR_BUTTON_WIDTH);
-            Artwork.hoverBoard.initiateOffset();
+    openArtwork: function () {
+        this.$section.addClass("collapsed");
+        this.$artwork.addClass("active");
+        this.initiateSize(this.YEAR_BUTTON_WIDTH);
+        if (this.hoverBoard) {
+            this.hoverBoard.refresh();
         }
     },
-    load: function () {
-        this.toggle();
+    openList: function () {
+        this.$section.removeClass("collapsed");
+        this.$artwork.removeClass("active");
+        this.initiateSize(this.YEAR_BUTTON_WIDTH);
+        if (this.hoverBoard) {
+            this.hoverBoard.refresh();
+        }
+    },
+    $artworkSource: $("#artwork-source"),
+    $artworkTitle: $("#artwork-title"),
+    load: function (artwork) {
+        var self = this;
+        ajax({
+            url: "/ajax/artwork?action=get_artwork_data",
+            type: "post",
+            data: { "artwork": artwork },
+            success: function (data) {
+                self.loadArtworkSource(data["sourceType"], data["source_url"], data["cover"]);
+            }
+        });
+    },
+    loadArtworkSource: function (sourceType, source, cover) {
+        var source = ""
+        if (type == 2) {
+            source = "<iframe src=\"https://player.vimeo.com/video/" + work.video + "?api=1&player_id=vimeo_player\"></iframe>";
+        }
+        else {
+            source = "<img src=\"" + cover + "\" />";
+        }
+        this.$artworkSource.html(source);
     }
 }
 

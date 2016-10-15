@@ -173,6 +173,25 @@ footer {
     -webkit-overflow-scrolling: touch;
 }
 
+#artwork-section {
+    transition: all 0.5s;
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 240px);
+}
+
+#artwork-section.active {
+    top: 200px;
+}
+
+#artwork-inner {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1024px;
+}
+
 @media (max-width: 768px) {
     #hovering-board {
         height: 560px;
