@@ -160,7 +160,7 @@ footer {
     height: 80px;
 }
 
-.artwork a {
+.artwork div {
     transition: all 0.2s;
     display: block;
     margin: 0;
@@ -172,12 +172,12 @@ footer {
     border-radius: 2px;
 }
 
-.artwork:hover a {
+.artwork:hover div {
     width: 95%;
     height: 95%;
 }
 
-.artwork:active a {
+.artwork:active div {
     width: 92%;
     height: 92%;
 }

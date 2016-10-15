@@ -90,6 +90,7 @@ var Artwork = {
                 self.openArtwork();
             }
         });
+        return false;
     },
     loadArtworkCover: function (sourceType, sourceUrl, cover) {
         if (sourceType == 2) {
