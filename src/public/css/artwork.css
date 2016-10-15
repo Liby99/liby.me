@@ -3,12 +3,27 @@ footer {
     bottom: 0;
 }
 
-#hovering-board {
+#artwork-list-section {
     position: fixed;
     height: 560px;
     top: 50%;
     margin-top: -280px;
     width: 100%;
+}
+
+#artwork-list-section.collapsed {
+    position: fixed;
+    height: 240px;
+    top: 45px;
+    margin-top: 0;
+}
+
+#hovering-board {
+    width: 100%;
+}
+
+#artwork-list-section.collapsed #hovering-board, #artwork-list-section.collapsed #hovering-board-inner {
+    height: 200px !important;
 }
 
 #hovering-board-inner {
@@ -25,6 +40,12 @@ footer {
     font-size: 16px;
     color: rgba(66, 66, 66, 1);
     cursor: pointer;
+}
+
+#artwork-list-section.collapsed #prev-year-button,
+#artwork-list-section.collapsed #next-year-button,
+#artwork-list-section.collapsed #curr-year-button {
+    line-height: 200px;
 }
 
 #curr-year-button {
@@ -48,6 +69,10 @@ footer {
     display: flex;
     flex-flow: row;
     justify-content: center;
+}
+
+#artwork-list-section.collapsed #artwork-year-content {
+    padding: 0 20px;
 }
 
 .artwork-month {
@@ -94,6 +119,9 @@ footer {
 
 .artwork-column {
     padding: 5px 0 5px 0;
+}
+
+#artwork-list-section.collapsed .artwork-column {
     display: flex;
     flex-flow: row;
 }
