@@ -85,32 +85,34 @@
                     <button type="submit">Submit</button>
                 </form>
             </section>
-            <section id="link-section">
-                <ul id="article-link">
-                    <li class="article" id="previous-article">
-                        <% if (prev_article) { %>
-                            <a href="passage.html?a=<%= prev_article["AUID"] %>" style="background-image: url(<%= prev_article["cover"] %>)">
-                                <div class="inner">
-                                    <div class="article-nav">
-                                        <span><i class="fa fa-angle-left"></i>Previous</span><%= prev_article["title"] %>
+            <% if (prev_article || next_article) { %>
+                <section id="link-section">
+                    <ul id="article-link">
+                        <li class="article" id="previous-article">
+                            <% if (prev_article) { %>
+                                <a href="passage.html?a=<%= prev_article["AUID"] %>" style="background-image: url(<%= prev_article["cover"] %>)">
+                                    <div class="inner">
+                                        <div class="article-nav">
+                                            <span><i class="fa fa-angle-left"></i>Previous</span><%= prev_article["title"] %>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        <% } %>
-                    </li>
-                    <li class="article" id="next-article">
-                        <% if (next_article) { %>
-                            <a href="passage.html?a=<%= next_article["AUID"] %>" style="background-image: url(<%= next_article["cover"] %>)">
-                                <div class="inner">
-                                    <div class="article-nav">
-                                        <%= next_article["title"] %><span>Next<i class="fa fa-angle-right"></i></span>
+                                </a>
+                            <% } %>
+                        </li>
+                        <li class="article" id="next-article">
+                            <% if (next_article) { %>
+                                <a href="passage.html?a=<%= next_article["AUID"] %>" style="background-image: url(<%= next_article["cover"] %>)">
+                                    <div class="inner">
+                                        <div class="article-nav">
+                                            <%= next_article["title"] %><span>Next<i class="fa fa-angle-right"></i></span>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        <% } %>
-                    </li>
-                </ul>
-            </section>
+                                </a>
+                            <% } %>
+                        </li>
+                    </ul>
+                </section>
+            <% } %>
         </main>
         <footer>
             <% include view/footer.html %>
