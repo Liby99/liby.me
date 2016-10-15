@@ -16,7 +16,7 @@
             <% include view/navbar.html %>
         </nav>
         <main>
-            <section id="artwork-list-section" class="">
+            <section id="artwork-list-section" class="<%= artwork ? "collapsed" : ""%>">
                 <div id="hovering-board">
                     <div id="hovering-board-inner">
                         <a id="prev-year-button" <%= has_prev_year ? "href=artwork.html?y=" + (year - 1) : "" %> >
@@ -29,38 +29,40 @@
                         <a id="curr-year-button"><%= year %></a>
                         <div id="artwork-year-content">
                             <% var month = -1; %>
-                            <% var id = 0; %>
+                            <% var row = 0; %>
                             <% artworks.forEach(function (artwork, index) { %>
                                 <% var currMonth = (new Date(Date.parse(artwork["date_time"]))).getMonth() %>
                                 <% if (currMonth > month) { %>
-                                    <% id = 0; %>
+                                    <% row = 0; %>
                                     <% if (index != 0) { %>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <% if (index - 1 % 4 != 0) { %>
+                                            </li>
+                                        <% } %>
+                                        </ul>
+                                    </div>
                                     <% } %>
                                     <div class="artwork-month">
                                         <div class="artwork-month-circle"></div>
                                         <div class="artwork-month-title"><%= artwork["short_month"] %></div>
                                         <ul class="artwork-list">
                                 <% } %>
-                                <% if (id == 0) { %>
-                                    <li class="artwork-column">
+                                <% if (row == 0) { %>
+                                            <li class="artwork-column">
                                 <% } %>
-                                            <div class="artwork" id="<%= artwork["AUID"] %>">
-                                                <a style="background-image: url(<%= artwork["thumbnail"] %>)" href="#" onclick="Artwork.load('<%= artwork["AUID"] %>')"></a>
-                                            </div>
-                                <% if (id++ == 3) { %>
-                                    <% id = 0; %>
-                                    </li>
+                                                <div class="artwork" id="<%= artwork["AUID"] %>">
+                                                    <a href="" onclick="Artwork.load('<%= artwork["AUID"] %>')" style="background-image: url(<%= artwork["thumbnail"] %>)"></a>
+                                                </div>
+                                <% if (row++ == 3) { %>
+                                    <% row = 0; %>
+                                            </li>
                                 <% } %>
                                 <% month = currMonth; %>
                             <% }); %>
                             <% if (artworks.length > 0) { %>
-                                </div>
+                                    </div>
                             <% } %>
                         </div>
-                        <a id="next-year-button" <%= has_next_year ? "href=artwork.html?y=" + (year + 1) : "" %> >
+                        <a id="next-year-button" <%= has_next_year ? "href=artwork.html?y=" + (year + 1) : "" %>>
                             <% if (has_next_year) { %>
                                 <%= year + 1 %> <i class="fa fa-angle-right"></i>
                             <% } else { %>
@@ -70,13 +72,30 @@
                     </div>
                 </div>
             </section>
-            <section id="artwork-section" class="">
+            <section id="artwork-section" class="<%= artwork ? "active" : ""%>">
                 <div id="artwork-inner">
                     <div id="artwork-source">
-                        
+                        <%- artwork ? artwork["url"] : "" %>
                     </div>
                     <div id="artwork-info">
-                        
+                        <div class="inner">
+                            <div id="artwork-title"><%= artwork ? artwork["title"] : "" %></div>
+                            <div id="artwork-subtitle"><%= artwork ? artwork["title"] : "" %></div>
+                            <div id="artwork-tags">
+                                <% if (artwork) { %>
+                                    <% artwork["tags"].split(", ").forEach(function (tag) { %>
+                                        <span class="tag"><%= tag %></span>
+                                    <% }) %>
+                                <% } %>
+                            </div>
+                            <!-- <div id="artwork-software-title">Software: </div>
+                            <ul id="artwork-softwares">
+                                
+                            </ul> -->
+                            <div id="artwork-description">
+                                <%- artwork ? artwork["description"] : "" %>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -86,5 +105,6 @@
         </footer>
     </body>
     <script src="js/basic.js"></script>
+    <script src="js/util.js"></script>
     <script src="js/artwork.js"></script>
 </html>

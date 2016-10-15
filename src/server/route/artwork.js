@@ -8,11 +8,22 @@ module.exports = function (req, res, callback) {
             });
             Artwork.hasArtworksOfYear(parseInt(req.query["y"]) - 1, function (hasPrev) {
                 Artwork.hasArtworksOfYear(parseInt(req.query["y"]) + 1, function (hasNext) {
-                    callback({
-                        "year": parseInt(req.query["y"]),
-                        "has_prev_year": hasPrev,
-                        "has_next_year": hasNext,
-                        "artworks": artworks
+                    Artwork.getArtworkData(req.query["a"], function (artwork) {
+                        
+                        var obj = {
+                            "year": parseInt(req.query["y"]),
+                            "has_prev_year": hasPrev,
+                            "has_next_year": hasNext,
+                            "artworks": artworks,
+                            "artwork": undefined
+                        }
+                        
+                        if (artwork) {
+                            obj.artwork = artwork;
+                            obj.artwork.url = getSourceUrl(artwork["source_type"], artwork["source_url"], artwork["cover"]);
+                        }
+                        
+                        callback(obj);
                     });
                 });
             });
@@ -45,5 +56,14 @@ function getShortMonth(month) {
         case 9: return "OCT";
         case 10: return "NOV";
         case 11: return "DEC";
+    }
+}
+
+function getSourceUrl(sourceType, sourceUrl, cover) {
+    if (sourceType == 2) {
+        return "<iframe src=\"" + sourceUrl.replace("https://", "https://player.").replace("com", "com/video") + "?api=1&player_id=vimeo_player\"></iframe>";
+    }
+    else {
+        return "<img src=\"" + cover + "\" />";
     }
 }

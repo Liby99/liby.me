@@ -60,6 +60,7 @@ function ajax(options) {
             else {
                 alert("Error " + data["error_code"] + ": " + data["error_log"]);
             }
+            return false;
         },
         error: function () {
             if (options["error"]) {
@@ -68,6 +69,7 @@ function ajax(options) {
             else {
                 alert("Error: Server connection failed");
             }
+            return false;
         }
     })
 }

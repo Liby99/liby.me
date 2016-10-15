@@ -9,8 +9,21 @@ var Artwork = {
     $board: $("#hovering-board-inner"),
     $content: $("#artwork-year-content"),
     $artwork: $("#artwork-section"),
+    $artworkSource: $("#artwork-source"),
+    $artworkTitle: $("#artwork-title"),
+    $artworkSubtitle: $("#artwork-subtitle"),
+    $artworkTags: $("#artwork-tags"),
+    $artworkSoftwares: $("#artwork-softwares"),
+    $artworkDescription: $("#artwork-description"),
     hoverBoard: undefined,
+    params: undefined,
     initiate: function () {
+        this.params = Utility.getQueryParams();
+        
+        if (this.params["a"]) {
+            this.initiateIframe();
+        }
+        
         if (isMobile()) {
             this.initiateSize(0);
             this.initiateMobileBoard();
@@ -40,6 +53,10 @@ var Artwork = {
     initiateHoveringBoard: function () {
         this.hoverBoard = new HoveringBoard(this.$holder, this.$board);
     },
+    initiateIframe: function () {
+        var width = this.$artworkSource.innerWidth();
+        this.$artworkSource.children("iframe").attr("width", width).attr("height", width * 9 / 16);
+    },
     openArtwork: function () {
         this.$section.addClass("collapsed");
         this.$artwork.addClass("active");
@@ -56,8 +73,6 @@ var Artwork = {
             this.hoverBoard.refresh();
         }
     },
-    $artworkSource: $("#artwork-source"),
-    $artworkTitle: $("#artwork-title"),
     load: function (artwork) {
         var self = this;
         ajax({
@@ -65,19 +80,56 @@ var Artwork = {
             type: "post",
             data: { "artwork": artwork },
             success: function (data) {
-                self.loadArtworkSource(data["sourceType"], data["source_url"], data["cover"]);
+                self.loadArtworkCover(data["source_type"], data["source_url"], data["cover"]);
+                self.loadArtworkTitle(data["title"]);
+                self.loadArtworkSubtitle(data["subtitle"]);
+                self.loadArtworkTags(data["tags"]);
+                self.loadArtworkSoftwares(data["softwares"]);
+                self.loadArtworkDescription(data["description"]);
+                self.pushState(data["AUID"]);
+                self.openArtwork();
             }
         });
     },
-    loadArtworkSource: function (sourceType, source, cover) {
-        var source = ""
-        if (type == 2) {
-            source = "<iframe src=\"https://player.vimeo.com/video/" + work.video + "?api=1&player_id=vimeo_player\"></iframe>";
+    loadArtworkCover: function (sourceType, sourceUrl, cover) {
+        if (sourceType == 2) {
+            var url = sourceUrl.replace("https://", "https://player.").replace("com", "com/video");
+            this.$artworkSource.html("<iframe src=\"" + url + "?api=1&player_id=vimeo_player\"></iframe>");
+            this.initiateIframe();
         }
         else {
-            source = "<img src=\"" + cover + "\" />";
+            this.$artworkSource.html("<img src=\"" + cover + "\" />");
         }
-        this.$artworkSource.html(source);
+    },
+    loadArtworkTitle: function (title) {
+        this.$artworkTitle.text(title);
+    },
+    loadArtworkSubtitle: function (subtitle) {
+        this.$artworkSubtitle.text(subtitle);
+    },
+    loadArtworkTags: function (tags) {
+        var html = "";
+        tags = tags.split(", ");
+        for (var i = 0; i < tags.length; i++) {
+            html += "<span class=\"tag\">" + tags[i] + "</span>";
+        }
+        this.$artworkTags.html(html);
+    },
+    loadArtworkSoftwares: function (softwares) {
+        var html = "";
+        softwares = softwares.split(", ");
+        for (var i = 0; i < softwares.length; i++) {
+            html += "<li class=\"software\">" + softwares[i] + "</li>";
+        }
+        this.$artworkSoftwares.html(html);
+    },
+    loadArtworkDescription: function (description) {
+        this.$artworkDescription.html(description);
+    },
+    pushState: function (AUID) {
+        history.pushState({
+            "AUID": AUID
+        }, "", "artwork.html?y=" + Utility.getQueryParams["y"] + "&a=" + AUID);
     }
 }
 
@@ -168,7 +220,6 @@ HoveringBoard.prototype.resizeListen = function () {
 
 HoveringBoard.prototype.refresh = function () {
     this.initiateOffset();
-    this.initiateCenter();
 }
 
 HoveringBoard.prototype.mouseListen = function () {

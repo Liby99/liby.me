@@ -14,8 +14,9 @@ footer {
 
 #artwork-list-section.collapsed {
     top: 45px;
-    height: 240px;
+    height: 160px;
     margin-top: 0;
+    background-color: rgba(48, 48, 48, 1);
 }
 
 #hovering-board {
@@ -46,6 +47,7 @@ footer {
 #artwork-list-section.collapsed #next-year-button,
 #artwork-list-section.collapsed #curr-year-button {
     line-height: 160px;
+    color: rgba(245, 245, 245, 1);
 }
 
 #curr-year-button {
@@ -60,8 +62,20 @@ footer {
     background-color: rgba(150, 150, 150, 0.05);
 }
 
+#artwork-list-section.collapsed #prev-year-button:hover,
+#artwork-list-section.collapsed #next-year-button:hover,
+#artwork-list-section.collapsed #curr-year-button:hover {
+    color: rgba(245, 245, 245, 1);
+}
+
 #prev-year-button:active, #next-year-button:active {
     background-color: rgba(150, 150, 150, 0.1);
+}
+
+#artwork-list-section.collapsed #prev-year-button:active,
+#artwork-list-section.collapsed #next-year-button:active,
+#artwork-list-section.collapsed #curr-year-button:active {
+    color: rgba(255, 255, 255, 1);
 }
 
 #artwork-year-content {
@@ -187,9 +201,76 @@ footer {
 }
 
 #artwork-inner {
-    margin: 0 auto;
+    margin: 15px auto;
+    padding: 30px 0;
     width: 100%;
     max-width: 1024px;
+    display: flex;
+}
+
+#artwork-source {
+    width: 65%;
+}
+
+#artwork-source iframe {
+    border: none;
+}
+
+#artwork-source img {
+    width: 100%;
+}
+
+#artwork-info {
+    width: 35%;
+}
+
+#artwork-info .inner {
+    padding-left: 30px;
+}
+
+#artwork-title {
+    font-size: 16px;
+}
+
+#artwork-subtitle {
+    color: rgba(150, 150, 150, 1);
+}
+
+#artwork-tags {
+    margin-top: 20px;
+}
+
+#artwork-tags .tag {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    line-height: 18px;
+    padding: 0 12px;
+    background-color: rgba(66, 66, 66, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 11px;
+    border-radius: 2px;
+}
+
+#artwork-software-title {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#artwork-softwares {
+    padding-left: 40px;
+}
+
+#artwork-softwares .software {
+    line-height: 30px;
+}
+
+#artwork-description {
+    border-top: 1px solid rgba(230, 230, 230, 1);
+    margin-top: 15px;
+    padding: 15px 0;
+    line-height: 24px;
+    color: rgba(120, 120, 120, 1);
 }
 
 @media (max-width: 768px) {
