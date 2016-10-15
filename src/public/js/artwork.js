@@ -3,38 +3,56 @@ $(function () {
 });
 
 var Artwork = {
-    holder: $("#hovering-board"),
-    board: $("#hovering-board-inner"),
-    content: $("#artwork-year-content"),
+    YEAR_BUTTON_WIDTH: 480,
+    $section: $("#artwork-list-section"),
+    $holder: $("#hovering-board"),
+    $board: $("#hovering-board-inner"),
+    $content: $("#artwork-year-content"),
+    hoverBoard: undefined,
     initiate: function () {
         if (isMobile()) {
             this.initiateSize(0);
             this.initiateMobileBoard();
         }
         else {
-            if (this.initiateSize(480)) {
+            if (this.initiateSize(this.YEAR_BUTTON_WIDTH)) {
                 this.initiateHoveringBoard();
             }
         }
     },
     initiateSize: function (yearButtonWidth) {
         var windowWidth = $(window).width();
-        if (yearButtonWidth + this.content.outerWidth() > windowWidth) {
-            this.board.width(yearButtonWidth + this.content.width());
+        if (yearButtonWidth + this.$content.outerWidth() > windowWidth) {
+            this.$board.width(yearButtonWidth + this.$content.width());
             return true;
         }
         else {
-            this.content.width(windowWidth - yearButtonWidth);
+            this.$content.width(windowWidth - yearButtonWidth);
             return false;
         }
     },
     initiateMobileBoard: function () {
-        var ox = (this.holder.innerWidth() - this.board.outerWidth()) / 2;
-        this.holder.addClass("mobile")
-        this.holder.scrollLeft(-ox);
+        var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
+        this.$holder.addClass("mobile")
+        this.$holder.scrollLeft(-ox);
     },
     initiateHoveringBoard: function () {
-        HoveringBoard(this.holder, this.board);
+        this.hoverBoard = new HoveringBoard(this.$holder, this.$board);
+    },
+    toggle: function () {
+        if (this.$section.hasClass("collapsed")) {
+            this.$section.removeClass("collapsed");
+            Artwork.initiateSize(this.YEAR_BUTTON_WIDTH);
+            Artwork.hoverBoard.refresh();
+        }
+        else {
+            this.$section.addClass("collapsed");
+            Artwork.initiateSize(this.YEAR_BUTTON_WIDTH);
+            Artwork.hoverBoard.initiateOffset();
+        }
+    },
+    load: function () {
+        this.toggle();
     }
 }
 
@@ -47,151 +65,110 @@ function isMobile() {
 }
 
 function HoveringBoard(holder, board, offset) {
-    
-    //Basic Constants
-    var IMG_AMPLITUDE = 1 / 48,
-        IMG_X_OFFSET = 557 * 0.2,
-        IMG_Y_OFFSET = 360 * 0.2;
-    var ANIMATION_DELAY = 10,
-        ANIMATION_SPEED = 1 / 25,
-        RESET_DELAY = 1000,
-        START_DELAY = 3000;
-
-    //Basic global parameters
-    var mx = 0, my = 0, //Coordinates of mouse
-        bx = 0, by = 0, //Coordinates of board
-        ox = 0, oy = 0; //Coordinates of offset between holder and board
-    var isInside = false; //Boolean of whether mouse is inside the holder
-    var interval = 0; //Integer of the interval
-    
-    /**
-     * Initialize the basic parameters and put the board to the center
-     */
-    function initialize() {
         
-        //Initialize the parameter and positions
-        initializeOffset();
-        initializeCenter();
-
-        //Set Listeners
-        resizeListen();
-        hoverListen();
-        mouseListen();
-        
-        //Start the animation
-        startAnimation();
-    }
+    this.mx = 0;
+    this.my = 0;
+    this.bx = 0;
+    this.by = 0;
+    this.ox = 0;
+    this.oy = 0;
+    this.isInside = false; //Boolean of whether mouse is inside the holder
+    this.interval = 0; //Integer of the interval
     
-    /**
-     * Initialize the offsets
-     */
-    function initializeOffset() {
-        ox = (holder.innerWidth() - board.outerWidth()) / 2;
-        oy = (holder.innerHeight() - board.outerHeight()) / 2;
-    }
+    this.holder = holder;
+    this.board = board;
+    this.offset = offset;
     
-    /**
-     * Initialize the center position by setting mouse and board position
-     */
-    function initializeCenter() {
-        setMousePosition(ox, oy);
-        setBoardPosition(ox, oy);
-    }
-    
-    /**
-     * Set the mouse position to given x y
-     * @param x
-     * @param y
-     */
-    function setMousePosition(x, y) {
-        mx = x;
-        my = y;
-    }
-    
-    /**
-     * Set the board position to given x y
-     * @param x
-     * @param y
-     */
-    function setBoardPosition(x, y) {
-        bx = x;
-        by = y;
-        refreshBoardPosition(x, y);
-    }
-
-    /**
-     * Directly change the boarder's position
-     * @param x
-     * @param y
-     */
-    function refreshBoardPosition(x, y) {
-        board.css("margin-left", x + "px");
-    }
-
-    /**
-     * The Animation Interval
-     */
-    function startAnimation() {
-        setInterval(function () {
-            bx += (mx - bx) * ANIMATION_SPEED;
-            by += (my - by) * ANIMATION_SPEED;
-            
-            //Set the position of the board
-            if (Math.pow(mx - bx, 2) + Math.pow(my - by, 2) > 1) {
-                setBoardPosition(bx, by);
-            }
-        }, ANIMATION_DELAY);
-    }
-
-    /**
-     * Refresh the basic parameter when window get resized
-     */
-    function resizeListen() {
-        $(window).resize(function () {
-            initializeOffset();
-            setMousePosition(ox, oy);
-        });
-    }
-
-    /**
-     * Refresh the mouse coordinates when mouse moves
-     */
-    function mouseListen() {
-        holder.mousemove(function (event) {
-            mx = ox * event.pageX / (holder.innerWidth() / 2);
-            my = oy * (event.pageY - holder.offset().top) / (holder.innerHeight() / 2);
-        });
-    }
-
-    /**
-     * The Hover Functions
-     */
-    function hoverListen() {
-        holder.hover(function (event) {
-
-            //When the mouse enter the holder
-            isInside = true;
-            clearInterval(interval);
-        }, function (event) {
-            
-            if (holder.attr("data-tracking") === "1") {
-                //When the mouse leave the holder, set the interval so that the
-                //board can return to the center position
-                isInside = false;
-
-                interval = setInterval(function () {
-
-                    if (isInside == false) {
-                        mx = ox;
-                        my = oy;
-                    }
-
-                    //When run through one Interval, clear the interval
-                    clearInterval(interval);
-                }, RESET_DELAY);
-            }
-        });
-    }
-
-    initialize();
+    this.initiateOffset();
+    this.initiateCenter();
+    this.resizeListen();
+    this.hoverListen();
+    this.mouseListen();
+    this.startAnimation();
 };
+
+HoveringBoard.prototype.ANIMATION_DELAY = 10;
+
+HoveringBoard.prototype.ANIMATION_SPEED = 1 / 25;
+
+HoveringBoard.prototype.RESET_DELAY = 1000;
+
+HoveringBoard.prototype.START_DELAY = 3000;
+
+HoveringBoard.prototype.initiateOffset = function () {
+    this.ox = (this.holder.innerWidth() - this.board.outerWidth()) / 2;
+    this.oy = (this.holder.innerHeight() - this.board.outerHeight()) / 2;
+}
+
+HoveringBoard.prototype.initiateCenter = function () {
+    this.setMousePosition(this.ox, this.oy);
+    this.setBoardPosition(this.ox, this.oy);
+}
+
+HoveringBoard.prototype.setMousePosition = function (x, y) {
+    this.mx = x;
+    this.my = y;
+}
+
+HoveringBoard.prototype.setBoardPosition = function (x, y) {
+    this.bx = x;
+    this.by = y;
+    this.refreshBoardPosition(x, y);
+}
+
+HoveringBoard.prototype.refreshBoardPosition = function (x, y) {
+    this.holder.css("margin-left", x + "px");
+}
+
+HoveringBoard.prototype.startAnimation = function () {
+    var self = this;
+    setInterval(function () {
+        self.bx += (self.mx - self.bx) * self.ANIMATION_SPEED;
+        self.by += (self.my - self.by) * self.ANIMATION_SPEED;
+        
+        //Set the position of the board
+        if (Math.pow(self.mx - self.bx, 2) + Math.pow(self.my - self.by, 2) > 1) {
+            self.setBoardPosition(self.bx, self.by);
+        }
+    }, self.ANIMATION_DELAY);
+}
+
+HoveringBoard.prototype.resizeListen = function () {
+    var self = this;
+    $(window).resize(function () {
+        self.initiateOffset();
+        self.setMousePosition(self.ox, self.oy);
+    });
+}
+
+HoveringBoard.prototype.refresh = function () {
+    this.initiateOffset();
+    this.initiateCenter();
+}
+
+HoveringBoard.prototype.mouseListen = function () {
+    var self = this;
+    this.holder.mousemove(function (event) {
+        self.mx = self.ox * event.pageX / (self.holder.innerWidth() / 2);
+        self.my = self.oy * (event.pageY - self.holder.offset().top) / (self.holder.innerHeight() / 2);
+    });
+}
+
+HoveringBoard.prototype.hoverListen = function () {
+    var self = this;
+    this.holder.hover(function (event) {
+        self.isInside = true;
+        clearInterval(self.interval);
+    }, function (event) {
+        if (self.holder.attr("data-tracking") === "1") {
+            self.isInside = false;
+            self.interval = setInterval(function () {
+                if (self.isInside == false) {
+                    self.mx = ox;
+                    self.my = oy;
+                }
+                clearInterval(self.interval);
+            }, self.RESET_DELAY);
+        }
+    });
+}

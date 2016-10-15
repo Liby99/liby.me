@@ -4,6 +4,7 @@ footer {
 }
 
 #artwork-list-section {
+    transition: all 0.5s;
     position: fixed;
     height: 560px;
     top: 50%;
@@ -12,9 +13,8 @@ footer {
 }
 
 #artwork-list-section.collapsed {
-    position: fixed;
-    height: 240px;
     top: 45px;
+    height: 240px;
     margin-top: 0;
 }
 
@@ -23,7 +23,7 @@ footer {
 }
 
 #artwork-list-section.collapsed #hovering-board, #artwork-list-section.collapsed #hovering-board-inner {
-    height: 200px !important;
+    height: 160px !important;
 }
 
 #hovering-board-inner {
@@ -45,7 +45,7 @@ footer {
 #artwork-list-section.collapsed #prev-year-button,
 #artwork-list-section.collapsed #next-year-button,
 #artwork-list-section.collapsed #curr-year-button {
-    line-height: 200px;
+    line-height: 160px;
 }
 
 #curr-year-button {
@@ -112,9 +112,14 @@ footer {
 }
 
 .artwork-list {
+    transition: all 0.5s;
     display: flex;
     flex-flow: row;
     padding: 10px 20px;
+}
+
+#artwork-list-section.collapsed .artwork-list {
+    padding: 0 20px;
 }
 
 .artwork-column {
@@ -127,12 +132,18 @@ footer {
 }
 
 .artwork {
+    transition: all 0.5s;
     display: flex;
     margin-top: 5px;
     width: 100px;
     height: 100px;
     justify-content: center;
     align-items: center;
+}
+
+#artwork-list-section.collapsed .artwork {
+    width: 80px;
+    height: 80px;
 }
 
 .artwork a {

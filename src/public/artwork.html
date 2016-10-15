@@ -16,7 +16,7 @@
             <% include view/navbar.html %>
         </nav>
         <main>
-            <section id="artwork-list-section" class="collapsed">
+            <section id="artwork-list-section" class="">
                 <div id="hovering-board">
                     <div id="hovering-board-inner">
                         <a id="prev-year-button" <%= has_prev_year ? "href=artwork.html?y=" + (year - 1) : "" %> >
@@ -48,7 +48,7 @@
                                     <li class="artwork-column">
                                 <% } %>
                                             <div class="artwork" id="<%= artwork["AUID"] %>">
-                                                <a href="work.html?a=<%= artwork["AUID"] %>" style="background-image: url(<%= artwork["thumbnail"] %>)"></a>
+                                                <a style="background-image: url(<%= artwork["thumbnail"] %>)" href="#" onclick="Artwork.load('<%= artwork["AUID"] %>')"></a>
                                             </div>
                                 <% if (id++ == 3) { %>
                                     <% id = 0; %>
