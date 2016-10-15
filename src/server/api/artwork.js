@@ -12,7 +12,7 @@ module.exports = {
         });
     },
     getLatestArtworks: function (callback) {
-        mysql.query("SELECT `AUID`, `title`, `subtitle`, `type`, `source_type`, `source_url`, `cover` FROM `artwork` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 12", {}, function (err, result) {
+        mysql.query("SELECT `AUID`, `title`, `subtitle`, `type`, `source_type`, `source_url`, `cover`, `date_time` FROM `artwork` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 12", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
