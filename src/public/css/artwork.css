@@ -162,7 +162,6 @@ footer {
 
 .artwork div {
     transition: all 0.2s;
-    display: block;
     margin: 0;
     margin-left: 5px;
     width: 100%;
@@ -170,6 +169,7 @@ footer {
     background-size: cover;
     background-position: center;
     border-radius: 2px;
+    cursor: pointer;
 }
 
 .artwork:hover div {
