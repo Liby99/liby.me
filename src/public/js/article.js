@@ -26,7 +26,7 @@ var Comment = {
             var email = $("#comment-form-email").val();
             var content = $("#comment-form-content").val();
             if (username != "" && email != "" && content != "") {
-                $.ajax({
+                ajax({
                     url: "/ajax/article?action=submit_comment",
                     type: "post",
                     data: {
@@ -35,18 +35,9 @@ var Comment = {
                         "email": email,
                         "content": content
                     },
-                    success: function (result) {
-                        var data = JSON.parse(result);
-                        if (data["error_code"] == 0) {
-                            alert("Successfully submitted comment");
-                            window.location.reload();
-                        }
-                        else {
-                            alert(data["error_log"]);
-                        }
-                    },
-                    error: function () {
-                        alert("Server connection error");
+                    success: function (data) {
+                        alert("Successfully submitted comment");
+                        window.location.reload();
                     }
                 });
             }

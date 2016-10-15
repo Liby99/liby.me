@@ -106,7 +106,7 @@ var Message = {
             var username = self.$inputUsername.val();
             var email = self.$inputEmail.val();
             var content = self.$inputContent.val();
-            $.ajax({
+            ajax({
                 url: "/ajax/message?action=submit_message",
                 type: "post",
                 data: {
@@ -115,17 +115,8 @@ var Message = {
                     "content": content
                 },
                 success: function (result) {
-                    var data = JSON.parse(result);
-                    if (data["error_code"] == 0) {
-                        alert("Message sent!");
-                        window.location.reload();
-                    }
-                    else {
-                        alert(data["error_log"]);
-                    }
-                },
-                error: function () {
-                    alert("Server connection error");
+                    alert("Message sent!");
+                    window.location.reload();
                 }
             });
             return false;
