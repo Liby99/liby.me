@@ -263,11 +263,20 @@ module.exports = {
         mysql.query("UPDATE `comment` SET `deleted` = 1 WHERE ?", {
             "CUID": comment
         }, function (err, result) {
-            if (err) {
-                callback(false);
+            if (result.affectedRows > 0) {
+                mysql.query("UPDATE `article` SET `comment` = `comment` - 1 WHERE `AUID` = (SELECT `AUID` FROM `comment` WHERE ?)", {
+                    "CUID": comment
+                }, function (err, result) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        callback(true);
+                    }
+                });
             }
             else {
-                callback(true);
+                callback(false);
             }
         });
     },
@@ -275,12 +284,21 @@ module.exports = {
         mysql.query("UPDATE `comment` SET `deleted` = 0 WHERE ?", {
             "CUID": comment
         }, function (err, result) {
-            if (err) {
-                callback(false);
+            if (result.affectedRows > 0) {
+                mysql.query("UPDATE `article` SET `comment` = `comment` + 1 WHERE `AUID` = (SELECT `AUID` FROM `comment` WHERE ?)", {
+                    "CUID": comment
+                }, function (err, result) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        callback(true);
+                    }
+                });
             }
             else {
-                callback(true);
+                callback(false);
             }
-        })
+        });
     }
 }
