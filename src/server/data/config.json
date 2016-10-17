@@ -14,7 +14,7 @@
         "/src",
         "/view"
     ],
-    "mysql_host": "127.0.0.1",
+    "mysql_host": "::1",
     "mysql_database": "liby.me",
     "mysql_username": "root",
     "mysql_password": "Bionicle-120"
