@@ -5,7 +5,7 @@
 var crypto = require("../module/crypto.js");
 var mysql = require("../module/mysql.js");
 var util = require("../module/util.js");
-var TimeSpan = require("../module/TimeSpan.js");
+var TimeSpan = require("../module/timespan.js");
 
 module.exports = {
     debug: true,
