@@ -37,7 +37,7 @@ var Artwork = {
     initiateSize: function (yearButtonWidth) {
         var windowWidth = $(window).width();
         if (yearButtonWidth + this.$content.outerWidth() > windowWidth) {
-            this.$board.width(yearButtonWidth + this.$content.width());
+            this.$board.width(yearButtonWidth + this.$content.outerWidth());
             return true;
         }
         else {
@@ -130,7 +130,7 @@ var Artwork = {
     pushState: function (AUID) {
         history.pushState({
             "AUID": AUID
-        }, "", "artwork.html?y=" + Utility.getQueryParams["y"] + "&a=" + AUID);
+        }, "", "artwork.html?y=" + this.params["y"] + "&a=" + AUID);
     }
 }
 
