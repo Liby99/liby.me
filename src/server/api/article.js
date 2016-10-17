@@ -43,7 +43,7 @@ module.exports = {
         });
     },
     getLatestArticles: function (callback) {
-        mysql.query("SELECT `AUID`, `cover`, `title`, `subtitle` FROM `article` ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
+        mysql.query("SELECT `AUID`, `cover`, `title`, `subtitle` FROM `article` ORDER BY `date_time` WHERE `status` = 1 DESC LIMIT 3", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
