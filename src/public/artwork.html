@@ -80,7 +80,7 @@
                     <div id="artwork-info">
                         <div class="inner">
                             <div id="artwork-title"><%= artwork ? artwork["title"] : "" %></div>
-                            <div id="artwork-subtitle"><%= artwork ? artwork["title"] : "" %></div>
+                            <div id="artwork-subtitle"><%= artwork ? artwork["subtitle"] : "" %></div>
                             <div id="artwork-tags">
                                 <% if (artwork) { %>
                                     <% artwork["tags"].split(", ").forEach(function (tag) { %>
