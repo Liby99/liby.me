@@ -42,6 +42,18 @@ module.exports = {
             }
         });
     },
+    deleteArticle: function (article, callback) {
+        mysql.query("DELETE FROM `article` WHERE ?", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
+    },
     getLatestArticles: function (callback) {
         mysql.query("SELECT `AUID`, `cover`, `title`, `subtitle` FROM `article` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
             if (err) {
