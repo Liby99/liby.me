@@ -55,10 +55,6 @@ function setAjax(server) {
     require("./server/module/ajax.js").set(server);
 }
 
-function setUpload(server) {
-    require("./server/module/upload.js").set(server);
-}
-
 (function () {
     var server = express();
     
@@ -68,7 +64,6 @@ function setUpload(server) {
     setRenderEngine(server);
     setRoute(server);
     setAjax(server);
-    setUpload(server);
     
     server.listen(config['port'], function () {
         console.log(config['name'] + ' Server Now Listening to Port ' + config['port']);
