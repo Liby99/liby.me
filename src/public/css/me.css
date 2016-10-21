@@ -491,6 +491,7 @@ section hr {
 @media (max-width: 425px) {
     #banner-section {
         height: 200px;
+        background-attachment: inherit;
     }
     
     #me-section {
