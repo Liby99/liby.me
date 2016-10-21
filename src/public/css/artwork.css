@@ -311,6 +311,23 @@ footer {
         width: 100px;
         height: 100px;
     }
+    
+    #artwork-section {
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #artwork-inner {
+        flex-flow: column
+    }
+    
+    #artwork-source, #artwork-info {
+        width: 100%;
+    }
+    
+    #artwork-info .inner {
+        padding: 10px;
+    }
 }
 
 @media (max-width: 320px) {

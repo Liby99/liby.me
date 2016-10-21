@@ -18,7 +18,7 @@
         </nav>
         <main>
             <section id="cover-section">
-                <div id="cover" style="background-image: url(<%= article["cover"] %>)">
+                <div id="cover" style="background-image: url(img/article/<%= article["AUID"] %>.jpg)">
                     <div class="cover-mask">
                         <div class="inner">
                             <div id="article-titles">
@@ -90,7 +90,7 @@
                     <ul id="article-link">
                         <li class="article" id="previous-article">
                             <% if (prev_article) { %>
-                                <a href="passage.html?a=<%= prev_article["AUID"] %>" style="background-image: url(<%= prev_article["cover"] %>)">
+                                <a href="passage.html?a=<%= prev_article["AUID"] %>" style="background-image: url(img/article/<%= prev_article["AUID"] %>.jpg)">
                                     <div class="inner">
                                         <div class="article-nav">
                                             <span><i class="fa fa-angle-left"></i>Previous</span><%= prev_article["title"] %>
@@ -101,7 +101,7 @@
                         </li>
                         <li class="article" id="next-article">
                             <% if (next_article) { %>
-                                <a href="passage.html?a=<%= next_article["AUID"] %>" style="background-image: url(<%= next_article["cover"] %>)">
+                                <a href="passage.html?a=<%= next_article["AUID"] %>" style="background-image: url(img/article/<%= next_article["AUID"] %>.jpg)">
                                     <div class="inner">
                                         <div class="article-nav">
                                             <%= next_article["title"] %><span>Next<i class="fa fa-angle-right"></i></span>

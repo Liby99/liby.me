@@ -12,7 +12,7 @@ module.exports = {
         });
     },
     getLatestArtworks: function (callback) {
-        mysql.query("SELECT `AUID`, `title`, `subtitle`, `type`, `source_type`, `source_url`, `cover`, `date_time` FROM `artwork` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 12", {}, function (err, result) {
+        mysql.query("SELECT `AUID`, `title`, `subtitle`, `type`, `source_type`, `source_url`, `date_time` FROM `artwork` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 12", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
@@ -22,7 +22,7 @@ module.exports = {
         });
     },
     getArtworksOfYear: function (year, callback) {
-        mysql.query("SELECT `AUID`, `thumbnail`, `date_time` FROM `artwork` WHERE `status` = 1 AND YEAR(`date_time`) = ? ORDER BY `date_time` ASC", [
+        mysql.query("SELECT `AUID`, `date_time` FROM `artwork` WHERE `status` = 1 AND YEAR(`date_time`) = ? ORDER BY `date_time` ASC", [
             year
         ], function (err, result) {
             if (err) {
@@ -107,7 +107,7 @@ module.exports = {
         });
     },
     updateArtwork: function (artwork, title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
-        mysql.query("UPDATE `artwork` SET `title` = ?, `subtitle` = ?, `status` = ?, `date_time` = ?, `type` = ?, `source_type` = ?, `source_url` = ?, `softwares` = ?, `tags` = ?, `cover` = ?, `thumbnail` = ?, `description` = ? WHERE `AUID` = ?", [
+        mysql.query("UPDATE `artwork` SET `title` = ?, `subtitle` = ?, `status` = ?, `date_time` = ?, `type` = ?, `source_type` = ?, `source_url` = ?, `softwares` = ?, `tags` = ?, `description` = ? WHERE `AUID` = ?", [
             title,
             subtitle,
             status,
@@ -117,8 +117,6 @@ module.exports = {
             sourceUrl,
             softwares,
             tags,
-            cover,
-            thumbnail,
             description,
             artwork
         ], function (err, result) {

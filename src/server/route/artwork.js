@@ -20,7 +20,7 @@ module.exports = function (req, res, callback) {
                         
                         if (artwork) {
                             obj.artwork = artwork;
-                            obj.artwork.url = getSourceUrl(artwork["source_type"], artwork["source_url"], artwork["cover"]);
+                            obj.artwork.url = getSourceUrl(artwork["source_type"], artwork["source_url"], artwork["AUID"]);
                         }
                         
                         callback(obj);
@@ -59,11 +59,11 @@ function getShortMonth(month) {
     }
 }
 
-function getSourceUrl(sourceType, sourceUrl, cover) {
+function getSourceUrl(sourceType, sourceUrl, AUID) {
     if (sourceType == 2) {
         return "<iframe src=\"" + sourceUrl.replace("https://", "https://player.").replace("com", "com/video") + "?api=1&player_id=vimeo_player\"></iframe>";
     }
     else {
-        return "<img src=\"" + cover + "\" />";
+        return "<img src=\"img/artwork/cover/" + AUID + ".jpg\" />";
     }
 }

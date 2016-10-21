@@ -12,7 +12,7 @@ module.exports = {
         });
     },
     getThreeProjects: function (callback) {
-        mysql.query("SELECT `name`, `author`, `url`, `cover` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
+        mysql.query("SELECT `name`, `author`, `url` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
@@ -22,7 +22,7 @@ module.exports = {
         });
     },
     getProjects: function (callback) {
-        mysql.query("SELECT `name`, `author`, `url`, `cover` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC", {}, function (err, result) {
+        mysql.query("SELECT `name`, `author`, `url` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
@@ -57,7 +57,7 @@ module.exports = {
         });
     },
     updateProject: function (project, name, author, url, status, dateTime, cover, callback) {
-        mysql.query("UPDATE `project` SET `name` = ?, `author` = ?, `url` = ?, `status` = ?, `date_time` = ?, `cover` = ? WHERE `PUID` = ?", [
+        mysql.query("UPDATE `project` SET `name` = ?, `author` = ?, `url` = ?, `status` = ?, `date_time` = ? WHERE `PUID` = ?", [
             name,
             author,
             url,
@@ -80,8 +80,7 @@ module.exports = {
             "author": author,
             "url": url,
             "status": status,
-            "date_time": dateTime,
-            "cover": cover
+            "date_time": dateTime
         }, function (err, result) {
             if (err) {
                 callback(false);
