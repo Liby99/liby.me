@@ -177,7 +177,7 @@
                 $("#project-date-time").datetimepicker({
                     "value": project["date_time"]
                 });
-                $("#project-cover").summernote("code", "<p><img src=\"" + project["cover"] + "\" /></p>");
+                $("#project-cover").summernote("code", "<p><img src=\"../img/project/" + project["PUID"] + ".jpg\" /></p>");
             },
             newProject: function () {
                 $("#project-date-time").datetimepicker();

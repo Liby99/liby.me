@@ -188,7 +188,7 @@
                 $("#article-date-time").datetimepicker({
                     "value": article["date_time"]
                 });
-                $("#article-cover").summernote('code', "<p><img src=\"" + article["cover"] + "\" /></p>");
+                $("#article-cover").summernote('code', "<p><img src=\"../img/article/" + article["AUID"] + ".jpg\" /></p>");
                 $("#article-content").summernote('code', article["content"]);
             },
             newArticle: function () {

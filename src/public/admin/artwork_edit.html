@@ -194,8 +194,8 @@
                 $("#artwork-source-url").val(artwork["source_url"]);
                 $("#artwork-softwares").val(artwork["softwares"]);
                 $("#artwork-tags").val(artwork["tags"]);
-                $("#artwork-cover").summernote('code', "<p><img src=\"" + artwork["cover"] + "\" /></p>");
-                $("#artwork-thumbnail").summernote('code', "<p><img src=\"" + artwork["thumbnail"] + "\" /></p>");
+                $("#artwork-cover").summernote('code', "<p><img src=\"../img/artwork/cover/" + artwork["AUID"] + ".jpg\" /></p>");
+                $("#artwork-thumbnail").summernote('code', "<p><img src=\"../img/artwork/thumbnail/" + artwork["AUID"] + ".jpg\" /></p>");
                 $("#artwork-description").summernote('code', artwork["description"]);
             },
             newArtwork: function () {
