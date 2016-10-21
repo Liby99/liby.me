@@ -1,4 +1,5 @@
 var mysql = require("../module/mysql.js");
+var file = require("../module/file.js");
 
 module.exports = {
     PAGE_ARTICLE_AMOUNT: 5,
@@ -150,12 +151,20 @@ module.exports = {
                 callback(false);
             }
             else {
-                console.log("Article " + title + " got updated. ");
-                callback(true);
+                self.saveCover(AUID, cover, function (err) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        console.log("Article " + title + " got updated. ");
+                        callback(true);
+                    }
+                });
             }
         });
     },
     newArticle: function (title, subtitle, tags, status, dateTime, cover, content, callback) {
+        var self = this;
         mysql.query("INSERT INTO `article` SET `AUID` = UUID(), update_date_time` = NOW(), ?", {
             "title": title,
             "subtitle": subtitle,
@@ -168,10 +177,29 @@ module.exports = {
                 callback(false);
             }
             else {
-                console.log("New article " + title + " created. ");
-                callback(true);
+                mysql.query("SELECT `AUID` FROM `article` WHERE `id` = LAST_INSERT_ID()", {}, function (err, result) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        if (result.length == 0) {
+                            callback(false);
+                        }
+                        else {
+                            self.saveCover(result[0]["AUID"], cover, function (err) {
+                                if (err) {
+                                    callback(false);
+                                }
+                                else {
+                                    console.log("New article " + title + " created. ");
+                                    callback(true);
+                                }
+                            })
+                        }
+                    }
+                });
             }
-        });
+        }, false);
     },
     changeStatus: function (article, status, callback) {
         mysql.query("UPDATE `article` SET `status` = ? WHERE `AUID` = ?", [
@@ -296,6 +324,16 @@ module.exports = {
             }
             else {
                 callback(false);
+            }
+        });
+    },
+    saveCover: function (AUID, data, callback) {
+        file.saveImage("article/" + AUID + ".jpg", data, function (err) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
             }
         });
     }
