@@ -284,6 +284,10 @@
         margin-top: 20px;
     }
     
+    #new-article-title {
+        padding: 5px 10px 0;
+    }
+    
     #new-article-list {
         padding-top: 10px;
         flex-flow: column;
