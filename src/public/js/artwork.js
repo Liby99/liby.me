@@ -99,7 +99,7 @@ var Artwork = {
             this.initiateIframe();
         }
         else {
-            this.$artworkSource.html("<img src=\"img/artwork/thumbnail/" + AUID + ".jpg\" />");
+            this.$artworkSource.html("<img src=\"img/artwork/cover/" + AUID + ".jpg\" />");
         }
     },
     loadArtworkTitle: function (title) {
