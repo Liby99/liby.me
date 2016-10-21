@@ -29,7 +29,7 @@ function saveArtworkCover(AUID, data) {
 }
 
 function saveArticleImage() {
-    mysql.query("SELECT `AUID`, `cover` FROM `artwork`", function (err, result) {
+    mysql.query("SELECT `AUID`, `cover` FROM `article`", function (err, result) {
         for (var i = 0; i < result.length; i++) {
             var decoded = decodeBase64Image(result[i]["cover"]);
             saveFile("../../public/img/article/" + result[i]["AUID"] + ".jpg", decoded);
