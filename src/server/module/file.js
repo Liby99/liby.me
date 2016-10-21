@@ -10,6 +10,9 @@ module.exports = {
                 callback(true);
             }
         });
+    },
+    removeImage: function (name) {
+        fs.unlinkSync("../../public/img/" + name);
     }
 }
 

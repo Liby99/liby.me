@@ -84,6 +84,7 @@ module.exports = {
         })
     },
     newArtwork: function (title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
+        var self = this;
         mysql.query("INSERT INTO `artwork` SET `AUID` = UUID(), ?", {
             "title": title,
             "subtitle": subtitle,
@@ -94,19 +95,44 @@ module.exports = {
             "source_url": sourceUrl,
             "softwares": softwares,
             "tags": tags,
-            "cover": cover,
-            "thumbnail": thumbnail,
             "description": description
         }, function (err, result) {
             if (err) {
                 callback(false);
             }
             else {
-                callback(true);
+                mysql.query("SELECT `AUID` FROM `artwork` WHERE `id` = LAST_INSERT_ID()", {}, function (err, result) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        if (result.length == 0) {
+                            callback(false);
+                        }
+                        else {
+                            self.saveCover(result[0]["AUID"], cover, function (err) {
+                                if (err) {
+                                    callback(false);
+                                }
+                                else {
+                                    self.saveThumbnail(result[0]["AUID"], thumbnail, function (err) {
+                                        if (err) {
+                                            self.removeCover(result[0]["AUID"]);
+                                            callback(false);
+                                        }
+                                        else {
+                                            callback(true);
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    }
+                });
             }
-        });
+        }, false);
     },
-    updateArtwork: function (artwork, title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
+    updateArtwork: function (AUID, title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
         mysql.query("UPDATE `artwork` SET `title` = ?, `subtitle` = ?, `status` = ?, `date_time` = ?, `type` = ?, `source_type` = ?, `source_url` = ?, `softwares` = ?, `tags` = ?, `description` = ? WHERE `AUID` = ?", [
             title,
             subtitle,
@@ -118,13 +144,28 @@ module.exports = {
             softwares,
             tags,
             description,
-            artwork
+            AUID
         ], function (err, result) {
             if (err) {
                 callback(false);
             }
             else {
-                callback(true);
+                self.saveCover(AUID, cover, function (err) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        self.saveThumbnail(AUID, thumbnail, function (err) {
+                            if (err) {
+                                self.removeCover(AUID);
+                                callback(false);
+                            }
+                            else {
+                                callback(true);
+                            }
+                        })
+                    }
+                })
             }
         });
     },
@@ -165,5 +206,28 @@ module.exports = {
             case 7: return "Music Sheet";
             case 8: return "Development";
         }
+    },
+    saveCover: function (AUID, data, callback) {
+        file.saveImage("artwork/cover/" + AUID + ".jpg", data, function (err) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
+    },
+    removeCover: function (AUID) {
+        file.removeImage("artwork/cover/" + AUID + ".jpg");
+    },
+    saveThumbnail: function (AUID, data, callback) {
+        file.saveImage("artwork/thumbnail/" + AUID + ".jpg", data, function (err) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
     }
 }
