@@ -1,5 +1,5 @@
 <li id="<%= artwork["AUID"] %>" class="artwork">
-    <a href="artwork.html?y=<%= (new Date(Date.parse(artwork["date_time"]))).getFullYear() %>&a=<%= artwork["AUID"] %>" style="background-image: url(<%= artwork["cover"] %>)">
+    <a href="artwork.html?y=<%= (new Date(Date.parse(artwork["date_time"]))).getFullYear() %>&a=<%= artwork["AUID"] %>" style="background-image: url(img/artwork/cover/<%= artwork["AUID"] %>.jpg)">
         <div class="inner">
             <div class="title"><%= artwork["title"] %></div>
             <div class="subtitle"><%= artwork["subtitle"] %></div>

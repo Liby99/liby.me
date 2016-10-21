@@ -30,7 +30,7 @@ module.exports = {
         });
     },
     getArticles: function (start, callback) {
-        mysql.query("SELECT `AUID`, `username`, `date_time`, `cover`, `title`, `subtitle`, `tags`, SUBSTRING(`content`, 1, 200) AS `content`, `view`, `comment` "
+        mysql.query("SELECT `AUID`, `username`, `date_time`, `title`, `subtitle`, `tags`, SUBSTRING(`content`, 1, 200) AS `content`, `view`, `comment` "
                   + "FROM `article` WHERE `status` = 1 "
                   + "ORDER BY `date_time` DESC "
                   + "LIMIT " + start + ", " + this.PAGE_ARTICLE_AMOUNT, {}, function (err, result) {
@@ -55,7 +55,7 @@ module.exports = {
         });
     },
     getLatestArticles: function (callback) {
-        mysql.query("SELECT `AUID`, `cover`, `title`, `subtitle` FROM `article` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
+        mysql.query("SELECT `AUID`, `title`, `subtitle` FROM `article` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
@@ -103,7 +103,7 @@ module.exports = {
         });
     },
     getNextArticle: function (article, callback) {
-        mysql.query("SELECT `AUID`, `title`, `cover` FROM `article` WHERE `date_time` > (SELECT `date_time` FROM `article` WHERE ?) AND `status` = 1 ORDER BY `date_time` ASC LIMIT 1", {
+        mysql.query("SELECT `AUID`, `title` FROM `article` WHERE `date_time` > (SELECT `date_time` FROM `article` WHERE ?) AND `status` = 1 ORDER BY `date_time` ASC LIMIT 1", {
             "AUID": article
         }, function (err, result) {
             if (err) {
@@ -120,7 +120,7 @@ module.exports = {
         });
     },
     getPreviousArticle: function (article, callback) {
-        mysql.query("SELECT `AUID`, `title`, `cover` FROM `article` WHERE `date_time` < (SELECT `date_time` FROM `article` WHERE ?) AND `status` = 1 ORDER BY `date_time` DESC LIMIT 1", {
+        mysql.query("SELECT `AUID`, `title` FROM `article` WHERE `date_time` < (SELECT `date_time` FROM `article` WHERE ?) AND `status` = 1 ORDER BY `date_time` DESC LIMIT 1", {
             "AUID": article
         }, function (err, result) {
             if (err) {
@@ -137,13 +137,12 @@ module.exports = {
         });
     },
     updateArticle: function (AUID, title, subtitle, tags, status, dateTime, cover, content, callback) {
-        mysql.query("UPDATE `article` SET `update_date_time` = NOW(), `title` = ?, `subtitle` = ?, `tags` = ?, `status` = ?, `date_time` = ?, `cover` = ?, `content` = ? WHERE `AUID` = ?", [
+        mysql.query("UPDATE `article` SET `update_date_time` = NOW(), `title` = ?, `subtitle` = ?, `tags` = ?, `status` = ?, `date_time` = ?, `content` = ? WHERE `AUID` = ?", [
             title,
             subtitle,
             tags,
             status,
             dateTime,
-            cover,
             content,
             AUID
         ], function (err, result) {
@@ -163,7 +162,6 @@ module.exports = {
             "tags": tags,
             "status": status,
             "date_time": dateTime,
-            "cover": cover,
             "content": content
         }, function (err, result) {
             if (err) {

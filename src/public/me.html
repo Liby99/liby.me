@@ -295,7 +295,7 @@
                     <% projects.forEach(function (project, index) { %>
                         <li class="project<%= index > 1 ? " hidable" : ""%>">
                             <a target="_blank" href="<%= project["url"] %>">
-                                <div class="project-cover" style="background-image: url(<%= project["cover"] %>)"></div>
+                                <div class="project-cover" style="background-image: url(img/article/<%= project["AUID"] %>.jpg)"></div>
                                 <div class="project-name"><%= project["name"] %></div>
                                 <div class="project-author"><%= project["author"] %></div>
                             </a>

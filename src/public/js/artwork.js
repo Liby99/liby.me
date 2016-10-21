@@ -80,7 +80,7 @@ var Artwork = {
             type: "post",
             data: { "artwork": artwork },
             success: function (data) {
-                self.loadArtworkCover(data["source_type"], data["source_url"], data["cover"]);
+                self.loadArtworkCover(data["source_type"], data["source_url"], data["AUID"]);
                 self.loadArtworkTitle(data["title"]);
                 self.loadArtworkSubtitle(data["subtitle"]);
                 self.loadArtworkTags(data["tags"]);
@@ -92,14 +92,14 @@ var Artwork = {
         });
         return false;
     },
-    loadArtworkCover: function (sourceType, sourceUrl, cover) {
+    loadArtworkCover: function (sourceType, sourceUrl, AUID) {
         if (sourceType == 2) {
             var url = sourceUrl.replace("https://", "https://player.").replace("com", "com/video");
             this.$artworkSource.html("<iframe src=\"" + url + "?api=1&player_id=vimeo_player\"></iframe>");
             this.initiateIframe();
         }
         else {
-            this.$artworkSource.html("<img src=\"" + cover + "\" />");
+            this.$artworkSource.html("<img src=\"img/artwork/thumbnail/" + AUID + ".jpg\" />");
         }
     },
     loadArtworkTitle: function (title) {

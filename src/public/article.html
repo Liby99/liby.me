@@ -18,7 +18,7 @@
         <main>
             <% if (page == 1) { %>
                 <section id="first-article-section">
-                    <a href="passage.html?a=<%= articles[0]["AUID"] %>" id="first-article" style="background-image: url(<%= articles[0]["cover"] %>)">
+                    <a href="passage.html?a=<%= articles[0]["AUID"] %>" id="first-article" style="background-image: url(img/article/<%= articles[0]["AUID"] %>.jpg)">
                         <div class="article-mask">
                             <div class="inner" id="<%= articles[0]["AUID"] %>">
                                 <div id="first-article-titles">
@@ -53,7 +53,7 @@
                     <% for (var i = (page == 1) ? 1 : 0; i < articles.length; i++) { %>
                         <li class="article" id="<%= articles[i]["AUID"] %>">
                             <a href="/passage.html?a=<%= articles[i]["AUID"] %>">
-                                <div class="article-cover" style="background-image: url(<%= articles[i]["cover"] %>)"></div>
+                                <div class="article-cover" style="background-image: url(img/article/<%= articles[i]["AUID"] %>.jpg)"></div>
                                 <div class="article-info">
                                     <div class="article-title"><%= articles[i]["title"] %></div>
                                     <div class="article-subtitle"><%= articles[i]["subtitle"] %></div>
