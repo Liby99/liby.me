@@ -1,9 +1,14 @@
 var fs = require("fs");
+var path = require("path");
+
+var regex = /^data:([A-Za-z-+\/]+);base64,(.+)$/;
 
 module.exports = {
+    imageDir: path.resolve(__dirname + "/../../public/img/"),
     saveImage: function (name, data, callback) {
-        fs.writeFile("../../public/img/" + name, decodeBase64Image(data);, function (err) {
+        fs.writeFile(this.imageDir + name, decodeBase64Image(data), function (err) {
             if (err) {
+                console.log(err);
                 callback(false);
             }
             else {
@@ -12,7 +17,7 @@ module.exports = {
         });
     },
     removeImage: function (name) {
-        fs.unlinkSync("../../public/img/" + name);
+        fs.unlinkSync(this.imageDir + name);
     }
 }
 

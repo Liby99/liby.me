@@ -58,6 +58,7 @@ module.exports = {
         });
     },
     updateProject: function (PUID, name, author, url, status, dateTime, cover, callback) {
+        var self = this;
         mysql.query("UPDATE `project` SET `name` = ?, `author` = ?, `url` = ?, `status` = ?, `date_time` = ? WHERE `PUID` = ?", [
             name,
             author,
@@ -82,6 +83,7 @@ module.exports = {
         })
     },
     newProject: function (name, author, url, status, dateTime, cover, callback) {
+        var self = this;
         mysql.query("INSERT INTO `project` SET `PUID` = UUID(), ?", {
             "name": name,
             "author": author,
@@ -104,7 +106,9 @@ module.exports = {
                         else {
                             self.saveCover(result[0]["PUID"], cover, function (err) {
                                 if (err) {
-                                    callback(false);
+                                    self.removeProject(result[0]["PUID"], function () {
+                                        callback(false);
+                                    });
                                 }
                                 else {
                                     callback(true);
@@ -115,6 +119,13 @@ module.exports = {
                 });
             }
         }, false);
+    },
+    removeProject: function (PUID, callback) {
+        mysql.query("DELETE FROM `project` WHERE ?", {
+            "PUID": PUID
+        }, function (err, result) {
+            callback();
+        });
     },
     changeStatus: function (project, status, callback) {
         mysql.query("UPDATE `project` SET `status` = ? WHERE `PUID` = ?", [
@@ -130,7 +141,7 @@ module.exports = {
         });
     },
     saveCover: function (PUID, data, callback) {
-        file.saveImage("project/" + PUID + ".jpg", data, function (err) {
+        file.saveImage("/project/" + PUID + ".jpg", data, function (err) {
             if (err) {
                 callback(false);
             }

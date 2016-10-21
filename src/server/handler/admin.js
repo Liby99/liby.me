@@ -414,7 +414,7 @@ module.exports = {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
                 if (req.body["artwork"] && req.body["artwork"] != "") {
-                    Artwork.deleteArtwork(req.body["artwork"], function (success) {
+                    Artwork.removeArtwork(req.body["artwork"], function (success) {
                         if (success) {
                             res.success({});
                         }

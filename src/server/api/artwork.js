@@ -113,13 +113,17 @@ module.exports = {
                         else {
                             self.saveCover(result[0]["AUID"], cover, function (err) {
                                 if (err) {
-                                    callback(false);
+                                    self.removeArtwork(result[0]["AUID"], function (success) {
+                                        callback(false);
+                                    });
                                 }
                                 else {
                                     self.saveThumbnail(result[0]["AUID"], thumbnail, function (err) {
                                         if (err) {
-                                            self.removeCover(result[0]["AUID"]);
-                                            callback(false);
+                                            self.removeArtwork(result[0]["AUID"], function (success) {
+                                                self.removeCover(result[0]["AUID"]);
+                                                callback(false);
+                                            });
                                         }
                                         else {
                                             callback(true);
@@ -153,13 +157,17 @@ module.exports = {
             else {
                 self.saveCover(AUID, cover, function (err) {
                     if (err) {
-                        callback(false);
+                        self.removeArtwork(result[0]["AUID"], function (success) {
+                            callback(false);
+                        });
                     }
                     else {
                         self.saveThumbnail(AUID, thumbnail, function (err) {
                             if (err) {
-                                self.removeCover(AUID);
-                                callback(false);
+                                self.removeArtwork(result[0]["AUID"], function (success) {
+                                    self.removeCover(AUID);
+                                    callback(false);
+                                });
                             }
                             else {
                                 callback(true);
@@ -183,7 +191,7 @@ module.exports = {
             }
         });
     },
-    deleteArtwork: function (artwork, callback) {
+    removeArtwork: function (artwork, callback) {
         mysql.query("DELETE FROM `artwork` WHERE ?", {
             "AUID": artwork
         }, function (err, result) {
@@ -209,7 +217,7 @@ module.exports = {
         }
     },
     saveCover: function (AUID, data, callback) {
-        file.saveImage("artwork/cover/" + AUID + ".jpg", data, function (err) {
+        file.saveImage("/artwork/cover/" + AUID + ".jpg", data, function (err) {
             if (err) {
                 callback(false);
             }
@@ -219,10 +227,10 @@ module.exports = {
         });
     },
     removeCover: function (AUID) {
-        file.removeImage("artwork/cover/" + AUID + ".jpg");
+        file.removeImage("/artwork/cover/" + AUID + ".jpg");
     },
     saveThumbnail: function (AUID, data, callback) {
-        file.saveImage("artwork/thumbnail/" + AUID + ".jpg", data, function (err) {
+        file.saveImage("/artwork/thumbnail/" + AUID + ".jpg", data, function (err) {
             if (err) {
                 callback(false);
             }

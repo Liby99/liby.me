@@ -19,5 +19,5 @@ module.exports = function (req, res, callback) {
         else {
             res.redirect("error.html?err=500");
         }
-    })
+    });
 }

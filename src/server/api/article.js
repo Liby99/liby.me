@@ -328,7 +328,7 @@ module.exports = {
         });
     },
     saveCover: function (AUID, data, callback) {
-        file.saveImage("article/" + AUID + ".jpg", data, function (err) {
+        file.saveImage("/article/" + AUID + ".jpg", data, function (err) {
             if (err) {
                 callback(false);
             }

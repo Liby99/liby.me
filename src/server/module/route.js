@@ -85,7 +85,7 @@ function process(req, res) {
         }
         else {
             
-            console.log("Router Error: ");
+            console.log("Router " + file + " Error: ");
             console.log(err);
             res.redirect("/error.html?err=500");
         }
