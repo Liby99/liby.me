@@ -12,7 +12,7 @@ module.exports = {
         });
     },
     getThreeProjects: function (callback) {
-        mysql.query("SELECT `name`, `author`, `url` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
+        mysql.query("SELECT `PUID`, `name`, `author`, `url` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 3", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
@@ -22,7 +22,7 @@ module.exports = {
         });
     },
     getProjects: function (callback) {
-        mysql.query("SELECT `name`, `author`, `url` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC", {}, function (err, result) {
+        mysql.query("SELECT `PUID`, `name`, `author`, `url` FROM `project` WHERE `status` = 1 ORDER BY `date_time` DESC", {}, function (err, result) {
             if (err) {
                 callback(undefined);
             }
