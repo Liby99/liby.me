@@ -8,7 +8,7 @@ var Index = {
         var board = $("#hovering-board-inner");
         if (isMobile()) {
             var ox = (holder.innerWidth() - board.outerWidth()) / 2;
-            var oy = (holder.innerHeight() - board.outerHeight()) / 2;
+            var oy = (holder.innerHeight() - board.outerHeight()) / 2 - 45;
             holder.addClass("mobile");
             holder.scrollTop(-oy);
             holder.scrollLeft(-ox);
