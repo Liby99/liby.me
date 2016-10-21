@@ -1,4 +1,5 @@
 var mysql = require("../module/mysql.js");
+var file = require("../module/file.js");
 
 module.exports = {
     getAdminProjects: function (callback) {
@@ -56,21 +57,27 @@ module.exports = {
             }
         });
     },
-    updateProject: function (project, name, author, url, status, dateTime, cover, callback) {
+    updateProject: function (PUID, name, author, url, status, dateTime, cover, callback) {
         mysql.query("UPDATE `project` SET `name` = ?, `author` = ?, `url` = ?, `status` = ?, `date_time` = ? WHERE `PUID` = ?", [
             name,
             author,
             url,
             status,
             dateTime,
-            cover,
-            project
+            PUID
         ], function (err, result) {
             if (err) {
                 callback(false);
             }
             else {
-                callback(true);
+                self.saveCover(PUID, cover, function (err) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        callback(true);
+                    }
+                });
             }
         })
     },
@@ -86,9 +93,28 @@ module.exports = {
                 callback(false);
             }
             else {
-                callback(true);
+                mysql.query("SELECT `PUID` FROM `project` WHERE `id` = LAST_INSERT_ID()", {}, function (err, result) {
+                    if (err) {
+                        callback(false);
+                    }
+                    else {
+                        if (result.length == 0) {
+                            callback(false);
+                        }
+                        else {
+                            self.saveCover(result[0]["PUID"], cover, function (err) {
+                                if (err) {
+                                    callback(false);
+                                }
+                                else {
+                                    callback(true);
+                                }
+                            });
+                        }
+                    }
+                });
             }
-        });
+        }, false);
     },
     changeStatus: function (project, status, callback) {
         mysql.query("UPDATE `project` SET `status` = ? WHERE `PUID` = ?", [
@@ -101,6 +127,16 @@ module.exports = {
             else {
                 callback(true);
             }
-        })
+        });
+    },
+    saveCover: function (PUID, data, callback) {
+        file.saveImage("project/" + PUID + ".jpg", data, function (err) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
     }
 }

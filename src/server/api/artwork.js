@@ -1,4 +1,5 @@
 var mysql = require("../module/mysql.js");
+var file = require("../module/file.js");
 
 module.exports = {
     getAdminArtworks: function (callback) {
@@ -123,9 +124,9 @@ module.exports = {
                                         else {
                                             callback(true);
                                         }
-                                    })
+                                    });
                                 }
-                            })
+                            });
                         }
                     }
                 });
@@ -163,9 +164,9 @@ module.exports = {
                             else {
                                 callback(true);
                             }
-                        })
+                        });
                     }
-                })
+                });
             }
         });
     },
