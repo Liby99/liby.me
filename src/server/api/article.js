@@ -336,5 +336,8 @@ module.exports = {
                 callback(true);
             }
         });
+    },
+    removeCover: function (AUID) {
+        file.removeImage("/article/" + AUID + ".jpg");
     }
 }

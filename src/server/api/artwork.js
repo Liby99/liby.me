@@ -199,6 +199,8 @@ module.exports = {
                 callback(false);
             }
             else {
+                this.removeCover(artwork);
+                this.removeThumbnail(artwork);
                 callback(true);
             }
         });
@@ -228,6 +230,9 @@ module.exports = {
     },
     removeCover: function (AUID) {
         file.removeImage("/artwork/cover/" + AUID + ".jpg");
+    },
+    removeThumbnail: function (AUID) {
+        file.removeImage("/artwork/thumbnail/" + AUID + ".jpg");
     },
     saveThumbnail: function (AUID, data, callback) {
         file.saveImage("/artwork/thumbnail/" + AUID + ".jpg", data, function (err) {
