@@ -158,17 +158,12 @@ module.exports = {
             else {
                 self.saveCover(AUID, cover, function (err) {
                     if (err) {
-                        self.removeArtwork(AUID, function (success) {
-                            callback(false);
-                        });
+                        callback(false);
                     }
                     else {
                         self.saveThumbnail(AUID, thumbnail, function (err) {
                             if (err) {
-                                self.removeArtwork(AUID, function (success) {
-                                    self.removeCover(AUID);
-                                    callback(false);
-                                });
+                                callback(false);
                             }
                             else {
                                 callback(true);
@@ -229,12 +224,6 @@ module.exports = {
             }
         });
     },
-    removeCover: function (AUID) {
-        file.removeImage("/artwork/cover/" + AUID + ".jpg");
-    },
-    removeThumbnail: function (AUID) {
-        file.removeImage("/artwork/thumbnail/" + AUID + ".jpg");
-    },
     saveThumbnail: function (AUID, data, callback) {
         file.saveImage("/artwork/thumbnail/" + AUID + ".jpg", data, function (err) {
             if (err) {
@@ -244,5 +233,11 @@ module.exports = {
                 callback(true);
             }
         });
+    },
+    removeCover: function (AUID) {
+        file.removeImage("/artwork/cover/" + AUID + ".jpg");
+    },
+    removeThumbnail: function (AUID) {
+        file.removeImage("/artwork/thumbnail/" + AUID + ".jpg");
     }
 }
