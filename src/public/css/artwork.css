@@ -3,6 +3,10 @@ footer {
     bottom: 0;
 }
 
+.mobile footer {
+    position: relative;
+}
+
 #artwork-list-section {
     transition: all 0.5s;
     position: fixed;
@@ -94,7 +98,7 @@ footer {
 }
 
 .artwork-month-circle {
-    position: absolute;
+    float: left;
     transition: all 0.2s;
     height: 6px;
     width: 6px;
@@ -194,9 +198,11 @@ footer {
     left: 0;
     width: 100%;
     height: calc(100% - 240px);
+    opacity: 0;
 }
 
 #artwork-section.active {
+    opacity: 1;
     top: 200px;
 }
 
@@ -274,18 +280,34 @@ footer {
 }
 
 @media (max-width: 768px) {
-    #hovering-board {
-        height: 560px;
-        margin-top: 45px;
+    #artwork-list-section {
+        top: 0 !important;
+        margin-top: 0 !important;
+        position: relative;
+        height: auto;
+        overflow: hidden;
     }
     
-    #hovering-board-inner {
-        height: 560px;
+    #artwork-list-section.collapsed, #artwork-list-section.collapsed #hovering-board, #artwork-list-section.collapsed #hovering-board-inner {
+        height: 205px !important;
+    }
+    
+    #artwork-list-section.collapsed #hovering-board {
+    }
+    
+    #artwork-year-content {
+        padding-top: 45px !important;
+    }
+    
+    
+    #artwork-list-section.collapsed #prev-year-button,
+    #artwork-list-section.collapsed #next-year-button,
+    #artwork-list-section.collapsed #curr-year-button {
+        line-height: 45px;
     }
     
     #prev-year-button, #next-year-button, #curr-year-button {
-        position: fixed;
-        top: 50px;
+        position: absolute;
         height: 45px;
         line-height: 45px;
         left: 0;
@@ -313,12 +335,16 @@ footer {
     }
     
     #artwork-section {
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
+        top: 0 !important;
+        padding: 10px;
+        width: auto;
+        position: relative;
     }
     
     #artwork-inner {
-        flex-flow: column
+        margin: 0;
+        padding: 20px 0 0 0;
+        flex-flow: column;
     }
     
     #artwork-source, #artwork-info {
@@ -326,19 +352,20 @@ footer {
     }
     
     #artwork-info .inner {
-        padding: 10px;
+        padding: 10px 10px 0;
+    }
+    
+    
+    #artwork-section {
+        height: 0;
+    }
+
+    #artwork-section.active {
+        height: auto;
     }
 }
 
 @media (max-width: 320px) {
-    #hovering-board {
-        height: 500px;
-    }
-    
-    #hovering-board-inner {
-        height: 500px;
-    }
-    
     .artwork {
         width: 80px;
         height: 80px;

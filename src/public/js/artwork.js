@@ -25,6 +25,7 @@ var Artwork = {
         }
         
         if (isMobile()) {
+            $("body").addClass("mobile");
             this.initiateSize(0);
             this.initiateMobileBoard();
         }
@@ -60,7 +61,12 @@ var Artwork = {
     openArtwork: function () {
         this.$section.addClass("collapsed");
         this.$artwork.addClass("active");
-        this.initiateSize(this.YEAR_BUTTON_WIDTH);
+        if (isMobile()) {
+            this.initiateSize(0);
+        }
+        else {
+            this.initiateSize(this.YEAR_BUTTON_WIDTH);
+        }
         if (this.hoverBoard) {
             this.hoverBoard.refresh();
         }
@@ -68,7 +74,12 @@ var Artwork = {
     openList: function () {
         this.$section.removeClass("collapsed");
         this.$artwork.removeClass("active");
-        this.initiateSize(this.YEAR_BUTTON_WIDTH);
+        if (isMobile()) {
+            this.initiateSize(0);
+        }
+        else {
+            this.initiateSize(this.YEAR_BUTTON_WIDTH);
+        }
         if (this.hoverBoard) {
             this.hoverBoard.refresh();
         }
