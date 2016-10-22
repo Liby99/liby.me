@@ -157,19 +157,9 @@ module.exports = {
             }
             else {
                 self.saveCover(AUID, cover, function (err) {
-                    if (err) {
-                        callback(false);
-                    }
-                    else {
-                        self.saveThumbnail(AUID, thumbnail, function (err) {
-                            if (err) {
-                                callback(false);
-                            }
-                            else {
-                                callback(true);
-                            }
-                        });
-                    }
+                    self.saveThumbnail(AUID, thumbnail, function (err) {
+                        callback(true);
+                    });
                 });
             }
         });

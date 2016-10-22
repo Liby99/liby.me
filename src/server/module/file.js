@@ -6,15 +6,21 @@ var regex = /^data:([A-Za-z-+\/]+);base64,(.+)$/;
 module.exports = {
     imageDir: path.resolve(__dirname + "/../../public/img/"),
     saveImage: function (name, data, callback) {
-        fs.writeFile(this.imageDir + name, decodeBase64Image(data), function (err) {
-            if (err) {
-                console.log(err);
-                callback(false);
-            }
-            else {
-                callback(true);
-            }
-        });
+        try {
+            fs.writeFile(this.imageDir + name, decodeBase64Image(data), function (err) {
+                if (err) {
+                    console.log(err);
+                    callback(false);
+                }
+                else {
+                    callback(true);
+                }
+            });
+        }
+        catch (ex) {
+            console.log(ex);
+            callback(false);
+        }
     },
     removeImage: function (name) {
         fs.unlinkSync(this.imageDir + name);
