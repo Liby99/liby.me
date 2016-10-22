@@ -165,7 +165,7 @@ module.exports = {
     },
     newArticle: function (title, subtitle, tags, status, dateTime, cover, content, callback) {
         var self = this;
-        mysql.query("INSERT INTO `article` SET `AUID` = UUID(), update_date_time` = NOW(), ?", {
+        mysql.query("INSERT INTO `article` SET `AUID` = UUID(), `update_date_time` = NOW(), ?", {
             "title": title,
             "subtitle": subtitle,
             "tags": tags,
