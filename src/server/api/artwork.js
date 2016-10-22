@@ -138,6 +138,7 @@ module.exports = {
         }, false);
     },
     updateArtwork: function (AUID, title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
+        var self = this;
         mysql.query("UPDATE `artwork` SET `title` = ?, `subtitle` = ?, `status` = ?, `date_time` = ?, `type` = ?, `source_type` = ?, `source_url` = ?, `softwares` = ?, `tags` = ?, `description` = ? WHERE `AUID` = ?", [
             title,
             subtitle,
