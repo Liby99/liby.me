@@ -276,7 +276,6 @@ footer {
 @media (max-width: 768px) {
     #hovering-board {
         height: 560px;
-        margin-top: -260px;
     }
     
     #hovering-board-inner {
@@ -333,7 +332,6 @@ footer {
 @media (max-width: 320px) {
     #hovering-board {
         height: 500px;
-        margin-top: -200px;
     }
     
     #hovering-board-inner {
