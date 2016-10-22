@@ -26,12 +26,7 @@ var Artwork = {
         
         if (isMobile()) {
             $("body").addClass("mobile");
-            if ($(window).width() <= 540) {
-                this.initiateSize(0);
-            }
-            else {
-                this.initiateSize(this.YEAR_BUTTON_WIDTH);
-            }
+            this.initiateSize(0);
             this.initiateMobileBoard();
         }
         else {
