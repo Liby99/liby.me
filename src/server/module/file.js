@@ -7,7 +7,8 @@ module.exports = {
     imageDir: path.resolve(__dirname + "/../../public/img/"),
     saveImage: function (name, data, callback) {
         try {
-            fs.writeFile(this.imageDir + name, decodeBase64Image(data), function (err) {
+            var decoded = decodeBase64Image(data);
+            fs.writeFile(this.imageDir + name, decoded, function (err) {
                 if (err) {
                     console.log(err);
                     callback(false);
