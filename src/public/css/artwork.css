@@ -276,6 +276,7 @@ footer {
 @media (max-width: 768px) {
     #hovering-board {
         height: 560px;
+        margin-top: 45px;
     }
     
     #hovering-board-inner {
