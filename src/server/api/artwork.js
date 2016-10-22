@@ -158,14 +158,14 @@ module.exports = {
             else {
                 self.saveCover(AUID, cover, function (err) {
                     if (err) {
-                        self.removeArtwork(result[0]["AUID"], function (success) {
+                        self.removeArtwork(AUID, function (success) {
                             callback(false);
                         });
                     }
                     else {
                         self.saveThumbnail(AUID, thumbnail, function (err) {
                             if (err) {
-                                self.removeArtwork(result[0]["AUID"], function (success) {
+                                self.removeArtwork(AUID, function (success) {
                                     self.removeCover(AUID);
                                     callback(false);
                                 });
