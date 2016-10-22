@@ -3,10 +3,6 @@ footer {
     bottom: 0;
 }
 
-.mobile footer {
-    position: relative;
-}
-
 #artwork-list-section {
     transition: all 0.5s;
     position: fixed;
@@ -369,5 +365,9 @@ footer {
     .artwork {
         width: 80px;
         height: 80px;
+    }
+    
+    footer {
+        position: relative;
     }
 }
