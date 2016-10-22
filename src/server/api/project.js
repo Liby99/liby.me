@@ -72,12 +72,7 @@ module.exports = {
             }
             else {
                 self.saveCover(PUID, cover, function (err) {
-                    if (err) {
-                        callback(false);
-                    }
-                    else {
-                        callback(true);
-                    }
+                    callback(true);
                 });
             }
         })

@@ -138,6 +138,7 @@ module.exports = {
         });
     },
     updateArticle: function (AUID, title, subtitle, tags, status, dateTime, cover, content, callback) {
+        var self = this;
         mysql.query("UPDATE `article` SET `update_date_time` = NOW(), `title` = ?, `subtitle` = ?, `tags` = ?, `status` = ?, `date_time` = ?, `content` = ? WHERE `AUID` = ?", [
             title,
             subtitle,
@@ -152,13 +153,8 @@ module.exports = {
             }
             else {
                 self.saveCover(AUID, cover, function (err) {
-                    if (err) {
-                        callback(false);
-                    }
-                    else {
-                        console.log("Article " + title + " got updated. ");
-                        callback(true);
-                    }
+                    console.log("Article " + title + " got updated. ");
+                    callback(true);
                 });
             }
         });
