@@ -69,10 +69,14 @@ module.exports = {
         });
     },
     getArtworkData: function (artwork, callback) {
+        var self = this;
         this.getAdminArtworkData(artwork, function (result) {
             if (result) {
                 if (result.status == 1) {
-                    delete result.status
+                    delete result.status;
+                    var dt = (new Date(Date.parse(result["date_time"])));
+                    result["type"] = self.getTypeString(result["type"]);
+                    result["date_time"] = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
                     callback(result);
                 }
                 else {

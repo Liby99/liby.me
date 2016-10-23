@@ -1,17 +1,15 @@
 footer {
-    background-color: rgba(255, 255, 255, 1);
     position: fixed;
     bottom: 0;
 }
 
 #artwork-list-section {
     transition: all 0.5s;
-    position: absolute;
+    position: fixed;
     height: 560px;
     top: 50%;
     margin-top: -280px;
     width: 100%;
-    z-index: 32;
 }
 
 #artwork-list-section.collapsed {
@@ -27,34 +25,33 @@ footer {
 
 #artwork-list-section.collapsed #hovering-board, #artwork-list-section.collapsed #hovering-board-inner {
     height: 160px !important;
-    overflow-y: hidden;
 }
 
 #hovering-board-inner {
     display: flex;
 }
 
-#prev-year-button, #next-year-button {
+#prev-year-button, #next-year-button, #curr-year-button {
     transition: all 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     width: 240px;
     height: 100%;
+    line-height: 560px;
     text-align: center;
     font-size: 16px;
     color: rgba(66, 66, 66, 1);
     cursor: pointer;
 }
 
-#prev-year-button span, #next-year-button span {
-    display: block;
-}
-
 #artwork-list-section.collapsed #prev-year-button,
-#artwork-list-section.collapsed #next-year-button {
+#artwork-list-section.collapsed #next-year-button,
+#artwork-list-section.collapsed #curr-year-button {
     line-height: 160px;
     color: rgba(245, 245, 245, 1);
+}
+
+#curr-year-button {
+    display: none;
 }
 
 #prev-year-button i, #next-year-button i {
@@ -66,7 +63,8 @@ footer {
 }
 
 #artwork-list-section.collapsed #prev-year-button:hover,
-#artwork-list-section.collapsed #next-year-button:hover {
+#artwork-list-section.collapsed #next-year-button:hover,
+#artwork-list-section.collapsed #curr-year-button:hover {
     color: rgba(245, 245, 245, 1);
 }
 
@@ -75,7 +73,8 @@ footer {
 }
 
 #artwork-list-section.collapsed #prev-year-button:active,
-#artwork-list-section.collapsed #next-year-button:active {
+#artwork-list-section.collapsed #next-year-button:active,
+#artwork-list-section.collapsed #curr-year-button:active {
     color: rgba(255, 255, 255, 1);
 }
 
@@ -190,30 +189,32 @@ footer {
 
 #artwork-section {
     transition: all 0.5s;
+    position: fixed;
+    top: 100%;
     left: 0;
     width: 100%;
+    height: calc(100% - 240px);
     opacity: 0;
-    z-index: 0;
 }
 
 #artwork-section.active {
     opacity: 1;
-    margin-top: 160px;
+    top: 200px;
 }
 
 #artwork-inner {
     margin: 15px auto;
     padding: 30px 0;
     width: 100%;
-    max-width: 768px;
+    max-width: 1024px;
+    display: flex;
 }
 
 #artwork-source {
-    padding: 10px;
+    width: 65%;
 }
 
 #artwork-source iframe {
-    width: 100%;
     border: none;
 }
 
@@ -222,83 +223,56 @@ footer {
 }
 
 #artwork-info {
-    padding: 10px;
-    display: flex;
-    flex-flow: row;
+    width: 35%;
 }
 
 #artwork-info .inner {
-    width: 60%;
-}
-
-#artwork-info .side {
-    padding-right: 20px;
-    width: calc(40% - 20px);
-}
-
-#artwork-head {
-    display: flex;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(230, 230, 230, 1);
-}
-
-#artwork-thumbnail {
-    width: 60px;
-    height: 60px;
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-#artwork-thumbnail img {
-    border: none;
-    width: 100%;
-    height: 100%;
-}
-
-#artwork-titles {
-    padding: 8px 0 8px 20px;
+    padding-left: 30px;
 }
 
 #artwork-title {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #artwork-subtitle {
-    color: rgba(80, 80, 80, 1);
-}
-
-#artwork-information {
-    padding: 20px 0;
-    line-height: 25px;
-    border-bottom: 1px solid rgba(230, 230, 230, 1);
-}
-
-#artwork-information .label {
     color: rgba(150, 150, 150, 1);
-    margin-right: 10px;
 }
 
-.artwork-info-section {
-    margin-bottom: 10px;
+#artwork-tags {
+    margin-top: 20px;
 }
 
-#artwork-software-list, #artwork-tag-list {
-    padding-left: 20px;
-    line-height: 16px;
-}
-
-#artwork-software-list .software, #artwork-tag-list .tag {
+#artwork-tags .tag {
     display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    line-height: 18px;
+    padding: 0 12px;
+    background-color: rgba(66, 66, 66, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 11px;
+    border-radius: 2px;
 }
 
-#artwork-software-list .software:not(:last-child):after, #artwork-tag-list .tag:not(:last-child):after {
-    content: ", ";
+#artwork-software-title {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#artwork-softwares {
+    padding-left: 40px;
+}
+
+#artwork-softwares .software {
+    line-height: 30px;
 }
 
 #artwork-description {
+    border-top: 1px solid rgba(230, 230, 230, 1);
+    margin-top: 15px;
+    padding: 15px 0;
     line-height: 24px;
     color: rgba(120, 120, 120, 1);
-    margin-bottom: 40px;
 }
 
 @media (max-width: 768px) {
@@ -310,16 +284,45 @@ footer {
         overflow: hidden;
     }
     
-    body.mobile #hovering-board {
-        overflow-x: scroll;
+    #artwork-list-section.collapsed, #artwork-list-section.collapsed #hovering-board, #artwork-list-section.collapsed #hovering-board-inner {
+        height: 205px !important;
+    }
+    
+    #artwork-list-section.collapsed #hovering-board {
+    }
+    
+    #artwork-year-content {
+        padding-top: 45px !important;
+    }
+    
+    
+    #artwork-list-section.collapsed #prev-year-button,
+    #artwork-list-section.collapsed #next-year-button,
+    #artwork-list-section.collapsed #curr-year-button {
+        line-height: 45px;
+    }
+    
+    #prev-year-button, #next-year-button, #curr-year-button {
+        position: absolute;
+        height: 45px;
+        line-height: 45px;
+        left: 0;
+        width: 33.3333%;
+        text-align: center;
+        font-size: 12px;
     }
     
     #prev-year-button i, #next-year-button i {
         font-size: 14px;
     }
     
-    body.mobile #prev-year-button, body.mobile #next-year-button {
-        width: 120px;
+    #next-year-button {
+        left: 66.6666%;
+    }
+    
+    #curr-year-button {
+        display: block;
+        left: 33.3333%;
     }
     
     .artwork {
@@ -328,37 +331,26 @@ footer {
     }
     
     #artwork-section {
-        margin: 0;
-        padding: 0;
+        top: 0 !important;
+        padding: 10px;
         width: auto;
         position: relative;
     }
     
-    #artwork-section.active {
-        margin-top: 0;
-    }
-    
     #artwork-inner {
         margin: 0;
-        padding: 0;
+        padding: 20px 0 0 0;
         flex-flow: column;
     }
     
-    #artwork-info {
-        flex-flow: column;
-    }
-    
-    #artwork-info .side {
+    #artwork-source, #artwork-info {
         width: 100%;
     }
     
     #artwork-info .inner {
-        width: 100%;
+        padding: 10px 10px 0;
     }
     
-    #artwork-info .inner {
-        padding: 10px 0;
-    }
     
     #artwork-section {
         height: 0;
@@ -373,5 +365,9 @@ footer {
     .artwork {
         width: 80px;
         height: 80px;
+    }
+    
+    footer {
+        position: relative;
     }
 }

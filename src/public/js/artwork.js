@@ -8,12 +8,16 @@ var Artwork = {
     $holder: $("#hovering-board"),
     $board: $("#hovering-board-inner"),
     $content: $("#artwork-year-content"),
+    $buttons: $("#prev-year-button, #next-year-button"),
     $artwork: $("#artwork-section"),
     $artworkSource: $("#artwork-source"),
+    $artworkThumbnail: $("#artwork-thumbnail"),
     $artworkTitle: $("#artwork-title"),
     $artworkSubtitle: $("#artwork-subtitle"),
-    $artworkTags: $("#artwork-tags"),
-    $artworkSoftwares: $("#artwork-softwares"),
+    $artworkDateTime: $("#artwork-date-time"),
+    $artworkType: $("#artwork-type"),
+    $artworkSoftwares: $("#artwork-software-list"),
+    $artworkTags: $("#artwork-tag-list"),
     $artworkDescription: $("#artwork-description"),
     hoverBoard: undefined,
     params: undefined,
@@ -25,14 +29,15 @@ var Artwork = {
         }
         
         if (isMobile()) {
-            $("body").addClass("mobile");
-            this.initiateSize(0);
-            this.initiateMobileBoard();
+            this.YEAR_BUTTON_WIDTH = 240;
         }
-        else {
-            if (this.initiateSize(this.YEAR_BUTTON_WIDTH)) {
-                this.initiateHoveringBoard();
-            }
+        
+        if (this.initiateSize(this.YEAR_BUTTON_WIDTH) && !isMobile()) {
+            this.initiateHoveringBoard();
+        }
+        
+        if (isMobile()) {
+            this.initiateMobileBoard();
         }
     },
     initiateSize: function (yearButtonWidth) {
@@ -48,25 +53,21 @@ var Artwork = {
     },
     initiateMobileBoard: function () {
         var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
-        this.$holder.addClass("mobile")
+        this.$holder.addClass("mobile");
+        this.$buttons.css("line-height", $(window).height() - 80 + "px");
         this.$holder.scrollLeft(-ox);
     },
     initiateHoveringBoard: function () {
         this.hoverBoard = new HoveringBoard(this.$holder, this.$board);
     },
     initiateIframe: function () {
-        var width = this.$artworkSource.innerWidth();
-        this.$artworkSource.children("iframe").attr("width", width).attr("height", width * 9 / 16);
+        var iframe = this.$artworkSource.children("iframe");
+        iframe.attr("height", iframe.innerWidth() * 9 / 16);
     },
     openArtwork: function () {
         this.$section.addClass("collapsed");
         this.$artwork.addClass("active");
-        if (isMobile()) {
-            this.initiateSize(0);
-        }
-        else {
-            this.initiateSize(this.YEAR_BUTTON_WIDTH);
-        }
+        this.initiateSize(this.YEAR_BUTTON_WIDTH);
         if (this.hoverBoard) {
             this.hoverBoard.refresh();
         }
@@ -74,12 +75,7 @@ var Artwork = {
     openList: function () {
         this.$section.removeClass("collapsed");
         this.$artwork.removeClass("active");
-        if (isMobile()) {
-            this.initiateSize(0);
-        }
-        else {
-            this.initiateSize(this.YEAR_BUTTON_WIDTH);
-        }
+        this.initiateSize(this.YEAR_BUTTON_WIDTH);
         if (this.hoverBoard) {
             this.hoverBoard.refresh();
         }
@@ -92,10 +88,13 @@ var Artwork = {
             data: { "artwork": artwork },
             success: function (data) {
                 self.loadArtworkCover(data["source_type"], data["source_url"], data["AUID"]);
+                self.loadArtworkThumbnail(data["AUID"]);
                 self.loadArtworkTitle(data["title"]);
                 self.loadArtworkSubtitle(data["subtitle"]);
-                self.loadArtworkTags(data["tags"]);
+                self.loadArtworkDateTime(data["date_time"]);
+                self.loadArtworkType(data["type"]);
                 self.loadArtworkSoftwares(data["softwares"]);
+                self.loadArtworkTags(data["tags"]);
                 self.loadArtworkDescription(data["description"]);
                 self.pushState(data["AUID"]);
                 self.openArtwork();
@@ -113,11 +112,20 @@ var Artwork = {
             this.$artworkSource.html("<img src=\"img/artwork/cover/" + AUID + ".jpg\" />");
         }
     },
+    loadArtworkThumbnail: function (AUID) {
+        this.$artworkThumbnail.children("img").attr("src", "img/artwork/thumbnail/" + AUID + ".jpg");
+    },
     loadArtworkTitle: function (title) {
         this.$artworkTitle.text(title);
     },
     loadArtworkSubtitle: function (subtitle) {
         this.$artworkSubtitle.text(subtitle);
+    },
+    loadArtworkDateTime: function (dateTime) {
+        this.$artworkDateTime.text(dateTime);
+    },
+    loadArtworkType: function (type) {
+        this.$artworkType.text(type);
     },
     loadArtworkTags: function (tags) {
         var html = "";
