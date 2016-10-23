@@ -24,19 +24,19 @@ var Artwork = {
     initiate: function () {
         this.params = Utility.getQueryParams();
         
-        if (this.params["a"]) {
-            this.initiateIframe();
-        }
+        this.initiateIframe();
         
-        if (isMobile()) {
+        var mobile = isMobile();
+        
+        if (mobile) {
             this.YEAR_BUTTON_WIDTH = 240;
         }
         
-        if (this.initiateSize(this.YEAR_BUTTON_WIDTH) && !isMobile()) {
+        if (this.initiateSize(this.YEAR_BUTTON_WIDTH) && !mobile) {
             this.initiateHoveringBoard();
         }
         
-        if (isMobile()) {
+        if (mobile) {
             this.initiateMobileBoard();
         }
     },
@@ -87,7 +87,6 @@ var Artwork = {
             type: "post",
             data: { "artwork": artwork },
             success: function (data) {
-                self.loadArtworkCover(data["source_type"], data["source_url"], data["AUID"]);
                 self.loadArtworkThumbnail(data["AUID"]);
                 self.loadArtworkTitle(data["title"]);
                 self.loadArtworkSubtitle(data["subtitle"]);
@@ -98,6 +97,7 @@ var Artwork = {
                 self.loadArtworkDescription(data["description"]);
                 self.pushState(data["AUID"]);
                 self.openArtwork();
+                self.loadArtworkCover(data["source_type"], data["source_url"], data["AUID"]);
             }
         });
         return false;
