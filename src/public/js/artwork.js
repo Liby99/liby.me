@@ -50,6 +50,7 @@ var Artwork = {
             this.$content.width(windowWidth - yearButtonWidth);
             return false;
         }
+        this.$buttons.height(this.$content.innerHeight());
     },
     initiateMobileBoard: function () {
         var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
