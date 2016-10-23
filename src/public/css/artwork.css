@@ -308,6 +308,10 @@ main {
     margin-bottom: 40px;
 }
 
+#artwork-description img {
+    max-width: 100%;
+}
+
 @media (max-width: 768px) {
     #artwork-list-section {
         top: 0 !important;
