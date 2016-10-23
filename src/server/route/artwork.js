@@ -19,7 +19,7 @@ module.exports = function (req, res, callback) {
                         }
                         
                         if (artwork) {
-                            Artwork.view(req.body["artwork"], function () {});
+                            Artwork.view(req.query["a"], function () {});
                             obj.artwork = artwork;
                             obj.artwork.url = getSourceUrl(artwork["source_type"], artwork["source_url"], artwork["AUID"]);
                         }
