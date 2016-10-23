@@ -28,9 +28,7 @@ var Artwork = {
         
         var mobile = isMobile();
         
-        if (mobile) {
-            this.YEAR_BUTTON_WIDTH = 240;
-        }
+        this.YEAR_BUTTON_WIDTH = mobile ? 240 : 480;
         
         if (this.initiateSize(this.YEAR_BUTTON_WIDTH) && !mobile) {
             this.initiateHoveringBoard();
@@ -53,8 +51,8 @@ var Artwork = {
         }
     },
     initiateMobileBoard: function () {
+        $("body").addClass("mobile");
         var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
-        this.$holder.addClass("mobile");
         this.$board.scrollLeft(-ox);
     },
     initiateHoveringBoard: function () {
@@ -161,7 +159,7 @@ function isMobile() {
     return check;
 }
 
-function HoveringBoard(holder, board, offset) {
+function HoveringBoard(holder, board) {
         
     this.mx = 0;
     this.my = 0;
@@ -174,7 +172,6 @@ function HoveringBoard(holder, board, offset) {
     
     this.holder = holder;
     this.board = board;
-    this.offset = offset;
     
     this.initiateOffset();
     this.initiateCenter();
@@ -214,7 +211,7 @@ HoveringBoard.prototype.setBoardPosition = function (x, y) {
 }
 
 HoveringBoard.prototype.refreshBoardPosition = function (x, y) {
-    this.holder.css("margin-left", x + "px");
+    this.board.css("margin-left", x + "px");
 }
 
 HoveringBoard.prototype.startAnimation = function () {
