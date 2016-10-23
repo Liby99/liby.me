@@ -88,6 +88,18 @@ module.exports = {
             }
         })
     },
+    view: function (artwork, callback) {
+        mysql.query("UPDATE `artwork` SET `view` = `view` + 1 WHERE ?", {
+            "AUID": artwork
+        }, function (err, result) {
+            if (err) {
+                callback(false);
+            }
+            else {
+                callback(true);
+            }
+        });
+    },
     newArtwork: function (title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
         var self = this;
         mysql.query("INSERT INTO `artwork` SET `AUID` = UUID(), ?", {

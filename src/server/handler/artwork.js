@@ -5,7 +5,9 @@ module.exports = {
         if (req.body["artwork"]) {
             Artwork.getArtworkData(req.body["artwork"], function (artwork) {
                 if (artwork) {
-                    res.success(artwork);
+                    Artwork.view(req.body["artwork"], function (callback) {
+                        res.success(artwork);
+                    });
                 }
                 else {
                     res.error(2, "No such artwork");
