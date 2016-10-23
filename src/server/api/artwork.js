@@ -182,6 +182,7 @@ module.exports = {
         });
     },
     removeArtwork: function (artwork, callback) {
+        var self = this;
         mysql.query("DELETE FROM `artwork` WHERE ?", {
             "AUID": artwork
         }, function (err, result) {
@@ -189,8 +190,8 @@ module.exports = {
                 callback(false);
             }
             else {
-                this.removeCover(artwork);
-                this.removeThumbnail(artwork);
+                self.removeCover(artwork);
+                self.removeThumbnail(artwork);
                 callback(true);
             }
         });
