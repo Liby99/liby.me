@@ -8,6 +8,7 @@ footer {
 main {
     width: 100%;
     overflow: hidden;
+    margin-bottom: 35px;
 }
 
 #artwork-list-section {
