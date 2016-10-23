@@ -319,6 +319,7 @@ main {
     
     body.mobile #hovering-board {
         overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
     }
     
     #prev-year-button i, #next-year-button i {

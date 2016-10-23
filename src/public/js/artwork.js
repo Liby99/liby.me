@@ -52,6 +52,7 @@ var Artwork = {
     },
     initiateMobileBoard: function () {
         $("body").addClass("mobile");
+        this.$holder.addClass("mobile");
         var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
         this.$board.scrollLeft(-ox);
     },
