@@ -55,7 +55,7 @@ var Artwork = {
     initiateMobileBoard: function () {
         var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
         this.$holder.addClass("mobile");
-        this.$holder.scrollLeft(-ox);
+        this.$board.scrollLeft(-ox);
     },
     initiateHoveringBoard: function () {
         this.hoverBoard = new HoveringBoard(this.$holder, this.$board);
