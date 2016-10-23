@@ -206,6 +206,7 @@ module.exports = {
             case 6: return "Instrument";
             case 7: return "Music Sheet";
             case 8: return "Development";
+            case 9: return "Illustration";
         }
     },
     saveCover: function (AUID, data, callback) {
