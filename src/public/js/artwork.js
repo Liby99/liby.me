@@ -54,7 +54,6 @@ var Artwork = {
     initiateMobileBoard: function () {
         var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
         this.$holder.addClass("mobile");
-        this.$buttons.css("line-height", $(window).height() - 80 + "px");
         this.$holder.scrollLeft(-ox);
     },
     initiateHoveringBoard: function () {
