@@ -23,6 +23,10 @@ section hr {
     background-attachment: fixed;
 }
 
+body.mobile #banner-section {
+    background-attachment: scroll;
+}
+
 #banner-background {
     width: 100%;
     position: absolute;
