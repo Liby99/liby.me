@@ -4,6 +4,11 @@ footer {
     bottom: 0;
 }
 
+main {
+    width: 100%;
+    overflow: hidden;
+}
+
 #artwork-list-section {
     transition: all 0.5s;
     position: absolute;
@@ -332,9 +337,11 @@ footer {
         padding: 0;
         width: auto;
         position: relative;
+        display: none;
     }
     
     #artwork-section.active {
+        display: block;
         margin-top: 0;
     }
     
