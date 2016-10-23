@@ -54,6 +54,7 @@ var Artwork = {
         $("body").addClass("mobile");
         this.$holder.addClass("mobile");
         var ox = (this.$holder.innerWidth() - this.$board.outerWidth()) / 2;
+        alert(ox);
         this.$board.scrollLeft(ox);
     },
     initiateHoveringBoard: function () {
