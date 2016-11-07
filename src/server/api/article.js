@@ -57,7 +57,7 @@ module.exports = {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    result[i]["content"] = result[i]["content"].replace(/\<[^\>]*\>/g, "").substring(0, 100);
+                    result[i]["content"] = result[i]["content"].replace(/\<[^\>]*\>/g, "").substring(0, 150);
                 }
                 callback(result);
             }
