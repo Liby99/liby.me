@@ -56,6 +56,9 @@ module.exports = {
                 callback(undefined);
             }
             else {
+                for (var i = 0; i < result.length; i++) {
+                    result[i]["content"] = result[i]["content"].replace(/\<[^\>]*\>/g, "").substring(0, 100);
+                }
                 callback(result);
             }
         });
