@@ -3,6 +3,23 @@ var file = require("../module/file.js");
 
 module.exports = {
     PAGE_ARTICLE_AMOUNT: 5,
+    adminExists: function (article, callback) {
+        mysql.query("SELECT `id` FROM `article` WHERE ?", {
+            "AUID": article
+        }, function (err, result) {
+            if (err) {
+                callback(undefined);
+            }
+            else {
+                if (result.length > 0) {
+                    callback(true);
+                }
+                else {
+                    callback(false);
+                }
+            }
+        });
+    },
     exists: function (article, callback) {
         mysql.query("SELECT `id` FROM `article` WHERE `status` = 1 AND ?", {
             "AUID": article

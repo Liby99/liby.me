@@ -87,7 +87,7 @@ module.exports = {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
                 if (req.body["article"] && req.body["article"] != "") {
-                    Article.exists(req.body["article"], function (exists) {
+                    Article.adminExists(req.body["article"], function (exists) {
                         if (exists) {
                             switch (req.body["status"]) {
                                 case "0": case "1": case "2":
@@ -127,7 +127,7 @@ module.exports = {
                     });
                 }
                 else {
-                    Article.exists(req.body["AUID"], function (exists) {
+                    Article.adminExists(req.body["AUID"], function (exists) {
                         if (exists != undefined) {
                             if (exists) {
                                 Article.updateArticle(req.body["AUID"], req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["date_time"], req.body["cover"], req.body["content"], function (success) {
@@ -158,7 +158,7 @@ module.exports = {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
                 if (req.body["article"] && req.body["article"] != "") {
-                    Article.exists(req.body["article"], function (exists) {
+                    Article.adminExists(req.body["article"], function (exists) {
                         if (exists) {
                             Article.getAdminComments(req.body["article"], function (comments) {
                                 if (comments != undefined) {
