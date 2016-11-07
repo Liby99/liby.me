@@ -48,7 +48,7 @@ module.exports = {
         });
     },
     getArticles: function (start, callback) {
-        mysql.query("SELECT `AUID`, `username`, `date_time`, `title`, `subtitle`, `tags`, SUBSTRING(REPLACE(`content`, '/\<[^\>]*\>/g', ''), 1, 200) AS `content`, `view`, `comment` "
+        mysql.query("SELECT `AUID`, `username`, `date_time`, `title`, `subtitle`, `tags`, `content`, `view`, `comment` "
                   + "FROM `article` WHERE `status` = 1 "
                   + "ORDER BY `date_time` DESC "
                   + "LIMIT " + start + ", " + this.PAGE_ARTICLE_AMOUNT, {}, function (err, result) {
