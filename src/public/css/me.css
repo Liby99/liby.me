@@ -334,8 +334,8 @@ body.mobile #banner-section {
 
 #friend-list a {
     display: block;
-    width: 16.6666%;
-    min-width: 160px;
+    width: 14.285714%;
+    min-width: 150px;
     height: 80px;
     line-height: 80px;
     text-align: center;
