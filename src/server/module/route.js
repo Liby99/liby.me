@@ -24,11 +24,10 @@ function process(req, res) {
         log("Router " + file + " handling request");
         route(req, res, function (data) {
             
+            data["file"] = file;
+            
             //Render the data and the file
-            res.render(file, {
-                "file": file,
-                "data": data
-            }, function (err, html) {
+            res.render(file, data, function (err, html) {
                 
                 //Check if there's error when rendering
                 if (err) {
