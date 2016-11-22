@@ -19,6 +19,7 @@ main {
     margin-top: -280px;
     width: 100%;
     z-index: 32;
+    overflow: hidden;
 }
 
 #artwork-list-section.collapsed {
