@@ -24,6 +24,11 @@ function process(req, res) {
         log("Router " + file + " handling request");
         route(req, res, function (data) {
             
+            //Set data to empty object
+            if (!data) {
+                data = {};
+            }
+            
             data["file"] = file;
             
             //Render the data and the file
