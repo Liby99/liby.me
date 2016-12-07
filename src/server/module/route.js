@@ -49,10 +49,18 @@ function process(req, res) {
         //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
             
+            //First load the option
+            var options = {
+                root: path.resolve(__dirname + "/../../public/"),
+                dotfiles: 'deny',
+                headers: {
+                    'x-timestamp': Date.now(),
+                    'x-sent': true
+                }
+            }
+ 
             //Try send the static file
-            res.render(file + ".html", {
-                "file": file
-            }, function (err) {
+            res.sendFile(file + ".html", options, function (err) {
                 
                 //Check if there's an error rendering the static file.s
                 if (err) {
