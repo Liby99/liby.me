@@ -1,0 +1,60 @@
+.node {
+	opacity: 1;
+}
+
+.circle {
+	opacity: 0.6;
+	fill: rgba(230, 230, 230, 0.8);
+}
+
+.disabled .circle {
+	fill: rgba(230, 230, 230, 0.8);
+}
+
+.cannot-take .circle {
+	fill: rgba(255, 132, 125, 0.8);
+}
+
+.can-take .circle {
+	fill: rgba(73, 255, 193, 0.8);
+}
+
+.taken .circle {
+	fill: rgba(127, 188, 255, 0.8);
+}
+
+.next .circle {
+	opacity: 0.3;
+}
+
+.circle:hover {
+	opacity: 1;
+}
+
+text {
+	font: 13px sans-serif;
+	text-anchor: middle;
+	fill: rgba(255, 255, 255, 0.8);
+}
+
+.cursor {
+	fill: none;
+	stroke: brown;
+	pointer-events: none;
+}
+
+.link {
+	stroke: rgba(230, 230, 230, 0.9);
+}
+
+.blink .circle {
+	animation: blink;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+	0% { fill: rgba(255, 250, 55, 0.3) }
+	50% { fill: rgba(255, 250, 55, 0.8) }
+	100% { fill: rgba(255, 250, 55, 0.3) }
+}
