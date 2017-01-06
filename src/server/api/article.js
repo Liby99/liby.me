@@ -1,3 +1,4 @@
+var jquery = require("jquery");
 var mysql = require("../module/mysql.js");
 var file = require("../module/file.js");
 
@@ -57,7 +58,9 @@ module.exports = {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    result[i]["content"] = result[i]["content"].replace(/\<[^\>]*\>/g, "").substring(0, 150);
+                    var $ = jquery("<body>" + result[i]["content"] + "</body>");
+                    var text = $("body").text();
+                    result[i]["content"] = text.substring(0, 150);
                 }
                 callback(result);
             }
