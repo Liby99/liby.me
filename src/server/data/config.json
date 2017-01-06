@@ -12,7 +12,8 @@
         "/img",
         "/js",
         "/src",
-        "/view"
+        "/view",
+        "/project"
     ],
     "mysql_host": "::1",
     "mysql_database": "liby.me",
