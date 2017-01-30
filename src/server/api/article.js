@@ -1,4 +1,4 @@
-var $ = require("jquery");
+var jquery = require("jquery");
 var mysql = require("../module/mysql.js");
 var file = require("../module/file.js");
 
@@ -57,14 +57,20 @@ module.exports = {
                 callback(undefined);
             }
             else {
-                for (var i = 0; i < result.length; i++) {
-                    console.log(result[i]["content"]);
-                    var body = $("<body>" + result[i]["content"] + "</body>");
-                    var text = body.text();
-                    console.log(text);
-                    result[i]["content"] = text.substring(0, 150);
+                function process(i) {
+                    if (i >= result.length) {
+                        callback(result);
+                    }
+                    jsdom.env(result[i]["content"], function (err, window) {
+                        if (err) {
+                            console.log("Process brief error for article " + result[i]["AUID"]);
+                        }
+                        var $ = jquery(window);
+                        result[i]["content"] = $("body").text().substring(0, 150);
+                        process(i + 1);
+                    });
                 }
-                callback(result);
+                process(0);
             }
         });
     },
