@@ -1,4 +1,4 @@
-var jquery = require("jquery");
+var $ = require("jquery");
 var mysql = require("../module/mysql.js");
 var file = require("../module/file.js");
 
@@ -58,8 +58,10 @@ module.exports = {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    var $ = jquery("<body>" + result[i]["content"] + "</body>");
-                    var text = $("body").text();
+                    console.log(result[i]["content"]);
+                    var body = $("<body>" + result[i]["content"] + "</body>");
+                    var text = body.text();
+                    console.log(text);
                     result[i]["content"] = text.substring(0, 150);
                 }
                 callback(result);
