@@ -61,6 +61,7 @@ module.exports = {
                 function process(i) {
                     if (i >= result.length) {
                         callback(result);
+                        return;
                     }
                     jsdom.env(result[i]["content"], function (err, window) {
                         if (err) {
