@@ -1,3 +1,4 @@
+var jsdom = require("jsdom");
 var jquery = require("jquery");
 var mysql = require("../module/mysql.js");
 var file = require("../module/file.js");
