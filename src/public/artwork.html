@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <link rel="stylesheet" href="css/artwork.css" />
+        <script src="js/lib/jquery.js"></script>
+        <script>const PAGE = "artwork";</script>
+    </head>
+    <body>
+        <nav>
+            <% include view/navbar.html %>
+        </nav>
+        <main>
+            <section id="artwork-list-section" class="<%= artwork ? "collapsed" : ""%>">
+                <div id="hovering-board">
+                    <div id="hovering-board-inner">
+                        <a id="prev-year-button" <%= has_prev_year ? "href=artwork.html?y=" + (year - 1) : "" %> >
+                            <span>
+                                <% if (has_prev_year) { %>
+                                    <i class="fa fa-angle-left"></i> <%= year - 1 %>
+                                <% } else { %>
+                                    Nothing Before
+                                <% } %>
+                            </span>
+                        </a>
+                        <div id="artwork-year-content">
+                            <% var month = -1; %>
+                            <% var row = 0; %>
+                            <% artworks.forEach(function (artwork, index) { %>
+                                <% var currMonth = (new Date(Date.parse(artwork["date_time"]))).getMonth() %>
+                                <% if (currMonth > month) { %>
+                                    <% row = 0; %>
+                                    <% if (index != 0) { %>
+                                        <% if (index - 1 % 4 != 0) { %>
+                                            </li>
+                                        <% } %>
+                                        </ul>
+                                    </div>
+                                    <% } %>
+                                    <div class="artwork-month">
+                                        <div class="artwork-month-circle"></div>
+                                        <div class="artwork-month-title"><%= artwork["short_month"] %></div>
+                                        <ul class="artwork-list">
+                                <% } %>
+                                <% if (row == 0) { %>
+                                            <li class="artwork-column">
+                                <% } %>
+                                                <div class="artwork" id="<%= artwork["AUID"] %>">
+                                                    <div onclick="Artwork.load('<%= artwork["AUID"] %>')" style="background-image: url(img/artwork/thumbnail/<%= artwork["AUID"] %>.jpg)"></div>
+                                                </div>
+                                <% if (row++ == 3) { %>
+                                    <% row = 0; %>
+                                            </li>
+                                <% } %>
+                                <% month = currMonth; %>
+                            <% }); %>
+                            <% if (artworks.length > 0) { %>
+                                    </div>
+                            <% } %>
+                        </div>
+                        <a id="next-year-button" <%= has_next_year ? "href=artwork.html?y=" + (year + 1) : "" %>>
+                            <span>
+                                <% if (has_next_year) { %>
+                                    <%= year + 1 %> <i class="fa fa-angle-right"></i>
+                                <% } else { %>
+                                    Future Awaits
+                                <% } %>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <section id="artwork-section" class="<%= artwork ? "active" : ""%>">
+                <div id="artwork-inner">
+                    <div id="artwork-source">
+                        <%- artwork ? artwork["url"] : "" %>
+                    </div>
+                    <div id="artwork-info">
+                        <div class="side">
+                            <div id="artwork-head">
+                                <div id="artwork-thumbnail">
+                                    <img src="<%= artwork ? "img\/artwork\/thumbnail\/" + artwork["AUID"] + ".jpg" : "" %>" />
+                                </div>
+                                <div id="artwork-titles">
+                                    <div id="artwork-title"><%= artwork ? artwork["title"] : "" %></div>
+                                    <div id="artwork-subtitle"><%= artwork ? artwork["subtitle"] : "" %></div>
+                                </div>
+                            </div>
+                            <div id="artwork-information">
+                                <div class="artwork-info-section">
+                                    <span class="label">Post: </span>
+                                    <span id="artwork-date-time"><%= artwork ? artwork["date_time"] : "" %></span>
+                                </div>
+                                <div class="artwork-info-section">
+                                    <span class="label">Type: </span>
+                                    <span id="artwork-type"><%= artwork ? artwork["type"] : "" %></span>
+                                </div>
+                                <div class="artwork-info-section">
+                                    <div class="artwork-info-title">
+                                        <span class="label">Softwares: </span>
+                                    </div>
+                                    <ul id="artwork-software-list">
+                                        <% if (artwork) artwork["softwares"].split(", ").forEach(function (str) { %>
+                                            <li class="software"><%= str %></li>
+                                        <% }) %>
+                                    </ul>
+                                </div>
+                                <div class="artwork-info-section">
+                                    <div class="artwork-info-title">
+                                        <span class="label">Tags: </span>
+                                    </div>
+                                    <ul id="artwork-tag-list">
+                                        <% if (artwork) artwork["tags"].split(", ").forEach(function (str) { %>
+                                            <li class="tag"><%= str %></li>
+                                        <% }) %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inner">
+                            <div id="artwork-description">
+                                <%- artwork ? artwork["description"] : "" %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <% include view/footer.html %>
+        </footer>
+    </body>
+    <script src="js/basic.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/artwork.js"></script>
+</html>

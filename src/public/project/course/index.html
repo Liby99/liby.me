@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Plan Your CSE Trip</title>
+		<link rel="stylesheet" href="css/basic.css" />
+		<link rel="stylesheet" href="css/graph.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="d3-extended.js"></script>
+        <script src="data.js"></script>
+        <script src="course.js"></script>
+        <script src="helper.js"></script>
+	</head>
+	<body>
+		<search>
+			<div id="search-inner">
+				<div id="search-main">
+					<i class="fa fa-search"></i>
+				</div>
+				<div id="search-input">
+					<input id="search" type="text" placeholder="Search For..." />
+				</div>
+			</div>
+		</search>
+		<nav>
+			<tabs>
+				<tab class="active" data-index="0">Course Info</tab>
+				<tab data-index="1">4 Year Plan</tab>
+			</tabs>
+			<navbody>
+				<tabbody data-index="0" id="course-info">
+					<div id="course-head">
+						<span id="course-number">TRY!</span>
+						<span id="course-unit">0 Unit</span>
+					</div>
+					<div id="course-title">START YOUR PLAN</div>
+					<div id="course-description">
+						Start by trying to click on any of the courses in the right side. You can then see the next courses you can take, and also the course info.
+					</div>
+					<div id="course-prerequisites-outer" class="list">
+						<div class="list-title">Prerequisites: </div>
+						<ul id="course-prerequisites">
+							<li>Your Fingers</li>
+						</ul>
+					</div>
+					<div id="course-corequisites-outer" class="list">
+						<div class="list-title">Corequisites: </div>
+						<ul id="course-corequisites">
+							<li>Your Eyes</li>
+						</ul>
+					</div>
+				</tabbody>
+				<tabbody data-index="1" id="four-year-plan">
+					<!-- Four year plan goes here -->
+				</tabbody>
+			</navbody>
+		</nav>
+		<main>
+			
+		</main>
+		<script src="plan.js"></script>
+		<script>
+			$("tab").click(function () {
+				$(this).addClass("active").siblings().removeClass("active");
+				var index = $(this).attr("data-index");
+				var tabbodies = $(this).parent().parent().children("navbody").children("tabbody");
+				for (var i = 0; i < tabbodies.length; i++) {
+					tabbodies.eq(i).css("margin-left", ((i - index) * 300) + "px");
+				}
+			});
+			
+			var width = $(window).width(), height = $(window).height();
+            var force = d3.layout.force()
+                          .size([width, height])
+                          .distance(120)
+                          .charge(-1000)
+                          .on("tick", tick);
+            var svg = d3.select("main")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
+						
+            var container = svg.append("g");
+            
+            var network = new Network(CourseData);
+            var json = network.getD3Json();
+            
+            var nodes = force.nodes();
+            var links = force.links();
+            var link = container.selectAll(".node");
+            var node = container.selectAll(".link");
+            
+            var takenClasses = [];
+            
+            init();
+            
+            function init() {
+                var startNode = {
+                    id: -1,
+                    name: "Start Here",
+                    next: [0, 2, 48],
+                    x: $(window).width()/2,
+                    y: $(window).height()/2
+                };
+                
+                nodes.push(startNode);
+                refresh();
+                $("#node--1").removeClass("cannot-take").addClass("can-take");
+                select(startNode);
+            }
+
+            function insert(existed, newNodes, insertionNode, isTemp) {
+                
+                if (isTemp == undefined) {
+                    isTemp = false;
+                }
+                
+                var coords = getNextCoords(existed, insertionNode, newNodes.length);
+                for (var i = 0; i < coords.length; i++) {
+                    if (!newNodes[i].rendered) {
+                        newNodes[i].x = coords[i].x;
+                        newNodes[i].y = coords[i].y;
+                        
+                        newNodes[i].noLink = true;
+                        if (!isTemp) {
+                            newNodes[i].rendered = true;
+                        }
+                        
+                        nodes.push(newNodes[i]);
+                    }
+                }
+                
+                nodes.forEach((target) => {
+                    if (target.noLink) {
+                        delete target.noLink;
+                        links.push({source: insertionNode, target: target});
+                    }
+                });
+
+                refresh();
+            }
+
+            function select(d) {
+					
+				if ($("#node-" + d.id).hasClass("can-take")) {
+					Planner.addToQuarter(d.quarter, d.id);
+				}
+				
+                if ($("#node-" + d.id).hasClass("can-take")) {
+                    
+                    takenClasses.push(d.id);
+                    $("#node-" + d.id).removeClass("can-take").addClass("taken");
+                    $("#course-" + d.id).attr('r', 12);
+                    
+                    if (d.coreq) {
+                        for (var i = 0; i < d.coreq.length; i++) {
+                            select(json.nodes[d.coreq[i].course]);
+                        }
+                    }
+                    
+                    if (d.equi) {
+                        for (var i = 0; i < d.equi.length; i++) {
+                            $("#node-" + d.equi[i].course).removeClass("cannot-take").removeClass("can-take").addClass("disabled");
+                        }
+                    }
+                    
+                    insert(nodes, d.next.map((i) => json.nodes[i]), d);
+
+                    for (var i = 0; i < d.next.length; i++) {
+                        var next = network.getCourse(d.next[i]);
+                        if (next.canTake(takenClasses)) {
+                            $("#node-" + d.next[i]).removeClass("cannot-take").addClass("can-take");
+                        }
+                        else {
+                            $("#node-" + d.next[i]).addClass("cannot-take");
+                        }
+                    }
+                }
+            }
+            
+            function tick() {
+                node.selectAll("circle")
+                    .attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y });
+                node.selectAll("text")
+                    .attr("x", function(d) { return d.x + 55; })
+                    .attr("y", function(d) { return d.y + 3; });
+                link.attr("d", function (d) {
+                    return "M " + d.source.x + " " + d.source.y
+                        + " L " + d.target.x + " " + d.target.y;
+                });
+            }
+            
+            function removeTemp(d) {
+                for (var i = 0; i < d.next.length; i++) {
+                    if (json.nodes[d.next[i]].rendered) {
+                        $("#node-" + d.next[i]).removeClass("blink");
+                    }
+                }
+                
+                if (d.newNodes) {
+                    for (var i = 0; i < d.newNodes.length; i++) {
+                        nodes.pop();
+                        links.pop();
+                    }
+                    delete d.newNodes;
+                }
+                
+                refresh();
+            }
+            
+            function disableBlinking(d) {
+                if (d.blinkingPrereq) {
+                    for (var i = 0; i < d.blinkingPrereq.length; i++) {
+                        $("#node-" + d.blinkingPrereq[i]).removeClass("blink");
+                    }
+                }
+            }
+            
+            function mergeNext(ids) {
+                var array = [];
+                for (var i = 0; i < ids.length; i++) {
+                    var currNext = json.nodes[ids[i]].next;
+                    if (currNext) {
+                        for (var j = 0; j < currNext.length; j++) {
+                            if (!array.includes(currNext[j])) {
+                                array.push(currNext[j]);
+                            }
+                        }
+                    }
+                }
+                return array;
+            }
+			
+			function renderInfo(id) {
+				var course = network.getCourse(id);
+				var info = course.getInfo();
+				$("#course-number").text(info.number);
+				$("#course-unit").text(info.unit);
+				$("#course-title").text(info.title);
+				$("#course-description").text(info.description);
+				$("#course-prerequisites").html(info.prerequisites.length != 0 ? info.prerequisites.map((name) => "<li>" + name + "</li>").join("") : "<li>None</li>");
+				$("#course-corequisites").html(info.corequisites.length != 0 ? info.corequisites.map((name) => "<li>" + name + "</li>").join("") : "<li>None</li>");
+			}
+			
+            function refresh() {
+                
+                node = node.data(nodes);
+
+                link = link.data(links);
+
+                link.enter().append("path").attr("class", "link")
+                    .attr("marker-end", "url(#end)")
+                    .attr("source", (d) => d.source.id)
+                    .attr("target", (d) => d.target.id)
+                    .attr("stroke", "rgba(230,230,230,1)");
+                    
+                link.exit().remove();
+
+                var g = node.enter().append("g").attr("class", "node")
+                    .call(force.drag)
+                    .attr("id", (d) => "node-" + d.id)
+                    .on("click", function (d) {
+						
+						if ($("#node-" + d.id).hasClass("can-take")) {
+							Planner.addToQuarter(d.quarter, d.id);
+						}
+						
+                        if (d.newNodes) {
+                            for (var i = 0; i < d.newNodes.length; i++) {
+                                json.nodes[d.newNodes[i].id].rendered = true;
+                                $("#node-" + d.newNodes[i].id).removeClass("blink");
+                            }
+                        }
+
+                        insert(nodes, d.next.filter((id) => !d.newNodes.map((node) => node.id)
+                                                                       .includes(id))
+                                            .map((i) => json.nodes[i]), d);
+                        delete d.newNodes;
+
+                        if ($("#node-" + d.id).hasClass("can-take")) {
+
+                            takenClasses.push(d.id);
+                            $("#node-" + d.id).removeClass("can-take").addClass("taken");
+                            $("#course-" + d.id).attr('r', 12);
+
+                            if (d.coreq) {
+                                for (var i = 0; i < d.coreq.length; i++) {
+                                    select(json.nodes[d.coreq[i].course]);
+                                }
+                            }
+
+                            if (d.equi) {
+                                for (var i = 0; i < d.equi.length; i++) {
+                                    $("#node-" + d.equi[i].course).removeClass("cannot-take").removeClass("can-take").addClass("disabled");
+                                }
+                            }
+
+                            for (var i = 0; i < d.next.length; i++) {
+                                var next = network.getCourse(d.next[i]);
+                                if (next.canTake(takenClasses)) {
+                                    $("#node-" + d.next[i]).removeClass("cannot-take").addClass("can-take");
+                                }
+                                else {
+                                    $("#node-" + d.next[i]).addClass("cannot-take");
+                                }
+                            }
+                        }
+                    })
+                    .on("mouseover", function (d) {
+						renderInfo(d.id);
+                        if (d.in) {
+                            return;
+                        }
+                        else {
+                            d.in = true;
+                            if ($("#node-" + d.id).hasClass("can-take")) {
+                                if (d.next) {
+                                    var newTaken = takenClasses.slice();
+                                    var currs = [];
+                                    newTaken.push(d.id);
+                                    d.newNodes = [];
+                                    currs.push(d.id);
+                                    if (d.coreq) {
+                                        for (var i = 0; i < d.coreq.length; i++) {
+                                            currs.push(d.coreq[i].course);
+                                            newTaken.push(d.coreq[i].course);
+                                        }
+                                    }
+                                    var next = mergeNext(currs);
+                                    for (var i = 0; i < next.length; i++) {
+                                        var course = network.getCourse(next[i]);
+                                        if (course.canTake(newTaken)) {
+                                            if (json.nodes[next[i]].rendered) {
+                                                if ($("#node-" + next[i]).hasClass("cannot-take")) {
+                                                    $("#node-" + next[i]).addClass("blink");
+                                                }
+                                            }
+                                            else {
+                                                d.newNodes.push(json.nodes[next[i]]);
+                                            }
+                                        }
+                                    }
+                                    insert(nodes, d.newNodes, d, true);
+                                    for (var i = 0; i < d.newNodes.length; i++) {
+                                        $("#node-" + d.newNodes[i].id).addClass("blink");
+                                    }
+                                    d3.select(this).moveToFront();
+                                }
+                            }
+                            else if ($("#node-" + d.id).hasClass("cannot-take")) {
+                                if (d.prereq) {
+                                    d.blinkingPrereq = [];
+                                    for (var i = 0; i < d.prereq.length; i++) {
+                                        var $node = $("#node-" + d.prereq[i].course);
+                                        if (!$node.hasClass("taken")) {
+                                            d.blinkingPrereq.push(d.prereq[i].course);
+                                            $node.addClass("blink");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .on("mouseout", function (d) {
+                        if (d.in) {
+                            d.in = false;
+                            if ($("#node-" + d.id).hasClass("cannot-take")) {
+                                disableBlinking(d);
+                            }
+                            else {
+                                removeTemp(d);
+                            }
+                        }
+                    });
+
+                g.append("circle", ".cursor")
+                    .attr("class", "circle cannot-take")
+                    .attr("r", 24)
+                    .attr("id", (d) => "course-" + d.id);
+                
+                g.append("text")
+                    .text((d) => d.name)
+                    .on("mouseover", function (d) {
+                        d3.event.stopPropagation();
+                    });
+                    
+                node.exit().remove();
+                
+                force.start();
+            }
+
+            var scale = 1;
+            $(window).on("mousewheel", (event) => {
+                scale += event.originalEvent.deltaY / 1000;
+                if (scale < 0.2) scale = 0.2;
+                if (scale > 5) scale = 5;
+
+                var width =  $(window).width();
+                var height = $(window).height();
+                var translateX = (1 - scale) * width / 2;
+                var translateY = (1 - scale) * height / 2;
+                container.attr("transform", "translate(" + translateX +
+                                ", " + translateY + ") scale(" + scale +")");
+
+                if (scale < 1) {
+                    force.distance(150 / Math.sqrt(scale))
+                         .charge(-1000 / scale)
+
+                    refresh();
+                }
+                return false;
+            });
+		</script>
+	</body>
+</html>

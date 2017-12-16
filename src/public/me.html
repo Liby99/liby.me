@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <link rel="stylesheet" href="css/me.css" />
+        <script src="js/lib/jquery.js"></script>
+        <script>const PAGE = "me";</script>
+    </head>
+    <body>
+        <nav>
+            <% include view/navbar.html %>
+        </nav>
+        <main>
+            <section id="banner-section" style="background-image: url(img/general/create.jpg)">
+                <!-- <img id="banner-background" src="" /> -->
+            </section>
+            <section id="me-section">
+                <div id="me-icon">
+                    <img src="img/general/icon.jpg" />
+                </div>
+                <div id="me-name">Liby Lee</div>
+                <div id="me-formal-name">Ziyang Li</div>
+                <div id="me-intro">
+                    Liby is a current undergraduate of University of California - San Diego,
+                    majoring in Mathematics & Computer Science and minor in Art.
+                    He is also a student graduated from Shenzhen Middle School in China.
+                    His skills vary from developing, graphics designing, 3D rendering, art and music.
+                    He is also a huge fan of Apple, console games, Japanese Anime <del>and Lolikon</del>.
+                </div>
+                <div id="me-resume">
+                    <a target="_blank" href="resume.pdf">RESUME</a>
+                </div>
+                <div id="me-media">
+                    <a target="_blank" href="https://www.facebook.com/liby.lee.35">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a target="_blank" href="https://www.linkedin.com/in/ziyang-li-bb407a71">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                    <a target="_blank" href="https://www.github.com/Liby99">
+                        <i class="fa fa-github-alt"></i>
+                    </a>
+                    <a target="_blank" href="https://my.playstation.com/Liby970120">
+                        <img src="img/general/playstation.png">
+                    </a>
+                </div>
+            </section>
+            <section id="skill-section">
+                <ul id="skill-header-list">
+                    <li class="skill-header active" data-id="0">Dev</li>
+                    <li class="skill-header" data-id="1">CG</li>
+                    <li class="skill-header" data-id="2">Design</li>
+                    <li class="skill-header" data-id="3">Music</li>
+                </ul>
+                <ul id="skill-list">
+                    <li class="skill active" style="background-image: url(img/general/dev_back.jpg)" data-id="0">
+                        <div class="inner">
+                            <div class="intro">
+                                <p>"Computers are never just tools". As he always thinking like this, he has
+                                stepped into the 6 year he has been working on developments. He believes that
+                                the world of computer science must have its own essence. </p>
+                                <p>He devotes most of his time working on the web related projects. But he is
+                                always eager to study new things like Unity game develop, iOS develop and so on.
+                                However to become a sapiential and knowledgable individual, he still has a long way
+                                to go. </p>
+                            </div>
+                            <ul class="skill-tree">
+                                <li class="skill-tree-item" data-percent="0.98">
+                                    <span class="name">HTML CSS</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.95">
+                                    <span class="name">JavaScript</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.6">
+                                    <span class="name">C</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.7">
+                                    <span class="name">C++</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.8">
+                                    <span class="name">C#</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.9">
+                                    <span class="name">Java</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.8">
+                                    <span class="name">Python</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="skill" style="background-image: url(img/general/cg_back.jpg)" data-id="1">
+                        <div class="inner">
+                            <div class="intro">
+                                <p>To Liby, who is super enthusiastic to the arts, computer graphics becomes
+                                the best way of expression for him. Video cutting, post-processing, special effects
+                                making, 3D modeling and rendering are all so familiar to him. </p>
+                                <p>Everytime he sees the professional CG arts from the movies, anime, and the
+                                works from others, he will realize that he still have lots of limit on expressing
+                                his idea through CG. Thus, he begins to practice this skill daily, willing
+                                that at some time, he will be able to achieve that extent.</p>
+                            </div>
+                            <ul class="skill-tree">
+                                <li class="skill-tree-item" data-percent="0.9">
+                                    <span class="name">After Effects</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.9">
+                                    <span class="name">Premiere</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.75">
+                                    <span class="name">Cinema 4D</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.6">
+                                    <span class="name">Blender</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.4">
+                                    <span class="name">Maya</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.5">
+                                    <span class="name">Vue</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.3">
+                                    <span class="name">Houdini</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="skill" style="background-image: url(img/general/design_back.jpg)" data-id="2">
+                        <div class="inner">
+                            <div class="intro">
+                                <p>To become a sapiential and knowledgable individual who is able to fully
+                                implement everything he wants through computer, Liby knows that he still need
+                                design and drawing skills. He loves the minimalism and anime styles. So he
+                                starts practicing and learning theories of design ideas and utilize them in
+                                every aspect of his works. </p>
+                                <p>Liby also want to be a Nijigen Illustrator, <del>so that he will be able
+                                to draw Lolies</del>. Although he has used graphics tablets for years, but
+                                he still need lots of practice.</p>
+                            </div>
+                            <ul class="skill-tree">
+                                <li class="skill-tree-item" data-percent="0.9">
+                                    <span class="name">Photoshop</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.8">
+                                    <span class="name">Illustrator</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.5">
+                                    <span class="name">InDesign</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.6">
+                                    <span class="name">Lightroom</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.8">
+                                    <span class="name">Sketch</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.7">
+                                    <span class="name">Clip Studio Paint</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.7">
+                                    <span class="name">Sai</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="skill" style="background-image: url(img/general/mus_back.jpg)" data-id="3">
+                        <div class="inner">
+                            <div class="intro">
+                                <p>Liby is also a huge fan of music. He mainly listen to Classical Piano musics
+                                composed by Liszt, Chopin and Debussy. He also loves the Original Sound Tracks
+                                from Anime, Movies and Games. </p>
+                                <p>Liby has already played the Piano for 15 years. Seeking more possibilities
+                                of performancing music, he started to learn the Violin and Guitar as well.
+                                He mainly plays classical musics, improvisions and re-arranged sheet musics,
+                                while sometimes he will also compose some musics using Logic Pro X.</p>
+                            </div>
+                            <ul class="skill-tree">
+                                <li class="skill-tree-item" data-percent="0.9">
+                                    <span class="name">Piano</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.4">
+                                    <span class="name">Violin</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.2">
+                                    <span class="name">Guitar</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.6">
+                                    <span class="name">Audition</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.6">
+                                    <span class="name">Logic Pro X</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                                <li class="skill-tree-item" data-percent="0.5">
+                                    <span class="name">Music Finale</span>
+                                    <span class="progress-outer">
+                                        <span class="progress-bar hidden"></span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <section id="project-section">
+                <h2 class="section-title" id="project-title">Projects</h2>
+                <hr />
+                <p id="project-intro">
+                    Liby is grown out of many projects he has participated to. He loves doing
+                    projects, so that he could really utilize what he has learnt, while also
+                    contribute to the communities he belongs to and loves.
+                </p>
+                <ul id="project-list">
+                    <% projects.forEach(function (project, index) { %>
+                        <li class="project<%= index > 1 ? " hidable" : ""%>">
+                            <a target="_blank" href="<%= project["url"] %>">
+                                <div class="project-cover" style="background-image: url(img/project/<%= project["PUID"] %>.jpg)"></div>
+                                <div class="project-name"><%= project["name"] %></div>
+                                <div class="project-author"><%= project["author"] %></div>
+                            </a>
+                        </li>
+                    <% }); %>
+                </ul>
+                <a id="more-project" href="project.html">More Project</a>
+            </section>
+            <section id="friend-section">
+                <h2 class="section-title" id="friend-title">Links</h2>
+                <hr />
+                <div id="friend-list-outer">
+                    <div id="friend-list">
+                        <a target="_blank" href="http://lyzde.com" style="background-image: url(img/friend/tonny.png)"></a>
+                        <a target="_blank" href="http://ethern.me" style="background-image: url(img/friend/ethern.png)"></a>
+                        <a target="_blank" href="http://enddle.me">Enddle.me</a>
+                        <a target="_blank" href="http://toxicologyprod.com" style="background-image: url(img/friend/tribute2nujabes.png)"></a>
+                        <a target="_blank" href="http://zinsser.me">Zinsser.me</a>
+                        <a target="_blank" href="http://azureric.org/#home">Azureric</a>
+                        <a target="_blank" href="http://hey.uhow.live" style="background-image: url(img/friend/barry.png)"></a>
+                    </div>
+                </div>
+            </section>
+            <section id="message-section">
+                <h2 class="section-title" id="message-title">Message</h2>
+                <hr />
+                <form id="message-form">
+                    <p>Say Hi!</p>
+                    <input type="text" id="message-username" placeholder="Your name" />
+                    <input type="text" id="message-email" placeholder="Your email" />
+                    <textarea id="message-content" placeholder="Message content"></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <% include view/footer.html %>
+        </footer>
+    </body>
+    <script src="js/basic.js"></script>
+    <script src="js/me.js"></script>
+</html>

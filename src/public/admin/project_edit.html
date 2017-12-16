@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me - Admin Edit Project</title>
+        <link rel="stylesheet" href="../css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="../css/lib/bootstrap.css" />
+        <link rel="stylesheet" href="../css/lib/summernote_liby.css" />
+        <link rel="stylesheet" href="../css/lib/datetimepicker.css" />
+        <link rel="stylesheet" href="../css/admin/basic.css" />
+        <script src="../js/lib/jquery.js"></script>
+        <script src="../js/lib/bootstrap.js"></script>
+        <script src="../js/lib/datetimepicker.js"></script>
+        <script src="../js/lib/summernote.js"></script>
+        <script src="../js/util.js"></script>
+        <script>const PAGE = "edit-project"</script>
+    </head>
+    <body>
+        <nav>
+            <% include view/sidebar.html %>
+        </nav>
+        <main>
+            <div id="main-title">New Project</div>
+            <div id="main-frame">
+                <form id="project-edit-form">
+                    <label>Name: </label>
+                    <input id="project-name" type="text" placeholder="Project Name" />
+                    <label>Author: </label>
+                    <input id="project-author" type="text" placeholder="Project Author" />
+                    <label>Date Time: </label>
+                    <input id="project-date-time" type="text" placeholder="Project date time" />
+                    <label>URL: </label>
+                    <input id="project-url" type="text" placeholder="Project URL" />
+                    <label>Status: </label>
+                    <select id="project-status">
+                        <option value="0">Draft</option>
+                        <option value="1">Public</option>
+                        <option value="2">Archived</option>
+                    </select>
+                    <label>Cover Image: </label>
+                    <div id="project-cover">
+                        
+                    </div>
+                    <button type="reset">Reset</button>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </main>
+    </body>
+    <script src="../js/admin/basic.js"></script>
+    <script>
+        $(document).ready(function () {
+            ProjectEdit.initiate();
+        });
+        
+        var ProjectEdit = {
+            project: undefined,
+            coverOption: {
+                height: 100,
+                toolbar: [['insert', ['picture']]],
+                popover: {
+                    image: [
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    air: [
+                        ['insert', ['picture']]
+                    ]
+                }
+            },
+            initiate: function () {
+                this.initiateSubmit();
+                this.checkParams();
+            },
+            initiateSubmit: function () {
+                var self = this;
+                $("#project-edit-form").submit(function () {
+                    
+                    //First gather all the data
+                    var name = $("#project-name").val();
+                    var author = $("#project-author").val();
+                    var url = $("#project-url").val();
+                    var status = parseInt($("#project-status").val());
+                    var dateTime = $("#project-date-time").val();
+                    var cover = "";
+                    
+                    //Try to check if the data satisties the requirement
+                    try {
+                        cover = $($("#project-cover").summernote("code")).children("img").attr("src");
+                    }
+                    catch (err) {
+                        alert("Please insert an image");
+                        return false;
+                    }
+                    if (name == "") {
+                        alert("Please insert the project name");
+                        return false;
+                    }
+                    if (author == "") {
+                        alert("Please insert the author");
+                        return false;
+                    }
+                    if (url == "") {
+                        alert("Please insert an url");
+                        return false;
+                    }
+                    
+                    $.ajax({
+                        url: "/ajax/admin?action=submit_project",
+                        type: "post",
+                        data: {
+                            "PUID": (self.project == undefined ? "" : self.project),
+                            "name": name,
+                            "author": author,
+                            "url": url,
+                            "status": status,
+                            "date_time": dateTime,
+                            "cover": cover
+                        },
+                        success: function (result) {
+                            var data = JSON.parse(result);
+                            if (data["error_code"] == 0) {
+                                alert("Successfully uploaded project!");
+                                window.location.href = "project_manage.html";
+                            }
+                            else {
+                                alert(data["error_log"]);
+                            }
+                        },
+                        error: function () {
+                            alert("Server connection error");
+                        }
+                    });
+                    
+                    return false;
+                });
+            },
+            checkParams: function () {
+                var self = this;
+                var params = Utility.getQueryParams();
+                if (params["p"] && params["p"] != "") {
+                    this.project = params["p"];
+                    this.getProjectData(params["p"], function (project) {
+                        self.renderProject(project);
+                    });
+                }
+                else {
+                    this.newProject();
+                }
+            },
+            getProjectData: function (project, callback) {
+                $.ajax({
+                    url: "/ajax/admin?action=get_project",
+                    type: "post",
+                    data: { "project": project },
+                    success: function (result) {
+                        var data = JSON.parse(result);
+                        if (data["error_code"] == 0) {
+                            callback(data["content"]);
+                        }
+                        else {
+                            alert(data["error_log"]);
+                            window.location.href = "project_manage.html";
+                        }
+                    },
+                    error: function () {
+                        alert("Server Connection Error");
+                        window.location.href = "project_manage.html";
+                    }
+                });
+            },
+            renderProject: function (project) {
+                $("#project-name").val(project["name"]);
+                $("#project-author").val(project["author"]);
+                $("#project-url").val(project["url"]);
+                $("#project-status").val(project["status"]);
+                $("#project-date-time").datetimepicker({
+                    "value": project["date_time"]
+                });
+                $("#project-cover").summernote("code", "<p><img src=\"../img/project/" + project["PUID"] + ".jpg\" /></p>");
+            },
+            newProject: function () {
+                $("#project-date-time").datetimepicker();
+                $("#project-cover").summernote(this.coverOption);
+            }
+        }
+    </script>
+</html>

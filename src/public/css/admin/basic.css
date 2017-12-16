@@ -1,0 +1,190 @@
+* {
+    font-size: 12px;
+    font-family: "Helvetica", "Arial";
+    color: rgba(66, 66, 66, 1);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited {
+    color: rgba(255, 149, 166, 1);
+    text-decoration: none !important;
+}
+
+::selection {
+    background-color: rgba(255, 149, 166, 0.3);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+textarea, input {
+    outline: none;
+}
+
+table {
+    border-collapse: collapse;
+    width: calc(100% - 40px);
+    margin: 20px;
+}
+
+table tr:hover {
+    background-color: rgba(250, 250, 250, 1);
+}
+
+table th {
+    border-bottom: 1px solid rgba(230, 230, 230, 1);
+}
+
+table th, table td {
+    text-align: center;
+    padding: 10px;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 220px;
+    background-color: rgba(245, 245, 245, 1);
+    line-height: 33px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow-y: scroll;
+}
+
+#nav-title {
+    padding: 20px;
+    font-size: 15px;
+}
+
+#nav-title a {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.sidebar-section {
+    margin: 10px 0;
+}
+
+.sidebar-section-title {
+    color: rgba(100, 100, 100, 1);
+    font-weight: bold;
+    padding: 0 15px;
+}
+
+.sidebar-section-content {
+    
+}
+
+.sidebar-section-content li {
+    color: rgba(130, 130, 130, 1);
+}
+
+.sidebar-section-content li a {
+    display: block;
+    transition: all 0.1s;
+    border-left: 0px solid rgba(255, 149, 166, 0);
+    padding: 0 20px;
+    color: inherit;
+}
+
+.sidebar-section-content li:hover a {
+    border-left: 3px solid rgba(255, 149, 166, 0.4);
+    background-color: rgba(235, 235, 235, 1);
+}
+
+.sidebar-section-content li:active a {
+    border-left: 3px solid rgba(255, 149, 166, 0.6);
+    background-color: rgba(225, 225, 225, 1);
+}
+
+.sidebar-section-content li.active a {
+    color: rgba(80, 80, 80, 1);
+    background-color: rgba(255, 255, 255, 1);
+    border-left: 3px solid rgba(255, 149, 166, 1);
+}
+
+.sidebar-section-content li a i {
+    width: 20px;
+    margin-right: 5px;
+    text-align: center;
+    color: rgba(130, 130, 130, 1);
+}
+
+main {
+    padding-left: 220px;
+}
+
+#main-title {
+    margin: 20px 20px 0 20px;
+    padding-bottom: 20px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(230, 230, 230, 1);
+}
+
+#main-frame {
+    padding: 20px;
+}
+
+form {
+    padding: 0 20px;
+}
+
+input {
+    transition: all 0.2s;
+    display: block;
+    line-height: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(230, 230, 230, 1);
+    padding: 0 15px;
+    width: calc(100% - 2px);
+    margin: 15px 0;
+}
+
+input:hover {
+    border: 1px solid rgba(255, 149, 166, 0.8);
+}
+
+input:focus {
+    border: 1px solid rgba(255, 149, 166, 1);
+}
+
+button {
+    line-height: 30px;
+    border-radius: 15px;
+    border: 0;
+    background-color: rgba(255, 149, 166, 1);
+    color: rgba(255, 255, 255, 1);
+    padding: 0 20px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+button.small {
+    line-height: 24px;
+}
+
+button:hover {
+    background-color: rgba(245, 139, 156, 1);
+}
+
+button:active {
+    background-color: rgba(235, 129, 146, 1);
+}
+
+label {
+    display: block;
+    margin: 20px 0 10px 0;
+    color: rgba(120, 120, 120, 1);
+}
+
+blockquote {
+    font-size: 12px !important;
+}

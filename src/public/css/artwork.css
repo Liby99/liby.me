@@ -1,0 +1,392 @@
+footer {
+    background-color: rgba(255, 255, 255, 1);
+    position: fixed;
+    bottom: 0;
+    z-index: 1024;
+}
+
+main {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+
+#artwork-list-section {
+    transition: all 0.5s;
+    position: absolute;
+    height: 560px;
+    top: 50%;
+    margin-top: -280px;
+    width: 100%;
+    z-index: 32;
+    overflow: hidden;
+}
+
+#artwork-list-section.collapsed {
+    top: 45px;
+    height: 160px;
+    margin-top: 0;
+    background-color: rgba(48, 48, 48, 1);
+}
+
+#hovering-board {
+    width: 100%;
+}
+
+#artwork-list-section.collapsed #hovering-board, #artwork-list-section.collapsed #hovering-board-inner {
+    height: 160px !important;
+    overflow-y: hidden;
+}
+
+#hovering-board-inner {
+    display: flex;
+}
+
+#prev-year-button, #next-year-button {
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 240px;
+    height: 100%;
+    text-align: center;
+    font-size: 16px;
+    color: rgba(66, 66, 66, 1);
+    cursor: pointer;
+}
+
+#prev-year-button span, #next-year-button span {
+    display: block;
+}
+
+#artwork-list-section.collapsed #prev-year-button,
+#artwork-list-section.collapsed #next-year-button {
+    line-height: 160px;
+    color: rgba(245, 245, 245, 1);
+}
+
+#prev-year-button i, #next-year-button i {
+    font-size: 18px;
+}
+
+#prev-year-button:hover, #next-year-button:hover {
+    background-color: rgba(150, 150, 150, 0.05);
+}
+
+#artwork-list-section.collapsed #prev-year-button:hover,
+#artwork-list-section.collapsed #next-year-button:hover {
+    color: rgba(245, 245, 245, 1);
+}
+
+#prev-year-button:active, #next-year-button:active {
+    background-color: rgba(150, 150, 150, 0.1);
+}
+
+#artwork-list-section.collapsed #prev-year-button:active,
+#artwork-list-section.collapsed #next-year-button:active {
+    color: rgba(255, 255, 255, 1);
+}
+
+#artwork-year-content {
+    padding: 10px 20px;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+#artwork-list-section.collapsed #artwork-year-content {
+    padding: 0 20px;
+}
+
+.artwork-month {
+    margin-left: 7px;
+}
+
+.artwork-month-circle {
+    float: left;
+    transition: all 0.2s;
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 149, 166, 1);
+    margin-left: -7px;
+    margin-top: 42px;
+}
+
+.artwork-month:hover .artwork-month-circle {
+    margin-left: -8px;
+    margin-top: 41px;
+    border: 2px solid rgba(255, 149, 166, 1);
+}
+
+.artwork-month-title {
+    transition: all 0.2s;
+    line-height: 45px;
+    height: 45px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255, 149, 166, 1);
+    color: rgba(255, 149, 166, 1);
+}
+
+.artwork-month:hover .artwork-month-title {
+    font-weight: bold;
+    line-height: 40px;
+    font-size: 14px;
+}
+
+.artwork-list {
+    transition: all 0.5s;
+    display: flex;
+    flex-flow: row;
+    padding: 10px 20px;
+}
+
+#artwork-list-section.collapsed .artwork-list {
+    padding: 0 20px;
+}
+
+.artwork-column {
+    padding: 5px 0 5px 0;
+}
+
+#artwork-list-section.collapsed .artwork-column {
+    display: flex;
+    flex-flow: row;
+}
+
+.artwork {
+    transition: all 0.5s;
+    display: flex;
+    margin-top: 5px;
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+#artwork-list-section.collapsed .artwork {
+    width: 80px;
+    height: 80px;
+}
+
+.artwork div {
+    transition: all 0.2s;
+    margin: 0;
+    margin-left: 5px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.artwork:hover div {
+    width: 95%;
+    height: 95%;
+}
+
+.artwork:active div {
+    width: 92%;
+    height: 92%;
+}
+
+#hovering-board.mobile {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+#artwork-section {
+    transition: all 0.5s;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    z-index: 0;
+}
+
+#artwork-section.active {
+    opacity: 1;
+    margin-top: 160px;
+}
+
+#artwork-inner {
+    margin: 15px auto;
+    padding: 30px 0;
+    width: 100%;
+    max-width: 768px;
+}
+
+#artwork-source {
+    padding: 10px;
+}
+
+#artwork-source iframe {
+    width: 100%;
+    border: none;
+}
+
+#artwork-source img {
+    width: 100%;
+}
+
+#artwork-info {
+    padding: 10px;
+    display: flex;
+    flex-flow: row;
+}
+
+#artwork-info .inner {
+    width: 60%;
+}
+
+#artwork-info .side {
+    padding-right: 20px;
+    width: calc(40% - 20px);
+}
+
+#artwork-head {
+    display: flex;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(230, 230, 230, 1);
+}
+
+#artwork-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+#artwork-thumbnail img {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+#artwork-titles {
+    padding: 8px 0 8px 20px;
+}
+
+#artwork-title {
+    font-size: 18px;
+}
+
+#artwork-subtitle {
+    color: rgba(80, 80, 80, 1);
+}
+
+#artwork-information {
+    padding: 20px 0;
+    line-height: 25px;
+    border-bottom: 1px solid rgba(230, 230, 230, 1);
+}
+
+#artwork-information .label {
+    color: rgba(150, 150, 150, 1);
+    margin-right: 10px;
+}
+
+.artwork-info-section {
+    margin-bottom: 10px;
+}
+
+#artwork-software-list, #artwork-tag-list {
+    padding-left: 20px;
+    line-height: 16px;
+}
+
+#artwork-software-list .software, #artwork-tag-list .tag {
+    display: inline-block;
+}
+
+#artwork-software-list .software:not(:last-child):after, #artwork-tag-list .tag:not(:last-child):after {
+    content: ", ";
+}
+
+#artwork-description {
+    line-height: 24px;
+    color: rgba(120, 120, 120, 1);
+    margin-bottom: 40px;
+}
+
+#artwork-description img {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    #artwork-list-section {
+        top: 0 !important;
+        margin-top: 0 !important;
+        position: relative;
+        height: auto;
+        overflow: hidden;
+    }
+    
+    body.mobile #hovering-board {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #prev-year-button i, #next-year-button i {
+        font-size: 14px;
+    }
+    
+    body.mobile #prev-year-button, body.mobile #next-year-button {
+        width: 120px;
+    }
+    
+    .artwork {
+        width: 100px;
+        height: 100px;
+    }
+    
+    #artwork-section {
+        margin: 0;
+        padding: 0;
+        width: auto;
+        position: relative;
+        display: none;
+    }
+    
+    #artwork-section.active {
+        display: block;
+        margin-top: 0;
+    }
+    
+    #artwork-inner {
+        margin: 0;
+        padding: 0;
+        flex-flow: column;
+    }
+    
+    #artwork-info {
+        flex-flow: column;
+    }
+    
+    #artwork-info .side {
+        width: 100%;
+    }
+    
+    #artwork-info .inner {
+        width: 100%;
+    }
+    
+    #artwork-info .inner {
+        padding: 10px 0;
+    }
+    
+    #artwork-section {
+        height: 0;
+    }
+
+    #artwork-section.active {
+        height: auto;
+    }
+}
+
+@media (max-width: 320px) {
+    .artwork {
+        width: 80px;
+        height: 80px;
+    }
+}

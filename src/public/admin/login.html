@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me - Admin</title>
+        <link href="../css/admin/login.css" rel="stylesheet" />
+        <script src="../js/lib/jquery.js"></script>
+        <script src="../js/util.js"></script>
+    </head>
+    <body>
+        <form id="login-form">
+            <p>Liby.me Admin</p>
+            <input type="text" id="username" placeholder="Username" maxlength="10" required />
+            <input type="password" id="password" placeholder="Password" maxlength="20" required />
+            <button type="submit" id="login">Login</button>
+        </form>
+        <script>
+            $(function () {
+                LoginPage.initiate();
+            });
+            
+            var LoginPage = {
+                initiate: function () {
+                    this.initiateError();
+                    this.initiateFormSubmit();
+                },
+                initiateError: function () {
+                    var params = Utility.getQueryParams();
+                    if (params["err"]) {
+                        switch(parseInt(params["err"])) {
+                            case 1001: alert("Login Session Expired. Please Login Later. "); break;
+                        }
+                    }
+                },
+                initiateFormSubmit: function () {
+                    $("#login-form").submit(function () {
+                        if ($("#username").val() != "" && $("#password").val() != "") {
+                            $.ajax({
+                                url: "/ajax/admin?action=login",
+                                type: "post",
+                                data: { "username": $("#username").val(), "password": $("#password").val() },
+                                success: function (result) {
+                                    var data = JSON.parse(result);
+                                    if (data["error_code"] == 0) {
+                                        window.location.href = "index.html";
+                                    }
+                                    else {
+                                        alert(data["error_log"]);
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            alert("请先输入用户名或密码");
+                        }
+                        return false;
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>

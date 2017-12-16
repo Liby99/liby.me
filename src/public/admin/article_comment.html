@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me - Admin Article Comment</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="../css/admin/basic.css" />
+        <script src="../js/lib/jquery.js"></script>
+        <script src="../js/util.js"></script>
+        <script>const PAGE = "article-comment"</script>
+        <style>
+            main {
+                position: fixed;
+                width: calc(100% - 220px);
+            }
+            
+            #main-frame {
+                position: fixed;
+                width: calc(100% - 260px);
+                height: calc(100% - 60px);
+            }
+            
+            #article-list-section {
+                position: fixed;
+                width: 219px;
+                height: calc(100% - 100px);
+            }
+            
+            #article-list-title {
+                margin: 0;
+                padding: 0;
+                line-height: 39px;
+                border-right: 1px solid rgba(230, 230, 230, 1);
+                border-bottom: 1px solid rgba(230, 230, 230, 1);
+                text-align: center;
+            }
+            
+            #article-list-holder {
+                height: calc(100% - 40px);
+                overflow-x: hidden;
+                overflow-y: scroll;
+            }
+            
+            #article-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                min-height: 100%;
+                border-right: 1px solid rgba(230, 230, 230, 1);
+            }
+            
+            #article-list li {
+                transition: all 0.1s;
+                padding: 15px 10px;
+                width: calc(100% - 20px);
+                background-color: rgba(255, 255, 255, 1);
+                border-bottom: 1px solid rgba(230, 230, 230, 1);
+                border-left: 0 solid rgba(255, 149, 166, 1);
+                cursor: pointer;
+            }
+            
+            #article-list li:hover {
+                background-color: rgba(245, 245, 245, 1);
+                border-left: 2px solid rgba(255, 149, 166, 0.4);
+            }
+            
+            #article-list li:active {
+                background-color: rgba(240, 240, 240, 1);
+                border-left: 2px solid rgba(255, 149, 166, 0.7);
+            }
+            
+            #article-list li.active {
+                width: calc(100% - 19px);
+                border-left: 2.5px solid rgba(255, 149, 166, 1);
+                background-color: rgba(255, 255, 255, 1);
+            }
+            
+            #article-list li .article-title {
+                display: block;
+                max-width: 160px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            
+            #article-list li.active .article-title {
+                font-weight: bold;
+            }
+            
+            #article-list li .article-info {
+                font-size: 11px;
+                color: rgba(150, 150, 150, 1);
+            }
+            
+            #article-list li .article-info .article-date {
+                color: rgba(150, 150, 150, 1);
+                font-size: 11px;
+                margin-right: 5px;
+            }
+            
+            #article-list li .article-info i {
+                margin-left: 5px;
+                font-size: 10px;
+                color: rgba(150, 150, 150, 1);
+            }
+            
+            #article-list li .article-comment-amount {
+                margin-top: -8px;
+                margin-right: 5px;
+                float: right;
+                line-height: 16px;
+                min-width: 6px;
+                padding: 0 5px;
+                text-align: center;
+                border-radius: 10px;
+                background-color: rgba(255, 149, 166, 1);
+                color: rgba(255, 255, 255, 1);
+                font-size: 10px;
+            }
+            
+            #article-comment-section {
+                position: relative;
+                margin-left: 220px;
+                width: calc(100% - 220px);
+                height: 100%;
+                overflow-y: scroll;
+            }
+            
+            #article-comment-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                margin-left: 30px;
+            }
+            
+            #article-comment-list .article-comment {
+                padding: 10px 20px;
+                line-height: 30px;
+                border-bottom: 1px solid rgba(230, 230, 230, 1);
+            }
+            
+            #article-comment-list .article-comment.deleted {
+                display: none;
+            }
+            
+            #article-comment-list .article-comment.deleted.show {
+                display: block !important;
+            }
+            
+            #article-comment-list .article-comment.empty, #article-comment-list .article-comment.error {
+                text-align: center;
+            }
+            
+            #article-comment-list .article-comment .article-comment-title i {
+                color: rgba(255, 149, 166, 1);
+                margin-right: 5px;
+            }
+            
+            #article-comment-list .article-comment .article-comment-username {
+                font-weight: bold;
+            }
+            
+            #article-comment-list .article-comment .dash {
+                margin-left: 10px;
+            }
+            
+            #article-comment-list .article-comment .article-comment-email, #article-comment-list .article-comment .delete-comment {
+                margin-left: 10px;
+            }
+            
+            #article-comment-list .article-comment .article-comment-date-time {
+                float: right;
+            }
+            
+            #article-comment-list .article-comment .article-comment-content {
+                color: rgba(120, 120, 120, 1);
+                padding: 5px 10px;
+                line-height: 20px;
+            }
+            
+            #show-deleted-btn {
+                margin-left: 30px;
+                line-height: 40px;
+                text-align: center;
+                cursor: pointer;
+                border-bottom: 1px solid rgba(230, 230, 230, 1);
+            }
+            
+            #show-deleted-btn:hover {
+                background-color: rgba(245, 245, 245, 1);
+            }
+            
+            #show-deleted-btn:active {
+                background-color: rgba(235, 235, 235, 1);
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <% include view/sidebar.html %>
+        </nav>
+        <main>
+            <div id="main-title">Article Comment</div>
+            <div id="main-frame">
+                <section id="article-list-section">
+                    <h5 id="article-list-title">Articles List</h5>
+                    <div id="article-list-holder">
+                        <ul id="article-list">
+                            <% articles.forEach(function (article) { %>
+                                <li class="article<%= (article["AUID"] == auid) ? " active" : ""%>" id="<%= article["AUID"] %>">
+                                    <span class="article-title">
+                                        <%= article["title"] %>
+                                    </span>
+                                    <span class="article-info">
+                                        <span class="article-date"><%= (new Date(Date.parse(article["date_time"]))).toDateString() %></span>
+                                        <% if (article["status"] == 0) { %>
+                                            | <i class="fa fa-pencil"></i>
+                                        <% } else if (article["status"] == 2) { %>
+                                            | <i class="fa fa-archive"></i>
+                                        <% } %>
+                                    </span>
+                                    <span class="article-comment-amount"><%= article["comment"] %></span>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </section>
+                <section id="article-comment-section">
+                    <ul id="article-comment-list">
+                        <% if (comments == undefined) { %>
+                            <li class="article-comment error">Error</li>
+                        <% } else if (comments.length == 0) { %>
+                            <li class="article-comment empty">Empty</li>
+                        <% } else { %>
+                            <% comments.forEach(function (comment) { %>
+                                <li class="article-comment<%= (comment["deleted"] == 1 ? " deleted" : "") %>" id="<%= comment["CUID"] %>">
+                                    <div class="article-comment-title">
+                                        <% if (comment["private"] == 1) { %>
+                                            <i class="fa fa-eye-slash"></i>
+                                        <% } %>
+                                        <% if (comment["deleted"] == 1) { %>
+                                            <i class="fa fa-trash"></i>
+                                        <% } %>
+                                        <span class="article-comment-username">
+                                            <%= comment["username"] %>
+                                        </span>
+                                        <span class="dash">–</span>
+                                        <a href="mailto:<%= comment["email"] %>" class="article-comment-email"><%= comment["email"] %></a>
+                                        <span class="dash">–</span>
+                                        <a href="#" class="delete-comment"><%= (comment["deleted"] == 1 ? "undelete" : "delete") %></a>
+                                        <span class="article-comment-date-time">
+                                            <%= comment["date_time"] %>
+                                        </span>
+                                    </div>
+                                    <div class="article-comment-content">
+                                        <%= comment["content"] %>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        <% } %>
+                    </ul>
+                    <% if (comments == undefined || comments.length != 0) { %>
+                        <div id="show-deleted-btn">Show Deleted</div>
+                    <% } %>
+                </section>
+            </div>
+        </main>
+    </body>
+    <script src="../js/admin/basic.js"></script>
+    <script>
+        $(function () {
+            ArticleList.initiate();
+        });
+        
+        var ArticleList = {
+            showDeleted: false,
+            initiate: function () {
+                this.initiateClick();
+                this.initiateShowDelete();
+                this.initiateDelete();
+            },
+            initiateClick: function () {
+                $("#article-list .article").click(function () {
+                    var id = $(this).attr("id");
+                    window.location.href = "article_comment.html?a=" + id;
+                })
+            },
+            initiateShowDelete: function () {
+                var self = this;
+                $("#show-deleted-btn").click(function () {
+                    self.showDeleted = !self.showDeleted;
+                    if (self.showDeleted) {
+                        $(this).text("Hide Deleted");
+                        $(".article-comment.deleted").addClass("show");
+                    }
+                    else {
+                        $(this).text("Show Deleted");
+                        $(".article-comment.deleted").removeClass("show");
+                    }
+                });
+            },
+            initiateDelete: function () {
+                $(".delete-comment").click(function () {
+                    var CUID = $(this).parent().parent().attr("id");
+                    if ($(this).parent().parent().hasClass("deleted")) {
+                        if (confirm("Do you want to undelete this comment?")) {
+                            $.ajax({
+                                url: "/ajax/admin?action=undelete_comment",
+                                type: "post",
+                                data: { "CUID": CUID },
+                                success: function (result) {
+                                    var data = JSON.parse(result);
+                                    if (data["error_code"] == 0) {
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        alert(data["error_log"]);
+                                    }
+                                },
+                                error: function () {
+                                    alert("server connection error");
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        if (confirm("Do you want to delete this comment?")) {
+                            $.ajax({
+                                url: "/ajax/admin?action=delete_comment",
+                                type: "post",
+                                data: { "CUID": CUID },
+                                success: function (result) {
+                                    var data = JSON.parse(result);
+                                    if (data["error_code"] == 0) {
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        alert(data["error_log"]);
+                                    }
+                                },
+                                error: function () {
+                                    alert("server connection error");
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+</html>

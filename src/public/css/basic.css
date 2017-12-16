@@ -1,0 +1,228 @@
+* {
+    font-family: Gotham, Dosis, 'Open Sans', Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 320px;
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(60, 60, 60, 1);
+}
+
+a, a:visited {
+    color: rgba(255, 149, 166, 1);
+    text-decoration: none;
+}
+
+::selection {
+    background-color: rgba(255, 149, 166, 0.5);
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    display: block;
+    resize: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+input, button {
+    padding: 0;
+    display: block;
+}
+
+textarea, input, button {
+    outline: none;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 45px;
+    width: 100%;
+    min-width: 320px;
+    z-index: 1020;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+#nav-inner {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1024px;
+    min-width: 320px;
+    height: 100%;
+    line-height: 45px;
+}
+
+#nav-main {
+    position: fixed;
+    width: 100%;
+    height: 0;
+    z-index: 1024;
+    min-width: 320px;
+}
+
+#nav-logo {
+    transition: all 0.2s;
+    float: left;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#nav-logo a {
+    display: block;
+    padding: 7.5px 10px;
+    height: 30px;
+}
+
+#nav-logo:hover {
+    opacity: 0.9;
+}
+
+#nav-logo:active {
+    opacity: 1;
+}
+
+#nav-logo span {
+    display: block;
+    float: left;
+    line-height: 25px;
+    background-color: rgba(20, 20, 20, 1);
+    color: rgba(255, 255, 255, 1);
+    width: 25px;
+    margin-top: 2.5px;
+    text-align: center;
+}
+
+#nav-logo span + span {
+    margin-left: 5px;
+}
+
+#nav-menu-outer {
+    transition: all 0.3s;
+    z-index: 1023;
+}
+
+#nav-menu {
+    float: right;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+#nav-menu li {
+    float: left;
+}
+
+#nav-menu li a {
+    transition: all 0.2s;
+    display: block;
+    padding: 0 20px;
+    line-height: 45px;
+    letter-spacing: 1px;
+    color: rgba(100, 100, 100, 1);
+}
+
+#nav-menu li a:hover {
+    color: rgba(44, 44, 44, 1);
+}
+
+#nav-menu li a:active {
+    color: rgba(20, 20, 20, 1);
+}
+
+#nav-menu li a.active {
+    color: rgba(255, 149, 166, 1);
+}
+
+#nav-menu-toggle {
+    display: none;
+    float: right;
+    height: 30px;
+    width: 30px;
+    margin: 7.5px;
+}
+
+.nav-menu-toggle-bar {
+    margin: 8px auto 0;
+    width: 20px;
+    height: 2px;
+    background-color: rgba(80, 80, 80, 1);
+}
+
+.nav-menu-toggle-bar + .nav-menu-toggle-bar {
+    margin-top: 4px;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#nav-menu-mask {
+    z-index: 1020;
+}
+
+@media (max-width: 425px) {
+    #nav-main {
+        height: 45px;
+        background-color: rgba(255, 255, 255, 1);
+    }
+    
+    #nav-menu-outer {
+        position: fixed;
+        width: 100%;
+        margin-top: -500px;
+        background-color: rgba(255,255,255,1);
+    }
+    
+    #nav-menu-outer.active {
+        margin-top: 45px;
+    }
+    
+    #nav-menu {
+        float: none;
+        padding: 0;
+    }
+    
+    #nav-menu li {
+        float: none;
+        width: auto;
+        line-height: 40px;
+    }
+    
+    #nav-menu li a {
+        padding: 0 15px;
+        text-align: center;
+    }
+    
+    #nav-menu-toggle {
+        display: block;
+    }
+}
+
+main {
+    padding-top: 45px;
+    z-index: 0;
+}
+
+footer {
+    font-size: 11px;
+    color: rgba(120, 120, 120, 1);
+    text-align: center;
+    line-height: 40px;
+    width: 100%;
+}

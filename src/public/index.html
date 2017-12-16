@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
+        <link rel="stylesheet" href="css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <link rel="stylesheet" href="css/index.css" />
+        <script src="js/lib/jquery.js"></script>
+        <script>const PAGE = "index";</script>
+    </head>
+    <body>
+        <nav>
+            <%- include('view/navbar.html') %>
+        </nav>
+        <main>
+            <section id="hovering-board-section">
+                <div id="hovering-board" data-tracking="1">
+                    <div id="hovering-board-inner">
+                        <ul id="hovering-board-row-1">
+                            <% for (var i = 0; i < 4; i++) { %>
+                                <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                            <% } %>
+                        </ul>
+                        <ul id="hovering-board-row-2">
+                            <li id="hovering-board-row-2-col-1">
+                                <ul id="hovering-board-row-2-col-1-ul">
+                                    <% for (var i = 4; i < 6; i++) { %>
+                                        <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                                    <% } %>
+                                </ul>
+                            </li>
+                            <li id="hovering-board-row-2-col-2">
+                                <div id="spotlight">
+                                    <div id="spotlight-inner">
+                                        <div id="spotlight-icon">
+                                            <img src="img/general/icon.jpg" />
+                                        </div>
+                                        <div id="spotlight-name">Liby Lee</div>
+                                        <div id="spotlight-formal-name">Ziyang Li</div>
+                                        <p id="spotlight-description">A Curious, Dedicated and Creative Individual</p>
+                                        <a id="spotlight-explore" href="me.html">Explore</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li id="hovering-board-row-2-col-3">
+                                <ul id="hovering-board-row-2-col-3-ul">
+                                    <% for (var i = 6; i < 8; i++) { %>
+                                        <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                                    <% } %>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul id="hovering-board-row-3">
+                            <% for (var i = 8; i < 12; i++) { %>
+                                <%- include('view/index_artwork.html', { artwork: artworks[i] }) %>
+                            <% } %>
+                        </ul>
+                        <div class="hovering-board-placeholder"></div>
+                    </div>
+                </div>
+            </section>
+            <section id="new-article-section">
+                <p id="new-article-title">
+                    Latest Articles:
+                    <a id="new-article-more" href="article.html">More <i class="fa fa-angle-right"></i></a>
+                </p>
+                <ul id="new-article-list">
+                    <% articles.forEach(function (article) { %>
+                        <li class="article">
+                            <a href="passage.html?a=<%= article["AUID"] %>" style="background-image: url(img/article/<%= article["AUID"] %>.jpg)">
+                                <div class="inner">
+                                    <div class="title"><%= article["title"] %></div>
+                                    <div class="subtitle"><%= article["subtitle"] %></div>
+                                </div>
+                            </a>
+                        </li>
+                    <% }) %>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <%- include('view/footer.html') %>
+        </footer>
+    </body>
+    <script src="js/basic.js"></script>
+    <script src="js/index.js"></script>
+</html>

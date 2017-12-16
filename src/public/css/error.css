@@ -1,0 +1,30 @@
+* {
+    font-family: 'Helvetica', 'Arial';
+    font-size: 12px;
+    color: rgba(66, 66, 66, 1);
+}
+
+body {
+    background-color: rgba(245, 245, 245, 1);
+    text-align: center;
+    padding: 100px;
+}
+
+a, a:visited {
+    color: rgba(255, 149, 166, 1);
+    text-decoration: none !important;
+}
+
+#error-code {
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#error-log {
+    font-size: 16px;
+}
+
+#emoji {
+    font-size: 28px;
+}

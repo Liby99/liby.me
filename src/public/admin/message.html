@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Liby.me - Admin Message Box</title>
+        <link rel="stylesheet" href="../css/lib/font-awesome.css" />
+        <link rel="stylesheet" href="../css/admin/basic.css" />
+        <script src="../js/lib/jquery.js"></script>
+        <script>const PAGE = "message"</script>
+        <style>
+            #message-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                padding: 0 20px;
+            }
+            
+            #message-list .message {
+                padding: 10px 20px;
+                line-height: 30px;
+                border-bottom: 1px solid rgba(230, 230, 230, 1);
+            }
+            
+            #message-list .message.empty, #message-list .message.error {
+                text-align: center;
+            }
+            
+            #message-list .message .message-username {
+                font-weight: bold;
+            }
+            
+            #message-list .message .dash {
+                margin-left: 10px;
+            }
+            
+            #message-list .message .message-email {
+                margin-left: 10px;
+            }
+            
+            #message-list .message .message-date-time {
+                float: right;
+            }
+            
+            #message-list .message .message-content {
+                color: rgba(120, 120, 120, 1);
+                padding: 5px 10px;
+                line-height: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <% include view/sidebar.html %>
+        </nav>
+        <main>
+            <div id="main-title">Message</div>
+            <div id="main-frame">
+                <ul id="message-list">
+                    <% if (messages) { %>
+                        <% if (messages.length > 0) { %>
+                            <% messages.forEach(function(message) { %>
+                                <li class="message">
+                                    <div class="message-title">
+                                        <span class="message-username">
+                                            <%= message["username"] %>
+                                        </span>
+                                        <span class="dash">–</span>
+                                        <a href="mailto:<%= message["email"] %>" class="message-email">
+                                            <%= message["email"] %>
+                                        </a>
+                                        <span class="message-date-time">
+                                            <%= message["date_time"] %>
+                                        </span>
+                                    </div>
+                                    <div class="message-content">
+                                        <%= message["content"] %>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        <% } else { %>
+                            <li class="message empty">空</li>
+                        <% } %>
+                    <% } else { %>
+                        <li class="message error">系统错误</li>
+                    <% } %>
+                </ul>
+            </div>
+        </main>
+    </body>
+    <script src="../js/admin/basic.js"></script>
+</html>

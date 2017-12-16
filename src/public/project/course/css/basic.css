@@ -1,0 +1,238 @@
+* {
+	font-family: Arial;
+	color: rgba(255, 255, 255, 0.8);
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+	font-size: 13px;
+}
+
+body {
+	position: fixed;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+search {
+	transition: all 0.3s;
+	position: fixed;
+	display: block;
+	top: 40px;
+	right: 40px;
+	height: 50px;
+	width: 50px;
+	background-color: rgba(15, 41, 66, 0.6);
+	overflow: hidden;
+}
+
+search:hover {
+	width: 250px;
+}
+
+#search-inner {
+	width: 250px;
+}
+
+#search-main {
+	height: 50px;
+	width: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 18px;
+	float: left;
+}
+
+#search-input {
+	float: left;
+	height: 50px;
+	width: 200px;
+}
+
+#search {
+	margin: 10px 0;
+	line-height: 30px;
+	height: 30px;
+	border: 0;
+	width: 100%;
+	background-color: transparent;
+	outline: none;
+}
+
+nav {
+	position: fixed;
+	width: 300px;
+	height: 100%;
+	background-color: rgba(15, 41, 66, 0.6);
+}
+
+nav tabs {
+	display: block;
+	height: 50px;
+}
+
+nav tabs tab {
+	transition: all 0.2s;
+	display: block;
+	float: left;
+	width: 50%;
+	text-align: center;
+	line-height: 50px;
+	height: 50px;
+	opacity: 0.8;
+	cursor: pointer;
+	border-bottom: 0px solid rgba(255, 255, 255, 0.8);
+}
+
+nav tabs tab:hover {
+	height: 49px;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+nav tabs tab:active {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+nav tabs tab.active {
+	height: 48px;
+	opacity: 1;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+nav tabs::after {
+	display: block;
+	width: 50%;
+	height: 2px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+nav navbody {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: calc(100% - 60px);
+	overflow: hidden;
+}
+
+nav navbody tabbody {
+	transition: all 0.5s;
+	position: absolute;
+	padding: 25px;
+	width: calc(100% - 50px);
+	height: calc(100% - 50px);
+	display: block;
+	overflow-y: scroll;
+}
+
+nav navbody tabbody + tabbody {
+	margin-left: 100%;
+}
+
+#course-number {
+	font-size: 20px;
+	line-height: 30px;
+}
+
+#course-title {
+	font-size: 18px;
+	margin-top: 20px;
+}
+
+#course-unit {
+	float: right;
+	margin-top: 5px;
+	font-size: 10px;
+	color: rgba(45, 71, 96, 1);
+	padding: 0 10px;
+	line-height: 16px;
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 3px;
+}
+
+#course-description {
+	font-size: 14px;
+	margin-top: 20px;
+	color: rgba(255, 255, 255, 0.5);
+	line-height: 20px;
+}
+
+.list {
+	margin-top: 20px;
+}
+
+.list ul {
+	list-style: none;
+	padding-left: 10px;
+}
+
+.list ul li {
+	line-height: 30px;
+	padding-left: 10px;
+	color: rgba(255, 255, 255, 0.7);
+}
+
+#four-year-plan {
+	
+}
+
+#four-year-plan section {
+	transition: all 0.2s;
+	padding: 10px 0;
+	opacity: 0.7;
+}
+
+#four-year-plan section i {
+	display: none;
+}
+
+#four-year-plan section:hover {
+	opacity: 0.8;
+}
+
+#four-year-plan section div {
+	
+}
+
+#four-year-plan section div span {
+	display: inline-block;
+	font-size: 18px;
+	line-height: 30px;
+	padding-right: 30px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+#four-year-plan section.active {
+	opacity: 1;
+}
+
+#four-year-plan section.active i {
+	display: inline;
+}
+
+#four-year-plan section ul {
+	list-style: none;
+	padding-left: 20px;
+}
+
+#four-year-plan section ul li {
+	white-space: nowrap;
+	overflow: hidden;
+	color: rgba(255, 255, 255, 0.6);
+}
+
+#four-year-plan section ul li span + span {
+	float: right;
+	margin-top: 5px;
+	display: inline-block;
+	line-height: 16px;
+	font-size: 11px;
+	padding: 0 10px;
+	color: rgba(45, 71, 96, 1);
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 3px;
+}
+
+main {
+	height: 100%;
+	background-color: rgba(41, 70, 105, 1);
+}
