@@ -4,7 +4,7 @@
     "description": "Liby's personal website",
     "main": "liby.me.js",
     "scripts": {
-        "dev": "nodemon --config data/nodemon.json saemanga.js",
+        "dev": "nodemon --config data/nodemon.json liby.me.js",
         "start": "node node_modules/keeling-js/entry.js",
         "create-entry": "cp node_modules/keeling-js/entry.js ./app.js"
     },
@@ -17,5 +17,8 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Liby99/liby.me.git"
+    },
+    "devDependencies": {
+        "nodemon": "^1.13.3"
     }
 }
