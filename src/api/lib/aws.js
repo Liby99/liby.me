@@ -6,8 +6,9 @@ var url = "https://s3.us-east-2.amazonaws.com/liby.me/a.jpg"
 
 var params = {
     Bucket: "liby.me",
-    Key: "a.jpg",
-    Body: "Hello World!"
+    Key: "a.txt",
+    Body: "Hello World!",
+    ACL: "public-read"
 };
 
 s3.putObject(params, function(err, data) {

@@ -192,27 +192,31 @@ module.exports = {
             "content": content
         }, function (err, result) {
             if (err) {
+                console.log(err);
                 callback(false);
             }
             else {
                 mysql.query("SELECT `AUID` FROM `article` WHERE `id` = LAST_INSERT_ID()", {}, function (err, result) {
                     if (err) {
+                        console.log(err);
                         callback(false);
                     }
                     else {
                         if (result.length == 0) {
+                            console.log("Article not found");
                             callback(false);
                         }
                         else {
                             self.saveCover(result[0]["AUID"], cover, function (err) {
                                 if (err) {
+                                    console.log(err);
                                     callback(false);
                                 }
                                 else {
                                     console.log("New article " + title + " created. ");
                                     callback(true);
                                 }
-                            })
+                            });
                         }
                     }
                 });
