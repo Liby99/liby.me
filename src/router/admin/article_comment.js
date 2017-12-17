@@ -7,16 +7,27 @@ module.exports = function (req, res, callback) {
             Article.getAdminArticles(function (articles) {
                 Article.getAdminComments(req.query["a"], function (comments) {
                     callback({
-                        "auid": req.query["a"],
+                        "id": req.query["a"],
                         "articles": articles,
                         "comments": comments,
                     });
+                }, function (err) {
+                    res.error(500, err);
                 });
+            }, function (err) {
+                res.error(500, err);
             });
         }
         else {
             Article.getAdminArticles(function (articles) {
-                res.redirect("article_comment.html?a=" + articles[0]["AUID"]);
+                if (articles.length > 0) {
+                    res.redirect("article_comment.html?a=" + articles[0]["_id"]);
+                }
+                else {
+                    res.redirect("article_manage.html");
+                }
+            }, function (err) {
+                res.error(500, err);
             });
         }
     });

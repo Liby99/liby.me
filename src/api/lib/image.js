@@ -1,0 +1,11 @@
+var BASE_64_REGEX = /^data:([A-Za-z-+\/]+);base64,(.+)$/;
+
+module.exports = {
+    decodeBase64 (data) {
+        var matches = data.match(BASE_64_REGEX);
+        if (matches.length !== 3) {
+            throw new Error('Invalid input string');
+        }
+        return new Buffer(matches[2], 'base64');
+    }
+}

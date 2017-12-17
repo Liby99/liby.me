@@ -65,13 +65,10 @@ module.exports = {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
                 if (req.body["article"] && req.body["article"] != "") {
-                    Article.getAdminArticle(req.body["article"], function (result) {
-                        if (result) {
-                            res.success(result);
-                        }
-                        else {
-                            res.error(2, "Database Error");
-                        }
+                    Article.getAdminArticle(req.body["article"], (article) => {
+                        res.success(article);
+                    }, (err) => {
+                        res.error(500, err);
                     });
                 }
                 else {
@@ -91,13 +88,10 @@ module.exports = {
                         if (exists) {
                             switch (req.body["status"]) {
                                 case "0": case "1": case "2":
-                                    Article.changeStatus(req.body["article"], parseInt(req.body["status"]), function (success) {
-                                        if (success) {
-                                            res.success({});
-                                        }
-                                        else {
-                                            res.error(3, "Database Error");
-                                        }
+                                    Article.changeStatus(req.body["article"], req.body["status"], function () {
+                                        res.success({});
+                                    }, (err) => {
+                                        res.error(500, err);
                                     });
                                     break;
                                 default:
@@ -116,34 +110,28 @@ module.exports = {
     submit_article: function (req, res) {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
-                if (req.body["AUID"] == "") {
+                if (req.body["id"] == "") {
                     Article.newArticle(req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["date_time"], req.body["cover"], req.body["content"], function (success) {
                         res.success({});
-                    }, function (err) {
+                    }, (err) => {
                         console.log(err);
                         res.error(500, err);
                     });
                 }
                 else {
-                    Article.adminExists(req.body["AUID"], function (exists) {
-                        if (exists != undefined) {
-                            if (exists) {
-                                Article.updateArticle(req.body["AUID"], req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["date_time"], req.body["cover"], req.body["content"], function (success) {
-                                    if (success) {
-                                        res.success({});
-                                    }
-                                    else {
-                                        res.error(1, "Database Error");
-                                    }
-                                });
-                            }
-                            else {
-                                res.error(2, "No Such Article Exists");
-                            }
+                    Article.adminExists(req.body["id"], function (exists) {
+                        if (exists) {
+                            Article.updateArticle(req.body["id"], req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["date_time"], req.body["cover"], req.body["content"], function (success) {
+                                res.success({});
+                            }, (err) => {
+                                res.error(1, err);
+                            });
                         }
                         else {
-                            res.error(1, "Database Error");
+                            res.error(500, "Article " + req.body["id"] + " does not exist");
                         }
+                    }, (err) => {
+                        res.error(500, err);
                     });
                 }
             }
@@ -184,8 +172,8 @@ module.exports = {
     delete_comment: function (req, res) {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
-                if (req.body["CUID"] && req.body["CUID"] != "") {
-                    Article.deleteComment(req.body["CUID"], function (success) {
+                if (req.body["id"] && req.body["id"] != "") {
+                    Article.deleteComment(req.body["id"], function (success) {
                         if (success) {
                             res.success({});
                         }
@@ -206,8 +194,8 @@ module.exports = {
     undelete_comment: function (req, res) {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
-                if (req.body["CUID"] && req.body["CUID"] != "") {
-                    Article.undeleteComment(req.body["CUID"], function (success) {
+                if (req.body["id"] && req.body["id"] != "") {
+                    Article.undeleteComment(req.body["id"], function (success) {
                         if (success) {
                             res.success({});
                         }
