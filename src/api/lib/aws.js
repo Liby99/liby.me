@@ -1,21 +1,20 @@
-var AWS = require('aws-sdk');
-
+var AWS = require("aws-sdk");
 var s3 = new AWS.S3();
 
-var url = "https://s3.us-east-2.amazonaws.com/liby.me/a.jpg"
-
-var params = {
-    Bucket: "liby.me",
-    Key: "a.txt",
-    Body: "Hello World!",
-    ACL: "public-read"
-};
-
-s3.putObject(params, function(err, data) {
-    if (err) {
-        console.log(err)
+module.exports = {
+    saveImage (filename, data, callback, error) {
+        s3.upload({
+            Bucket: "liby.me",
+            Key: filename,
+            Body: data,
+            ACL: "public-read"
+        }, function (err, data) {
+            if (err) {
+                error(err);
+            }
+            else {
+                callback(data["Location"]);
+            }
+        });
     }
-    else {
-        console.log("Successfully uploaded data to " + params.Bucket + "/" + params.Key);
-    }
-});
+}

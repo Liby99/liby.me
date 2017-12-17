@@ -118,12 +118,10 @@ module.exports = {
             if (logged) {
                 if (req.body["AUID"] == "") {
                     Article.newArticle(req.body["title"], req.body["subtitle"], req.body["tags"], req.body["status"], req.body["date_time"], req.body["cover"], req.body["content"], function (success) {
-                        if (success) {
-                            res.success({});
-                        }
-                        else {
-                            res.error(1, "Database Error");
-                        }
+                        res.success({});
+                    }, function (err) {
+                        console.log(err);
+                        res.error(500, err);
                     });
                 }
                 else {
