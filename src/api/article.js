@@ -1,5 +1,4 @@
-var jsdom = require("jsdom");
-var jquery = require("jquery");
+var cheerio = require("cheerio");
 var mysql = require("keeling-js/lib/mysql.js");
 var file = require("./lib/file.js");
 
@@ -58,21 +57,11 @@ module.exports = {
                 callback(undefined);
             }
             else {
-                function process(i) {
-                    if (i >= result.length) {
-                        callback(result);
-                        return;
-                    }
-                    jsdom.env(result[i]["content"], function (err, window) {
-                        if (err) {
-                            console.log("Process brief error for article " + result[i]["AUID"]);
-                        }
-                        var $ = jquery(window);
-                        result[i]["content"] = $("body").text().substring(0, 150);
-                        process(i + 1);
-                    });
-                }
-                process(0);
+                callback(result.map((article) => {
+                    var $ = cheerio.load("<div>" + article["content"] + "</div>");
+                    article["content"] = $.text().substring(0, 150);
+                    return article;
+                }));
             }
         });
     },
