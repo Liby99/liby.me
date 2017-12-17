@@ -227,11 +227,15 @@ body.mobile #banner-section {
     width: 0px !important;
 }
 
-#project-section {
+#experiences-section, #project-section {
     max-width: 1024px;
     width: 100%;
     margin: 0 auto;
     padding: 80px 0;
+}
+
+#experiences-section {
+    border-bottom: 1px solid rgba(220, 220, 220, 1);
 }
 
 #project-intro {
