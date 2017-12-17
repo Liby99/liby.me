@@ -25,16 +25,16 @@ module.exports = function (req, res, callback) {
                             });
                         }
                         else {
-                            res.redirect("error.html?err=500");
+                            res.error(500, "Get articles error");
                         }
                     });
                 }
                 else {
-                    res.redirect("error.html?err=500&log=Invalid%20page%20number");
+                    res.error(500, "Invalid page number");
                 }
             }
             else {
-                res.redirect("error.html?err=500");
+                res.error(500, "No articles right now");
             }
         });
     }

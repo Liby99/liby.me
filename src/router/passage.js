@@ -21,22 +21,22 @@ module.exports = function (req, res, callback) {
                                     });
                                 }
                                 else {
-                                    res.redirect("error.html?err=500");
+                                    res.error(500, "Get comments error");
                                 }
                             });
                         });
                     }
                     else {
-                        res.redirect("error.html?err=500");
+                        res.error(404, "This article does not exists");
                     }
                 });
             }
             else {
-                res.redirect("error.html?err=404&log=Article%20not%20found");
+                res.error(404, "This article does not exists");
             }
         });
     }
     else {
-        res.redirect("error.html?err=502");
+        res.error(404, "Please specify article id");
     }
 }
