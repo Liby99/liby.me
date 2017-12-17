@@ -20,11 +20,11 @@ var User = {
                 type: "get",
                 success: function (result) {
                     var data = JSON.parse(result);
-                    if (data["error_code"] == 0) {
+                    if (data["code"] == 0) {
                         window.location.href = "/admin/login.html";
                     }
                     else {
-                        alert(data["error_log"]);
+                        alert(data["msg"]);
                     }
                 }
             });
@@ -37,12 +37,12 @@ var User = {
             data: { "original": original, "new": password },
             success: function (result) {
                 var data = JSON.parse(result);
-                if (data["error_code"] == 0) {
+                if (data["code"] == 0) {
                     alert("Successfully Changed Password");
                     window.location.reload();
                 }
                 else {
-                    alert(data["error_log"])
+                    alert(data["msg"])
                 }
             }
         })

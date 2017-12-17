@@ -79,8 +79,8 @@
                         data: { "article": AUID, "status": status },
                         success: function (result) {
                             var data = JSON.parse(result);
-                            if (data["error_code"] != 0) {
-                                alert(data["error_log"]);
+                            if (data["code"] != 0) {
+                                alert(data["msg"]);
                                 window.location.reload();
                             }
                         }

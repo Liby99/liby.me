@@ -65,14 +65,14 @@ function ajax(options) {
         data: options["data"],
         success: function (result) {
             var data = JSON.parse(result);
-            if (data["error_code"] == 0) {
+            if (data["code"] == 0) {
                 options["success"](data["content"]);
             }
             else if (options["error"]) {
-                options["error"](data["error_code"], data["error_log"], data["content"]);
+                options["error"](data["code"], data["msg"], data["content"]);
             }
             else {
-                alert("Error " + data["error_code"] + ": " + data["error_log"]);
+                alert("Error " + data["code"] + ": " + data["msg"]);
             }
             return false;
         },

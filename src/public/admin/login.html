@@ -40,11 +40,11 @@
                                 data: { "username": $("#username").val(), "password": $("#password").val() },
                                 success: function (result) {
                                     var data = JSON.parse(result);
-                                    if (data["error_code"] == 0) {
+                                    if (data["code"] == 0) {
                                         window.location.href = "index.html";
                                     }
                                     else {
-                                        alert(data["error_log"]);
+                                        alert(data["msg"]);
                                     }
                                 }
                             });
