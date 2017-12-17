@@ -5,14 +5,20 @@
     "main": "liby.me.js",
     "scripts": {
         "dev": "nodemon --config data/nodemon.json liby.me.js",
-        "start": "node node_modules/keeling-js/entry.js",
-        "create-entry": "cp node_modules/keeling-js/entry.js ./app.js"
+        "start": "node liby.me.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "bufferhelper": "^0.2.1",
+        "client-sessions": "^0.8.0",
         "ejs-alt": "0.0.3",
-        "keeling-js": "^1.3.12"
+        "fileupload": "^1.0.0",
+        "jquery": "^3.2.1",
+        "jsdom": "^11.5.1",
+        "keeling-js": "^1.3.12",
+        "mysql": "^2.15.0",
+        "request": "^2.83.0"
     },
     "repository": {
         "type": "git",
