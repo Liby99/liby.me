@@ -1,10 +1,10 @@
 var AWS = require("./lib/aws");
 var Promise = require("./lib/promise");
 var ObjectId = require("./lib/object_id");
-var Image = require("./lib/image");
 
 var Mongo = require("keeling-js/lib/mongo");
 var Debug = require("keeling-js/lib/debug");
+var Image = require("keeling-js/lib/image");
 var Cheerio = require("cheerio");
 
 var Articles = Mongo.db.collection("article");
