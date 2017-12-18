@@ -8,13 +8,10 @@ module.exports = {
         Admin.match(req.body["username"], req.body["password"], function (result) {
             if (result == 0) {
                 Admin.login(req.body["username"], res, function (logged) {
-                    if (logged) {
-                        console.log("User " + req.body["username"] + " now logged in the admin system. ");
-                        res.success({});
-                    }
-                    else {
-                        res.error(4, "Session Log Error");
-                    }
+                    console.log("User " + req.body["username"] + " now logged in the admin system. ");
+                    res.success({});
+                }, (err) => {
+                    res.error(4, "Session Log Error");
                 });
             }
             else if (result == 1) {
@@ -26,6 +23,8 @@ module.exports = {
             else {
                 res.error(3, "System Error");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     logout: function (req, res) {

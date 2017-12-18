@@ -1,13 +1,14 @@
-var AWS = require("./lib/aws");
-var Promise = require("./lib/promise");
-var ObjectId = require("./lib/object_id");
+const AWS = require("./lib/aws");
+const Promise = require("./lib/promise");
+const ObjectId = require("./lib/object_id");
 
-var Mongo = require("keeling-js/lib/mongo");
-var Debug = require("keeling-js/lib/debug");
-var Image = require("keeling-js/lib/image");
-var Cheerio = require("cheerio");
+const Mongo = require("keeling-js/lib/mongo");
+const Debug = require("keeling-js/lib/debug");
+const Image = require("keeling-js/lib/image");
 
-var Articles = Mongo.db.collection("article");
+const Cheerio = require("cheerio");
+
+const Articles = Mongo.db.collection("article");
 
 module.exports = {
     adminExists (articleId, callback, error) {
