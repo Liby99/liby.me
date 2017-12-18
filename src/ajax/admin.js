@@ -38,22 +38,23 @@ module.exports = {
                     Admin.checkPasswordWithSession(req.cookies["session"], req.body["original"], function (correct) {
                         if (correct) {
                             Admin.changePassword(req.cookies["session"], req.body["new"], function (result) {
-                                if (result) {
-                                    res.success({});
-                                }
-                                else {
-                                    res.error(4, "Database Error");
-                                }
+                                res.success({});
+                            }, (err) => {
+                                res.error(500, err);
                             });
                         }
                         else {
                             res.error(3, "Your Password Is Incorrect");
                         }
+                    }, (err) => {
+                        res.error(500, err);
                     });
                 }
                 else {
                     res.error(2, "You Have Not Logged In Yet!");
                 }
+            }, (err) => {
+                res.error(500, err);
             });
         }
         else {
@@ -77,6 +78,8 @@ module.exports = {
             else {
                 res.error(1000, "Please Login First");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     change_article_status: function (req, res) {
@@ -104,6 +107,8 @@ module.exports = {
                     });
                 }
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     submit_article: function (req, res) {
@@ -137,6 +142,8 @@ module.exports = {
             else {
                 res.error(1000, "please Login First");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     get_article_comment: function (req, res) {
@@ -166,6 +173,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     delete_comment: function (req, res) {
@@ -188,6 +197,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     undelete_comment: function (req, res) {
@@ -210,6 +221,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     get_project: function (req, res) {
@@ -232,6 +245,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     submit_project: function (req, res) {
@@ -263,6 +278,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     change_project_status: function (req, res) {
@@ -290,6 +307,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     get_artwork: function (req, res) {
@@ -312,6 +331,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     submit_artwork: function (req, res) {
@@ -366,6 +387,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     change_artwork_status: function (req, res) {
@@ -393,6 +416,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     },
     delete_artwork: function (req, res) {
@@ -415,6 +440,8 @@ module.exports = {
             else {
                 res.error(1000, "Please login first");
             }
+        }, (err) => {
+            res.error(500, err);
         });
     }
 }
