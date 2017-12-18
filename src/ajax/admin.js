@@ -234,9 +234,11 @@ module.exports = {
                             res.success(project);
                         }
                         else {
-                            res.error(2, "Database error");
+                            res.error(2, "project not found");
                         }
-                    })
+                    }, (err) => {
+                        res.error(500, err);
+                    });
                 }
                 else {
                     res.error(1, "project parameter is required");
@@ -252,26 +254,20 @@ module.exports = {
     submit_project: function (req, res) {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
-                if (req.body["PUID"] != "") {
-                    Project.updateProject(req.body["PUID"], req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["date_time"], req.body["cover"], function (success) {
-                        if (success) {
-                            console.log("Updated project " + req.body["name"]);
-                            res.success({});
-                        }
-                        else {
-                            res.error(1, "Error when updating project " + req.body["name"]);
-                        }
+                if (req.body["id"] != "") {
+                    Project.updateProject(req.body["id"], req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["date_time"], req.body["cover"], function (success) {
+                        console.log("Updated project " + req.body["name"]);
+                        res.success({});
+                    }, (err) => {
+                        res.error(1, "Error when updating project " + req.body["name"]);
                     });
                 }
                 else {
                     Project.newProject(req.body["name"], req.body["author"], req.body["url"], req.body["status"], req.body["date_time"], req.body["cover"], function (success) {
-                        if (success) {
-                            console.log("Inserted new project " + req.body["name"]);
-                            res.success({});
-                        }
-                        else {
-                            res.error(1, "Error when inserting new project");
-                        }
+                        console.log("Inserted new project " + req.body["name"]);
+                        res.success({});
+                    }, (err) => {
+                        res.error(1, "Error when inserting new project");
                     });
                 }
             }
@@ -288,12 +284,9 @@ module.exports = {
                 if (req.body["project"] && req.body["project"] != "") {
                     if (req.body["status"] && req.body["status"] >= 0 && req.body["status"] <= 2) {
                         Project.changeStatus(req.body["project"], req.body["status"], function (success) {
-                            if (success) {
-                                res.success({});
-                            }
-                            else {
-                                res.error(3, "Database error");
-                            }
+                            res.success({});
+                        }, (err) => {
+                            res.error(500, err);
                         });
                     }
                     else {

@@ -27,9 +27,9 @@
                             <th>Status</th>
                             <th>Edit</th>
                         </tr>
-                        <% projects.forEach(function (project) { %>
-                            <tr class="project" id="<%= project["PUID"] %>">
-                                <td><%= project["id"] %></td>
+                        <% projects.forEach(function (project, i) { %>
+                            <tr class="project" id="<%= project["_id"] %>">
+                                <td><%= i + 1 %></td>
                                 <td><%= project["name"] %></td>
                                 <td><%= project["author"] %></td>
                                 <td><a target="_blank" href="<%= project["url"] %>"><%= project["url"] %></a></td>
