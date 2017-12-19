@@ -131,8 +131,10 @@
     margin: 0;
     padding: 10px 20px !important;
     font-size: 12px;
-    border-left: 3px solid rgba(200, 200, 200, 1);
     font-style: italic;
+    border-left: 3px solid rgba(255, 149, 166, 1);
+    color: rgba(255, 149, 166, 1);
+    background-color: rgba(255, 149, 166, 0.1);
 }
 
 #article-content img {

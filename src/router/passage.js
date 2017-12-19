@@ -7,10 +7,6 @@ module.exports = function (req, res, callback) {
                 Article.read(req.query["a"], function (success) {
                     Article.getPreviousArticle(req.query["a"], article["date_time"], function (prev) {
                         Article.getNextArticle(req.query["a"], article["date_time"], function (next) {
-                            
-                            console.log(prev);
-                            console.log(next);
-                            
                             callback({
                                 "article": article,
                                 "prev_article": prev,

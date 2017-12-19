@@ -10,7 +10,7 @@ var Nav = {
         this.initiateMobile();
         this.initiateNav();
         this.initiateNavToggle();
-        this.initiateTitle();
+        // this.initiateTitle();
     },
     initiateMobile: function () {
         if (isMobile()) {

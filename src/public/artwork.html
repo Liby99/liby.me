@@ -103,13 +103,17 @@
                                 <span class="artwork-info-title">
                                     <span class="label">Softwares: </span>
                                 </span>
-                                <% if (artwork) artwork["softwares"].split(", ").forEach(function (str) { %>
-                                    <span class="software"><%= str %></span>
-                                <% }) %>
+                                <span id="artwork-software-list">
+                                    <% if (artwork) artwork["softwares"].split(", ").forEach(function (str) { %>
+                                        <span class="software"><%= str %></span>
+                                    <% }) %>
+                                </span>
                             </div>
                             <div class="artwork-info-section">
                                 <span class="artwork-info-title">
                                     <span class="label">Tags: </span>
+                                </span>
+                                <span id="artwork-tag-list">
                                     <% if (artwork) artwork["tags"].split(", ").forEach(function (str) { %>
                                         <span class="tag"><%= str %></span>
                                     <% }) %>

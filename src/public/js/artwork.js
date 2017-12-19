@@ -138,7 +138,7 @@ var Artwork = {
         var html = "";
         softwares = softwares.split(", ");
         for (var i = 0; i < softwares.length; i++) {
-            html += "<li class=\"software\">" + softwares[i] + "</li>";
+            html += "<span class=\"software\">" + softwares[i] + "</span>";
         }
         this.$artworkSoftwares.html(html);
     },
