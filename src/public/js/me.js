@@ -77,12 +77,13 @@ var Skill = {
             var target = self.targetSkill * $(window).width();
             var diff = curr - target;
             if (Math.abs(diff * 0.1) <= self.threshold) {
-                self.$skillHolder.scrollLeft(target);
-                self.currSkill = self.targetSkill;
+                if (self.currSkill != self.targetSkill) {
+                    self.$skillHolder.scrollLeft(target);
+                    self.currSkill = self.targetSkill;
+                }
             }
             else {
-                var nv = curr - diff * 0.1;
-                self.$skillHolder.scrollLeft(diff > 0 ? Math.floor(nv) : Math.ceil(nv));
+                self.$skillHolder.scrollLeft(diff > 0 ? Math.floor(curr - diff * 0.1) : Math.ceil(curr - diff * 0.1));
             }
         }, 20);
     },
@@ -93,7 +94,7 @@ var Skill = {
     open: function (id) {
         this.targetSkill = id;
         this.$skillHeaders.eq(id).addClass("active").siblings().removeClass("active");
-        this.$skills.eq(id).addClass("active").siblings().removeClass("active");
+        this.$skills.eq(this.targetSkill).addClass("active").siblings().removeClass("active");
     }
 }
 

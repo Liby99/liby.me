@@ -218,12 +218,11 @@ body.mobile #banner-section {
     transition-delay: 0.3s;
     display: block;
     height: 2px;
-    width: 0;
     background-color: rgba(255, 109, 136, 1);
 }
 
-.skill.active .progress-bar {
-    width: auto;
+.skill:not(.active) .progress-bar {
+    width: 0 !important;
 }
 
 #experiences-section, #project-section {
