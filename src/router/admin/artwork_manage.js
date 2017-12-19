@@ -14,6 +14,10 @@ module.exports = function (req, res, callback) {
             callback({
                 "artworks": artworks
             });
+        }, (err) => {
+            res.error(500, err);
         });
+    }, (err) => {
+        res.error(500, err);
     });
 }

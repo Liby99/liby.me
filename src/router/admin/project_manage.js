@@ -7,6 +7,10 @@ module.exports = function (req, res, callback) {
             callback({
                 "projects": projects
             });
+        }, (err) => {
+            res.error(err);
         });
+    }, (err) => {
+        res.error(err);
     });
 }

@@ -8,7 +8,9 @@ const Cheerio = require("cheerio");
 
 module.exports = {
     getAdminArtworks (callback, error) {
-        Artworks.find({}).sort({
+        Artworks.find({}, {
+            "description": 0
+        }).sort({
             "date_time": -1
         }).toArray((err, artworks) => {
             if (err) {
@@ -21,7 +23,8 @@ module.exports = {
     },
     getLatestArtworks (callback, error)  {
         Artworks.find({
-            "status": 1
+            "status": 1,
+            "visible": true
         }, {
             "description": 0
         }).sort({
@@ -188,6 +191,27 @@ module.exports = {
                 callback();
             }
         });
+    },
+    setVisibility (artworkId, visible, callback, error) {
+        if (visible == "true" || visible == "false") {
+            Artworks.updateOne({
+                "_id": ObjectId(artworkId)
+            }, {
+                $set: {
+                    "visible": JSON.parse(visible)
+                }
+            }, (err, result) => {
+                if (err) {
+                    error(err);
+                }
+                else {
+                    callback();
+                }
+            });
+        }
+        else {
+            error(new Error("visible should be either 'true' or 'false'"));
+        }
     },
     getTypeString (type) {
         switch (type) {

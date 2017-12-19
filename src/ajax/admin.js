@@ -373,6 +373,27 @@ module.exports = {
         }, (err) => {
             res.error(500, err);
         });
+    },
+    set_artwork_visibility: function (req, res) {
+        Admin.loggedIn(req, function (logged) {
+            if (logged) {
+                if (req.body["artwork"] && req.body["visible"]) {
+                    Artwork.setVisibility(req.body["artwork"], req.body["visible"], () => {
+                        res.success();
+                    }, (err) => {
+                        res.error(500, err);
+                    });
+                }
+                else {
+                    res.error(403, "Please specify artwork and visibility");
+                }
+            }
+            else {
+                res.error(1000, "Please login first");
+            }
+        }, (err) => {
+            res.error(500, err);
+        });
     }
     // delete_artwork: function (req, res) {
     //     Admin.loggedIn(req, function (logged) {
