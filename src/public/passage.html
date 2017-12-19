@@ -39,7 +39,7 @@
                     <div id="article-info-inner">
                         <div id="article-user"><%= article["username"] %></div>
                         <div id="article-data">
-                            <span id="article-date"><%= article["date_time"].toString().substring(0, 10) %></span>
+                            <span id="article-date"><%= article["date_time"].toString().substring(4, 10) + ", " + article["date_time"].getFullYear() %></span>
                             <span id="article-view"><i class="fa fa-eye"></i><%= article["view"] %></span>
                             <span id="article-comment"><i class="fa fa-comments"></i><%= article["comments"].length %></span>
                         </div>
@@ -59,7 +59,7 @@
                                     <div class="comment-info">
                                         <span class="comment-username"><%= comment["username"] %></span>
                                         -
-                                        <span class="comment-date"><%= comment["date_time"] %></span>
+                                        <span class="comment-date"><%= comment["date_time"].toString().substring(4, 10) + ", " + comment["date_time"].getFullYear() %></span>
                                     </div>
                                     <div class="comment-content">
                                         <%= comment["content"] %>
