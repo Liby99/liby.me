@@ -19,7 +19,6 @@ module.exports = {
                 error(err);
             }
             else {
-                console.log(count);
                 callback(count != 0);
             }
         });

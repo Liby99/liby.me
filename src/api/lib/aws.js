@@ -48,7 +48,6 @@ module.exports = {
                             error(err);
                         }
                         else {
-                            console.log(data);
                             callback();
                         }
                     });
@@ -82,7 +81,6 @@ module.exports = {
                 error(err);
             }
             else {
-                console.log(data);
                 callback();
             }
         });

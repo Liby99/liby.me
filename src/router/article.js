@@ -11,7 +11,6 @@ module.exports = function (req, res, callback) {
                 var right = page >= maxPage - 2;
                 var start = left ? 1 : middle ? page - 2 : maxPage - 4;
                 if (!isNaN(page) && page > 0 && page <= maxPage) {
-                    console.log(page);
                     Article.getArticles((page - 1) * 5, function (articles) {
                         if (articles) {
                             callback({
