@@ -230,24 +230,22 @@ main {
 }
 
 #artwork-info {
+    margin-top: 10px;
     padding: 10px;
     display: flex;
     flex-flow: row;
-}
-
-#artwork-info .inner {
-    width: 60%;
-}
-
-#artwork-info .side {
-    padding-right: 20px;
-    width: calc(40% - 20px);
+    border-bottom: 1px solid rgba(230, 230, 230, 1);
 }
 
 #artwork-head {
     display: flex;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(230, 230, 230, 1);
+}
+
+#artwork-information {
+    flex-grow: 1;
+    padding-top: 8px;
+    text-align: right;
 }
 
 #artwork-thumbnail {
@@ -275,19 +273,14 @@ main {
     color: rgba(80, 80, 80, 1);
 }
 
-#artwork-information {
-    padding: 20px 0;
-    line-height: 25px;
-    border-bottom: 1px solid rgba(230, 230, 230, 1);
-}
-
 #artwork-information .label {
     color: rgba(150, 150, 150, 1);
     margin-right: 10px;
 }
 
 .artwork-info-section {
-    margin-bottom: 10px;
+    font-size: 10px;
+    margin-bottom: 2px;
 }
 
 #artwork-software-list, #artwork-tag-list {
@@ -304,12 +297,15 @@ main {
 }
 
 #artwork-description {
+    padding: 10px;
     line-height: 24px;
     color: rgba(120, 120, 120, 1);
     margin-bottom: 40px;
 }
 
 #artwork-description img {
+    display: block;
+    margin: 0 auto;
     max-width: 100%;
 }
 

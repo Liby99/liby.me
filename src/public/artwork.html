@@ -81,52 +81,44 @@
                         <%- artwork ? artwork["url"] : "" %>
                     </div>
                     <div id="artwork-info">
-                        <div class="side">
-                            <div id="artwork-head">
-                                <div id="artwork-thumbnail">
-                                    <img src="<%= artwork ? artwork.thumb : "" %>" />
-                                </div>
-                                <div id="artwork-titles">
-                                    <div id="artwork-title"><%= artwork ? artwork["title"] : "" %></div>
-                                    <div id="artwork-subtitle"><%= artwork ? artwork["subtitle"] : "" %></div>
-                                </div>
+                        <div id="artwork-head">
+                            <div id="artwork-thumbnail">
+                                <img src="<%= artwork ? artwork.thumb : "" %>" />
                             </div>
-                            <div id="artwork-information">
-                                <div class="artwork-info-section">
-                                    <span class="label">Post: </span>
-                                    <span id="artwork-date-time"><%= artwork ? (artwork["date_time"].toString().substring(4, 10) + ", " + artwork["date_time"].getFullYear()) : "" %></span>
-                                </div>
-                                <div class="artwork-info-section">
-                                    <span class="label">Type: </span>
-                                    <span id="artwork-type"><%= artwork ? artwork["type"] : "" %></span>
-                                </div>
-                                <div class="artwork-info-section">
-                                    <div class="artwork-info-title">
-                                        <span class="label">Softwares: </span>
-                                    </div>
-                                    <ul id="artwork-software-list">
-                                        <% if (artwork) artwork["softwares"].split(", ").forEach(function (str) { %>
-                                            <li class="software"><%= str %></li>
-                                        <% }) %>
-                                    </ul>
-                                </div>
-                                <div class="artwork-info-section">
-                                    <div class="artwork-info-title">
-                                        <span class="label">Tags: </span>
-                                    </div>
-                                    <ul id="artwork-tag-list">
-                                        <% if (artwork) artwork["tags"].split(", ").forEach(function (str) { %>
-                                            <li class="tag"><%= str %></li>
-                                        <% }) %>
-                                    </ul>
-                                </div>
+                            <div id="artwork-titles">
+                                <div id="artwork-title"><%= artwork ? artwork["title"] : "" %></div>
+                                <div id="artwork-subtitle"><%= artwork ? artwork["subtitle"] : "" %></div>
                             </div>
                         </div>
-                        <div class="inner">
-                            <div id="artwork-description">
-                                <%- artwork ? artwork["description"] : "" %>
+                        <div id="artwork-information">
+                            <div class="artwork-info-section">
+                                <span class="label">Post: </span>
+                                <span id="artwork-date-time"><%= artwork ? (artwork["date_time"].toString().substring(4, 10) + ", " + artwork["date_time"].getFullYear()) : "" %></span>
+                            </div>
+                            <!-- <div class="artwork-info-section">
+                                <span class="label">Type: </span>
+                                <span id="artwork-type"><%= artwork ? artwork["type"] : "" %></span>
+                            </div> -->
+                            <div class="artwork-info-section">
+                                <span class="artwork-info-title">
+                                    <span class="label">Softwares: </span>
+                                </span>
+                                <% if (artwork) artwork["softwares"].split(", ").forEach(function (str) { %>
+                                    <span class="software"><%= str %></span>
+                                <% }) %>
+                            </div>
+                            <div class="artwork-info-section">
+                                <span class="artwork-info-title">
+                                    <span class="label">Tags: </span>
+                                    <% if (artwork) artwork["tags"].split(", ").forEach(function (str) { %>
+                                        <span class="tag"><%= str %></span>
+                                    <% }) %>
+                                </span>
                             </div>
                         </div>
+                    </div>
+                    <div id="artwork-description">
+                        <%- artwork ? artwork["description"] : "" %>
                     </div>
                 </div>
             </section>
