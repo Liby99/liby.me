@@ -5,13 +5,17 @@ module.exports = {
         if (req.body["artwork"]) {
             Artwork.getArtworkData(req.body["artwork"], function (artwork) {
                 if (artwork) {
-                    Artwork.view(req.body["artwork"], function (callback) {
+                    Artwork.view(req.body["artwork"], function () {
                         res.success(artwork);
+                    }, (err) => {
+                        res.error(500, err);
                     });
                 }
                 else {
                     res.error(2, "No such artwork");
                 }
+            }, (err) => {
+                res.error(500, err);
             });
         }
         else {
