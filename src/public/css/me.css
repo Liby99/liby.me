@@ -213,16 +213,17 @@ body.mobile #banner-section {
     background-color: rgba(220, 220, 220, 1);
 }
 
-.skill .inner .skill-tree .skill-tree-item .progress-outer .progress-bar {
+.skill .progress-bar {
     transition: all 1s;
     transition-delay: 0.3s;
     display: block;
     height: 2px;
+    width: 0;
     background-color: rgba(255, 109, 136, 1);
 }
 
-.skill .inner .skill-tree .skill-tree-item .progress-outer .progress-bar.hidden {
-    width: 0px !important;
+.skill.active .progress-bar {
+    width: auto;
 }
 
 #experiences-section, #project-section {

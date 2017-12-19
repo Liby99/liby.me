@@ -6,8 +6,10 @@ $(function () {
 
 var Skill = {
     currSkill: 0,
+    targetSkill: 0,
     schedule: undefined,
-    interval: 5 * 1000,
+    interval: 8 * 1000,
+    threshold: 0.1,
     $skillHeaders: $(".skill-header"),
     $skillHolder: $("#skill-list-holder"),
     $skills: $(".skill"),
@@ -17,6 +19,8 @@ var Skill = {
         this.initiateScheduler();
         this.initiateSkillTree();
         this.initiateResize();
+        
+        this.runAnimation();
     },
     initiateHover: function () {
         var self = this;
@@ -40,7 +44,7 @@ var Skill = {
         var self = this;
         $(".skill-tree-item").each(function () {
             var percentage = parseFloat($(this).attr("data-percent")) * 100;
-            $(this).children(".progress-outer").children(".progress-bar").css("width", percentage + "%");
+            $(this).find(".progress-bar").css({ "width": percentage + "%" });
         });
     },
     initiateResize: function () {
@@ -57,25 +61,39 @@ var Skill = {
         var self = this;
         self.stopScheduler();
         self.schedule = setInterval(function () {
-            if (self.currSkill == 3) {
-                self.currSkill = 0;
+            if (self.targetSkill == 3) {
+                self.targetSkill = 0;
             }
             else {
-                self.currSkill++;
+                self.targetSkill++;
             }
-            self.open(self.currSkill);
+            self.open(self.targetSkill);
         }, self.interval);
+    },
+    runAnimation: function () {
+        var self = this;
+        self.animation = setInterval(function () {
+            var curr = self.$skillHolder.scrollLeft();
+            var target = self.targetSkill * $(window).width();
+            var diff = curr - target;
+            if (Math.abs(diff * 0.1) <= self.threshold) {
+                self.$skillHolder.scrollLeft(target);
+                self.currSkill = self.targetSkill;
+            }
+            else {
+                var nv = curr - diff * 0.1;
+                self.$skillHolder.scrollLeft(diff > 0 ? Math.floor(nv) : Math.ceil(nv));
+            }
+        }, 20);
     },
     stopScheduler: function () {
         clearInterval(this.schedule);
         this.schedule = undefined;
     },
     open: function (id) {
-        this.currSkill = id;
-        this.$skillHolder.animate({ scrollLeft: id * $(window).width() });
+        this.targetSkill = id;
         this.$skillHeaders.eq(id).addClass("active").siblings().removeClass("active");
-        this.$skills.eq(id).addClass("active").siblings().removeClass("active").find(".progress-bar").addClass("hidden");
-        this.$skills.eq(id).find(".progress-bar").removeClass("hidden");
+        this.$skills.eq(id).addClass("active").siblings().removeClass("active");
     }
 }
 
