@@ -2,3 +2,4 @@
 old/server/data/config.json filter=git-crypt diff=git-crypt
 src/data/config.json filter=git-crypt diff=git-crypt
 src/data/mysql.json filter=git-crypt diff=git-crypt
+src/data/mongo.json filter=git-crypt diff=git-crypt

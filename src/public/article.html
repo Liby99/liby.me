@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Liby.me</title>
+        <title>Liby.me - Article</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
@@ -18,9 +18,9 @@
         <main>
             <% if (page == 1) { %>
                 <section id="first-article-section">
-                    <a href="passage.html?a=<%= articles[0]["AUID"] %>" id="first-article" style="background-image: url(img/article/<%= articles[0]["AUID"] %>.jpg)">
+                    <a href="passage.html?a=<%= articles[0]["_id"] %>" id="first-article" style="background-image: url(<%= articles[0]["cover"] %>)">
                         <div class="article-mask">
-                            <div class="inner" id="<%= articles[0]["AUID"] %>">
+                            <div class="inner" id="<%= articles[0]["_id"] %>">
                                 <div id="first-article-titles">
                                     <div id="first-article-title"><%= articles[0]["title"] %></div>
                                     <div id="first-article-subtitle"><%= articles[0]["subtitle"] %></div>
@@ -28,11 +28,11 @@
                                 <div id="first-article-info">
                                     <div id="first-article-data">
                                         <%= articles[0]["username"] %> |
-                                        <%= articles[0]["date_time"].toString().substring(0, 10) %> |
+                                        <%= articles[0]["date_time"] %> |
                                         <i class="fa fa-eye"></i>
                                         <%= articles[0]["view"] %> |
                                         <i class="fa fa-comments"></i>
-                                        <%= articles[0]["comment"] %>
+                                        <%= articles[0]["comments"].length %>
                                     </div>
                                     <div id="first-article-tags">
                                         <% articles[0]["tags"].split(", ").forEach(function (str) { %>
@@ -51,19 +51,19 @@
             <section id="article-list-section">
                 <ul id="article-list">
                     <% for (var i = (page == 1) ? 1 : 0; i < articles.length; i++) { %>
-                        <li class="article" id="<%= articles[i]["AUID"] %>">
-                            <a href="/passage.html?a=<%= articles[i]["AUID"] %>">
-                                <div class="article-cover" style="background-image: url(img/article/<%= articles[i]["AUID"] %>.jpg)"></div>
+                        <li class="article" id="<%= articles[i]["_id"] %>">
+                            <a href="/passage.html?a=<%= articles[i]["_id"] %>">
+                                <div class="article-cover" style="background-image: url(<%= articles[i]["cover"] %>)"></div>
                                 <div class="article-info">
                                     <div class="article-title"><%= articles[i]["title"] %></div>
                                     <div class="article-subtitle"><%= articles[i]["subtitle"] %></div>
                                     <div class="article-data">
                                         <%= articles[i]["username"] %> |
-                                        <%= articles[i]["date_time"].toString().substring(0, 10) %> |
+                                        <%= articles[i]["date_time"] %> |
                                         <i class="fa fa-eye"></i>
-                                        <%= articles[i]["view"] %> |
+                                        <%= articles[i]["view"] || 0 %> |
                                         <i class="fa fa-comments"></i>
-                                        <%= articles[i]["comment"] %>
+                                        <%= articles[i]["comments"] ? articles[i]["comments"].length : 0 %>
                                     </div>
                                     <div class="article-content"><%- articles[i]["content"] %>...</div>
                                 </div>

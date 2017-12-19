@@ -6,13 +6,10 @@ module.exports = {
         if (req.body["username"] && req.body["email"] && req.body["content"]) {
             if (UserUtil.isUsername(req.body["username"])) {
                 if (UserUtil.isEmail(req.body["email"])) {
-                    Message.newMessage(req.body["username"], req.body["email"], req.body["content"], function (success) {
-                        if (success) {
-                            res.success({});
-                        }
-                        else {
-                            res.error(4, "Database error");
-                        }
+                    Message.newMessage(req.body["username"], req.body["email"], req.body["content"], function () {
+                        res.success({});
+                    }, (err) => {
+                        res.error(4, "Database error: " + err);
                     });
                 }
                 else {

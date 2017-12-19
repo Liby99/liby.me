@@ -70,14 +70,14 @@
                 <ul id="new-article-list">
                     <% articles.forEach(function (article) { %>
                         <li class="article">
-                            <a href="passage.html?a=<%= article["AUID"] %>" style="background-image: url(img/article/<%= article["AUID"] %>.jpg)">
+                            <a href="passage.html?a=<%= article["_id"] %>" style="background-image: url(<%= article["cover"] %>)">
                                 <div class="inner">
                                     <div class="title"><%= article["title"] %></div>
                                     <div class="subtitle"><%= article["subtitle"] %></div>
                                 </div>
                             </a>
                         </li>
-                    <% }) %>
+                    <% }); %>
                 </ul>
             </section>
         </main>

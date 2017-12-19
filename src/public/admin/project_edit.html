@@ -109,7 +109,7 @@
                         url: "/ajax/admin?action=submit_project",
                         type: "post",
                         data: {
-                            "PUID": (self.project == undefined ? "" : self.project),
+                            "id": (self.project == undefined ? "" : self.project),
                             "name": name,
                             "author": author,
                             "url": url,
@@ -177,7 +177,7 @@
                 $("#project-date-time").datetimepicker({
                     "value": project["date_time"]
                 });
-                $("#project-cover").summernote("code", "<p><img src=\"../img/project/" + project["PUID"] + ".jpg\" /></p>");
+                $("#project-cover").summernote("code", "<p><img src=\"" + project["cover"] + "\" /></p>");
             },
             newProject: function () {
                 $("#project-date-time").datetimepicker();

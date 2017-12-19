@@ -1,23 +1,17 @@
-var Artwork = require("../api/artwork.js");
-var Article = require("../api/article.js");
+var Artwork = require("../api/artwork");
+var Article = require("../api/article");
 
 module.exports = function (req, res, callback) {
     Artwork.getLatestArtworks(function (artworks) {
-        if (artworks) {
-            Article.getLatestArticles(function (articles) {
-                if (articles) {
-                    callback({
-                        "artworks": artworks,
-                        "articles": articles
-                    });
-                }
-                else {
-                    res.error(500, "Internal server error");
-                }
+        Article.getLatestArticles(function (articles) {
+            callback({
+                "artworks": artworks,
+                "articles": articles
             });
-        }
-        else {
-            res.error(500, "Internal server error");
-        }
+        }, (err) => {
+            res.error(500, err);
+        });
+    }, (err) => {
+        res.error(500, err);
     });
 }

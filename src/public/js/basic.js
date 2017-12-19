@@ -10,7 +10,7 @@ var Nav = {
         this.initiateMobile();
         this.initiateNav();
         this.initiateNavToggle();
-        this.initiateTitle();
+        // this.initiateTitle();
     },
     initiateMobile: function () {
         if (isMobile()) {
@@ -31,12 +31,12 @@ var Nav = {
     initiateNav: function () {
         $("#nav-" + PAGE).children("a").addClass("active");
     },
-    initiateTitle: function () {
-        if (PAGE != "index") {
-            var name = PAGE.substring(0, 1).toUpperCase() + PAGE.substring(1);
-            $("title").html($("title").html() + " - " + name);
-        }
-    },
+    // initiateTitle: function () {
+    //     if (PAGE != "index") {
+    //         var name = PAGE.substring(0, 1).toUpperCase() + PAGE.substring(1);
+    //         $("title").html($("title").html() + " - " + name);
+    //     }
+    // },
     menuShown: function () {
         return this.$menu.hasClass("active");
     },

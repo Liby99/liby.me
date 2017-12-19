@@ -206,7 +206,7 @@
                     <div id="article-list-holder">
                         <ul id="article-list">
                             <% articles.forEach(function (article) { %>
-                                <li class="article<%= (article["AUID"] == auid) ? " active" : ""%>" id="<%= article["AUID"] %>">
+                                <li class="article<%= (article["_id"] == id) ? " active" : ""%>" id="<%= article["_id"] %>">
                                     <span class="article-title">
                                         <%= article["title"] %>
                                     </span>

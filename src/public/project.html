@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Liby.me</title>
+        <title>Liby.me - Project</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/x-icon" href="img/general/favicon.ico" media="screen" />
@@ -17,7 +17,7 @@
         <main>
             <ul id="project-list">
                 <% projects.forEach(function (project) { %>
-                    <li class="project" style="background-image: url(img/project/<%= project["PUID"] %>.jpg)">
+                    <li class="project" style="background-image: url(<%= project["cover"] %>)">
                         <a target="_blank" href="<%= project["url"] %>">
                             <div class="name"><%= project["name"] %></div>
                             <div class="author"><%= project["author"] %></div>

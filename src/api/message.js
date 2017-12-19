@@ -1,27 +1,32 @@
-var mysql = require("keeling-js/lib/mysql.js");
+const Mongo = require("keeling-js/lib/mongo");
+const Messages = Mongo.db.collection("message");
 
 module.exports = {
-    getMessages: function (callback) {
-        mysql.query("SELECT `username`, `email`, `date_time`, `content`  FROM `message` ORDER BY `date_time` DESC", {}, function (err, result) {
+    getMessages (callback, error) {
+        Messages.find({}).sort({
+            "date_time": -1
+        }).toArray((err, messages) => {
             if (err) {
-                callback(undefined);
+                error(err);
             }
             else {
-                callback(result);
+                callback(messages);
             }
         });
     },
-    newMessage: function (username, email, content, callback) {
-        mysql.query("INSERT INTO `message` SET `MUID` = UUID(), `date_time` = NOW(), `read` = 0, ?", {
+    newMessage (username, email, content, callback, error) {
+        Messages.insertOne({
+            "date_time": new Date(),
+            "read": false,
             "username": username,
             "email": email,
             "content": content
-        }, function (err, result) {
+        }, (err, result) => {
             if (err) {
-                callback(false);
+                error(err);
             }
             else {
-                callback(true);
+                callback();
             }
         });
     }

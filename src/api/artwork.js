@@ -1,214 +1,195 @@
-var mysql = require("keeling-js/lib/mysql.js");
-var file = require("./lib/file.js");
+const Mongo = require("keeling-js/lib/mongo");
+const Image = require("keeling-js/lib/image");
+const ObjectId = require("./lib/object_id");
+const Promise = require("./lib/promise");
+const AWS = require("./lib/aws");
+const Artworks = Mongo.db.collection("artwork");
+const Cheerio = require("cheerio");
 
 module.exports = {
-    getAdminArtworks: function (callback) {
-        mysql.query("SELECT * FROM `artwork` ORDER BY `date_time` DESC", {}, function (err, result) {
+    getAdminArtworks (callback, error) {
+        Artworks.find({}).sort({
+            "date_time": -1
+        }).toArray((err, artworks) => {
             if (err) {
-                callback(undefined);
+                error(err);
             }
             else {
-                callback(result);
+                callback(artworks);
             }
         });
     },
-    getLatestArtworks: function (callback) {
-        mysql.query("SELECT `AUID`, `title`, `subtitle`, `type`, `source_type`, `source_url`, `date_time` FROM `artwork` WHERE `status` = 1 ORDER BY `date_time` DESC LIMIT 12", {}, function (err, result) {
+    getLatestArtworks (callback, error)  {
+        Artworks.find({
+            "status": 1
+        }, {
+            "description": 0
+        }).sort({
+            "date_time": -1
+        }).limit(12).toArray((err, artworks) => {
             if (err) {
-                callback(undefined);
+                error(err);
             }
             else {
-                callback(result);
+                callback(artworks);
             }
         });
     },
-    getArtworksOfYear: function (year, callback) {
-        mysql.query("SELECT `AUID`, `date_time` FROM `artwork` WHERE `status` = 1 AND YEAR(`date_time`) = ? ORDER BY `date_time` ASC", [
-            year
-        ], function (err, result) {
+    getArtworksOfYear (year, callback, error) {
+        Artworks.find({
+            $where: "this.date_time.getFullYear() == " + year,
+            status: 1
+        }, {
+            "thumb": 1,
+            "date_time": 1
+        }).sort({
+            date_time: 1
+        }).toArray((err, artworks) => {
             if (err) {
-                callback(undefined);
+                error(err);
             }
             else {
-                callback(result);
+                callback(artworks);
             }
         });
     },
-    hasArtworksOfYear: function (year, callback) {
-        mysql.query("SELECT COUNT(`id`) AS `count` FROM `artwork` WHERE `status` = 1 AND YEAR(`date_time`) = ?", [
-            year
-        ], function (err, result) {
+    hasArtworksOfYear (year, callback, error) {
+        Artworks.find({
+            $where: "this.date_time.getFullYear() == " + year,
+            status: 1
+        }).count((err, count) => {
             if (err) {
-                callback(false);
+                error(err);
             }
             else {
-                if (result[0]["count"] == 0) {
-                    callback(false);
-                }
-                else {
-                    callback(true);
-                }
+                callback(count > 0);
             }
         });
     },
-    getAdminArtworkData: function (artwork, callback) {
-        mysql.query("SELECT * FROM `artwork` WHERE ?", {
-            "AUID": artwork
-        }, function (err, result) {
+    getAdminArtworkData (artworkId, callback, error) {
+        Artworks.findOne({
+            "_id": ObjectId(artworkId)
+        }, (err, artwork) => {
             if (err) {
-                callback(undefined);
+                error(err);
             }
             else {
-                if (result.length > 0) {
-                    callback(result[0]);
-                }
-                else {
-                    callback(undefined);
-                }
+                callback(artwork);
             }
         });
     },
-    getArtworkData: function (artwork, callback) {
-        var self = this;
-        this.getAdminArtworkData(artwork, function (result) {
-            if (result) {
-                if (result.status == 1) {
-                    delete result.status;
-                    var dt = (new Date(Date.parse(result["date_time"])));
-                    result["type"] = self.getTypeString(result["type"]);
-                    result["date_time"] = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-                    callback(result);
-                }
-                else {
-                    callback(undefined);
-                }
+    getArtworkData (artworkId, callback, error) {
+        Artworks.findOne({
+            "_id": ObjectId(artworkId),
+            "status": 1
+        }, (err, artwork) => {
+            if (err) {
+                error(err);
             }
             else {
-                callback(undefined);
+                callback(artwork);
+            }
+        });
+    },
+    view (artworkId, callback, error) {
+        Artworks.updateOne({
+            "_id": ObjectId(artworkId)
+        }, {
+            $inc: {
+                "view": 1
+            }
+        }, (err) => {
+            if (err) {
+                error(err);
+            }
+            else {
+                callback();
             }
         })
     },
-    view: function (artwork, callback) {
-        mysql.query("UPDATE `artwork` SET `view` = `view` + 1 WHERE ?", {
-            "AUID": artwork
-        }, function (err, result) {
-            if (err) {
-                callback(false);
-            }
-            else {
-                callback(true);
-            }
-        });
-    },
-    newArtwork: function (title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
-        var self = this;
-        mysql.query("INSERT INTO `artwork` SET `AUID` = UUID(), ?", {
-            "title": title,
-            "subtitle": subtitle,
-            "status": status,
-            "date_time": dateTime,
-            "type": type,
-            "source_type": sourceType,
-            "source_url": sourceUrl,
-            "softwares": softwares,
-            "tags": tags,
-            "description": description
-        }, function (err, result) {
-            if (err) {
-                callback(false);
-            }
-            else {
-                mysql.query("SELECT `AUID` FROM `artwork` WHERE `id` = LAST_INSERT_ID()", {}, function (err, result) {
-                    if (err) {
-                        callback(false);
-                    }
-                    else {
-                        if (result.length == 0) {
-                            callback(false);
+    newArtwork (title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumb, description, callback, error) {
+        var artworkId = ObjectId();
+        uploadThumbnail(artworkId, thumb, (thumbUrl, thumbUploaded) => {
+            uploadCover(artworkId, cover, (coverUrl, coverUploaded) => {
+                uploadContentImage(artworkId, description, (html) => {
+                    Artworks.insertOne({
+                        "_id": artworkId,
+                        "username": "Liby99",
+                        "title": title,
+                        "subtitle": subtitle,
+                        "status": parseInt(status),
+                        "type": parseInt(type),
+                        "source_type": parseInt(sourceType),
+                        "source_url": sourceUrl,
+                        "date_time": new Date(Date.parse(dateTime)),
+                        "softwares": softwares,
+                        "tags": tags,
+                        "cover": coverUrl,
+                        "thumb": thumbUrl,
+                        "description": html,
+                        "view": 0
+                    }, (err, result) => {
+                        if (err) {
+                            error(err);
                         }
                         else {
-                            self.saveCover(result[0]["AUID"], cover, function (err) {
-                                if (err) {
-                                    self.removeArtwork(result[0]["AUID"], function (success) {
-                                        callback(false);
-                                    });
-                                }
-                                else {
-                                    self.saveThumbnail(result[0]["AUID"], thumbnail, function (err) {
-                                        if (err) {
-                                            self.removeArtwork(result[0]["AUID"], function (success) {
-                                                self.removeCover(result[0]["AUID"]);
-                                                callback(false);
-                                            });
-                                        }
-                                        else {
-                                            callback(true);
-                                        }
-                                    });
-                                }
-                            });
+                            callback();
                         }
-                    }
-                });
-            }
-        }, false);
-    },
-    updateArtwork: function (AUID, title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumbnail, description, callback) {
-        var self = this;
-        mysql.query("UPDATE `artwork` SET `title` = ?, `subtitle` = ?, `status` = ?, `date_time` = ?, `type` = ?, `source_type` = ?, `source_url` = ?, `softwares` = ?, `tags` = ?, `description` = ? WHERE `AUID` = ?", [
-            title,
-            subtitle,
-            status,
-            dateTime,
-            type,
-            sourceType,
-            sourceUrl,
-            softwares,
-            tags,
-            description,
-            AUID
-        ], function (err, result) {
-            if (err) {
-                callback(false);
-            }
-            else {
-                self.saveCover(AUID, cover, function (err) {
-                    self.saveThumbnail(AUID, thumbnail, function (err) {
-                        callback(true);
                     });
-                });
-            }
-        });
+                }, error);
+            }, error);
+        }, error);
     },
-    changeArtworkStatus: function (artwork, status, callback) {
-        mysql.query("UPDATE `artwork` SET `status` = ? WHERE `AUID` = ?", [
-            status,
-            artwork
-        ], function (err, result) {
+    updateArtwork (artworkId, title, subtitle, status, dateTime, type, sourceType, sourceUrl, softwares, tags, cover, thumb, description, callback, error) {
+        uploadThumbnail(artworkId, thumb, (thumbUrl, thumbUploaded) => {
+            uploadCover(artworkId, cover, (coverUrl, coverUploaded) => {
+                uploadContentImage(artworkId, description, (html) => {
+                    Artworks.updateOne({
+                        "_id": ObjectId(artworkId)
+                    }, {
+                        $set: {
+                            "title": title,
+                            "subtitle": subtitle,
+                            "status": parseInt(status),
+                            "type": parseInt(type),
+                            "source_type": parseInt(sourceType),
+                            "source_url": sourceUrl,
+                            "date_time": new Date(Date.parse(dateTime)),
+                            "softwares": softwares,
+                            "tags": tags,
+                            "cover": coverUrl,
+                            "thumb": thumbUrl,
+                            "description": html
+                        }
+                    }, (err, result) => {
+                        if (err) {
+                            error(err);
+                        }
+                        else {
+                            callback();
+                        }
+                    });
+                }, error);
+            }, error);
+        }, error);
+    },
+    changeArtworkStatus (artworkId, status, callback, error) {
+        Artworks.updateOne({
+            "_id": ObjectId(artworkId)
+        }, {
+            $set: {
+                "status": parseInt(status)
+            }
+        }, (err, result) => {
             if (err) {
-                callback(false);
+                error(err);
             }
             else {
-                callback(true);
+                callback();
             }
         });
     },
-    removeArtwork: function (artwork, callback) {
-        var self = this;
-        mysql.query("DELETE FROM `artwork` WHERE ?", {
-            "AUID": artwork
-        }, function (err, result) {
-            if (err) {
-                callback(false);
-            }
-            else {
-                self.removeCover(artwork);
-                self.removeThumbnail(artwork);
-                callback(true);
-            }
-        });
-    },
-    getTypeString: function (type) {
+    getTypeString (type) {
         switch (type) {
             case 0: return "3D Rendering";
             case 1: return "Special Effects";
@@ -221,31 +202,71 @@ module.exports = {
             case 8: return "Development";
             case 9: return "Illustration";
         }
-    },
-    saveCover: function (AUID, data, callback) {
-        file.saveImage("/artwork/cover/" + AUID + ".jpg", data, function (err) {
-            if (err) {
-                callback(false);
+    }
+}
+
+function findNextGap (arr) {
+    arr = arr.sort();
+    for (var i = 0; i < arr.length; i++)
+        if (i != arr[i])
+            return i;
+    return arr.length;
+}
+
+const IMAGE_REGEX = /\/(\d+).jpg$/;
+
+function uploadContentImage (artworkId, description, callback, error) {
+    var $ = Cheerio.load("<body>" + description + "</body>");
+    removeUnusedImage(artworkId, $, (files) => {
+        var ids = files.filter((f) => !f.removed).map((f) => parseInt(f.key.match(IMAGE_REGEX)[1]));
+        Promise.all($("img:not([data-aws])"), (elem, i, c, e) => {
+            var id = findNextGap(ids);
+            ids.push(id);
+            var name = "artwork/" + artworkId + "/" + id + ".jpg";
+            var img = $(elem).attr("src");
+            uploadImage(name, img, (location, uploaded) => {
+                $(elem).attr("src", location).attr("data-aws", uploaded ? 1 : 0);
+                c();
+            }, e);
+        }, () => {
+            callback($("body").html());
+        }, error);
+    }, error);
+}
+
+function removeUnusedImage (artworkId, $, callback, error) {
+    AWS.listObjects("artwork/" + artworkId + "/", (files) => {
+        contentFiles = files.filter((file) => file.key.indexOf("cover") == -1 && file.key.indexOf("thumb") == -1);
+        Promise.all(contentFiles, (file, i, c, e) => {
+            if ($("img[src='" + file.url + "']").length == 0) {
+                file.removed = true;
+                AWS.removeImage(file.key, c, e);
             }
             else {
-                callback(true);
+                c();
             }
-        });
-    },
-    saveThumbnail: function (AUID, data, callback) {
-        file.saveImage("/artwork/thumbnail/" + AUID + ".jpg", data, function (err) {
-            if (err) {
-                callback(false);
-            }
-            else {
-                callback(true);
-            }
-        });
-    },
-    removeCover: function (AUID) {
-        file.removeImage("/artwork/cover/" + AUID + ".jpg");
-    },
-    removeThumbnail: function (AUID) {
-        file.removeImage("/artwork/thumbnail/" + AUID + ".jpg");
+        }, () => {
+            callback(contentFiles);
+        }, error);
+    }, error);
+}
+
+function uploadThumbnail (artworkId, thumbnail, callback, error) {
+    uploadImage("artwork/" + artworkId + "/thumb.jpg", thumbnail, callback, error);
+}
+
+function uploadCover (artworkId, cover, callback, error) {
+    uploadImage("artwork/" + artworkId + "/cover.jpg", cover, callback, error);
+}
+
+function uploadImage (name, img, callback, error) {
+    try {
+        var buf = Image.decodeBase64(img);
+        AWS.saveImage(name, buf, (location) => {
+            callback(location, true);
+        }, error);
+    }
+    catch (err) {
+        callback(img, false);
     }
 }

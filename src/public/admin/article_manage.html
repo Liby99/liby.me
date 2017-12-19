@@ -10,7 +10,7 @@
     </head>
     <body>
         <nav>
-            <% include view/sidebar.html %>
+            <%- include("view/sidebar.html") %>
         </nav>
         <main>
             <div id="main-title">Manage Article</div>
@@ -32,15 +32,15 @@
                             <th>Status</th>
                             <th>Edit</th>
                         </tr>
-                        <% articles.forEach(function (article) { %>
-                            <tr class="article" id="<%= article["AUID"] %>">
-                                <td><%= article["id"] %></td>
+                        <% articles.forEach(function (article, i) { %>
+                            <tr class="article" id="<%= article["_id"] %>">
+                                <td><%= i + 1 %></td>
                                 <td><%= article["title"] %></td>
                                 <td><%= article["subtitle"] %></td>
                                 <td><%= article["date_time"] %></td>
                                 <td><%= article["update_date_time"] %></td>
-                                <td><%= article["view"] %></td>
-                                <td><%= article["comment"] %></td>
+                                <td><%= article["view"] || 0 %></td>
+                                <td><%= article["comments"] ? article["comments"].length : 0 %></td>
                                 <td>
                                     <select class="article-status" value="<%= article["status"] %>">
                                         <option value="0" <%= (article["status"] == 0 ? "selected" : "") %>>Draft</option>
@@ -71,12 +71,12 @@
             },
             initiateStatus: function () {
                 $(".article-status").change(function () {
-                    var AUID = $(this).parent().parent().attr("id");
+                    var id = $(this).parent().parent().attr("id");
                     var status = parseInt($(this).val());
                     $.ajax({
                         url: "/ajax/admin?action=change_article_status",
                         type: "post",
-                        data: { "article": AUID, "status": status },
+                        data: { "article": id, "status": status },
                         success: function (result) {
                             var data = JSON.parse(result);
                             if (data["code"] != 0) {
@@ -89,8 +89,8 @@
             },
             initiateEdit: function () {
                 $(".article-edit").click(function () {
-                    var AUID = $(this).parent().parent().attr("id");
-                    window.location.href = "article_edit.html?a=" + AUID;
+                    var id = $(this).parent().parent().attr("id");
+                    window.location.href = "article_edit.html?a=" + id;
                 })
             }
         }
