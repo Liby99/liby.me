@@ -116,7 +116,7 @@
                         url: "/ajax/admin?action=submit_artwork",
                         type: "post",
                         data: {
-                            "AUID": ((self.artwork != undefined) ? self.artwork : ""),
+                            "id": ((self.artwork != undefined) ? self.artwork : ""),
                             "title": $("#artwork-title").val(),
                             "subtitle": $("#artwork-subtitle").val(),
                             "status": parseInt($("#artwork-status").val()),
@@ -195,8 +195,8 @@
                 $("#artwork-source-url").val(artwork["source_url"]);
                 $("#artwork-softwares").val(artwork["softwares"]);
                 $("#artwork-tags").val(artwork["tags"]);
-                $("#artwork-cover").summernote('code', "<p><img src=\"../img/artwork/cover/" + artwork["AUID"] + ".jpg\" /></p>");
-                $("#artwork-thumbnail").summernote('code', "<p><img src=\"../img/artwork/thumbnail/" + artwork["AUID"] + ".jpg\" /></p>");
+                $("#artwork-cover").summernote('code', "<p><img src=\"" + artwork["cover"] + "\" /></p>");
+                $("#artwork-thumbnail").summernote('code', "<p><img src=\"" + artwork["thumb"] + "\" /></p>");
                 $("#artwork-description").summernote('code', artwork["description"]);
             },
             newArtwork: function () {

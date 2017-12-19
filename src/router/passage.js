@@ -1,4 +1,4 @@
-var Article = require("../api/article.js");
+var Article = require("../api/article");
 
 module.exports = function (req, res, callback) {
     if (req.query["a"]) {

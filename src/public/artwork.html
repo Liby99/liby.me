@@ -50,8 +50,8 @@
                                 <% if (row == 0) { %>
                                             <li class="artwork-column">
                                 <% } %>
-                                                <div class="artwork" id="<%= artwork["AUID"] %>">
-                                                    <div onclick="Artwork.load('<%= artwork["AUID"] %>')" style="background-image: url(img/artwork/thumbnail/<%= artwork["AUID"] %>.jpg)"></div>
+                                                <div class="artwork" id="<%= artwork["_id"] %>">
+                                                    <div onclick="Artwork.load('<%= artwork["_id"] %>')" style="background-image: url(<%= artwork["thumb"] %>)"></div>
                                                 </div>
                                 <% if (row++ == 3) { %>
                                     <% row = 0; %>
@@ -84,7 +84,7 @@
                         <div class="side">
                             <div id="artwork-head">
                                 <div id="artwork-thumbnail">
-                                    <img src="<%= artwork ? "img\/artwork\/thumbnail\/" + artwork["AUID"] + ".jpg" : "" %>" />
+                                    <img src="<%= artwork ? artwork.thumb : "" %>" />
                                 </div>
                                 <div id="artwork-titles">
                                     <div id="artwork-title"><%= artwork ? artwork["title"] : "" %></div>

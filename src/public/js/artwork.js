@@ -85,7 +85,7 @@ var Artwork = {
             type: "post",
             data: { "artwork": artwork },
             success: function (data) {
-                self.loadArtworkThumbnail(data["AUID"]);
+                self.loadArtworkThumbnail(data["thumb"]);
                 self.loadArtworkTitle(data["title"]);
                 self.loadArtworkSubtitle(data["subtitle"]);
                 self.loadArtworkDateTime(data["date_time"]);
@@ -93,25 +93,25 @@ var Artwork = {
                 self.loadArtworkSoftwares(data["softwares"]);
                 self.loadArtworkTags(data["tags"]);
                 self.loadArtworkDescription(data["description"]);
-                self.pushState(data["AUID"]);
+                self.pushState(data["_id"]);
                 self.openArtwork();
-                self.loadArtworkCover(data["source_type"], data["source_url"], data["AUID"]);
+                self.loadArtworkCover(data["source_type"], data["source_url"], data["cover"]);
             }
         });
         return false;
     },
-    loadArtworkCover: function (sourceType, sourceUrl, AUID) {
+    loadArtworkCover: function (sourceType, sourceUrl, cover) {
         if (sourceType == 2) {
             var url = sourceUrl.replace("https://", "https://player.").replace("com", "com/video");
             this.$artworkSource.html("<iframe src=\"" + url + "?api=1&player_id=vimeo_player\"></iframe>");
             this.initiateIframe();
         }
         else {
-            this.$artworkSource.html("<img src=\"img/artwork/cover/" + AUID + ".jpg\" />");
+            this.$artworkSource.html("<img src=\"" + cover + "\" />");
         }
     },
-    loadArtworkThumbnail: function (AUID) {
-        this.$artworkThumbnail.children("img").attr("src", "img/artwork/thumbnail/" + AUID + ".jpg");
+    loadArtworkThumbnail: function (thumb) {
+        this.$artworkThumbnail.children("img").attr("src", thumb);
     },
     loadArtworkTitle: function (title) {
         this.$artworkTitle.text(title);
@@ -144,10 +144,10 @@ var Artwork = {
     loadArtworkDescription: function (description) {
         this.$artworkDescription.html(description);
     },
-    pushState: function (AUID) {
+    pushState: function (id) {
         history.pushState({
-            "AUID": AUID
-        }, "", "artwork.html?y=" + this.params["y"] + "&a=" + AUID);
+            "id": id
+        }, "", "artwork.html?y=" + this.params["y"] + "&a=" + id);
     }
 }
 

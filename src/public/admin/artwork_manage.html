@@ -9,7 +9,7 @@
     </head>
     <body>
         <nav>
-            <% include view/sidebar.html %>
+            <%- include("view/sidebar.html") %>
         </nav>
         <main>
             <div id="main-title">Manage Artwork</div>
@@ -29,11 +29,11 @@
                             <th>Status</th>
                             <th>View</th>
                             <th>Edit</th>
-                            <th>Delete</th>
+                            <!-- <th>Delete</th> -->
                         </tr>
-                        <% artworks.forEach(function (artwork) { %>
-                            <tr class="artwork" id="<%= artwork["AUID"] %>">
-                                <td><%= artwork["id"] %></td>
+                        <% artworks.forEach(function (artwork, i) { %>
+                            <tr class="artwork" id="<%= artwork["_id"] %>">
+                                <td><%= i + 1 %></td>
                                 <td><%= artwork["title"] %></td>
                                 <td><%= artwork["subtitle"] %></td>
                                 <td><%= artwork["type"] %></td>
@@ -49,9 +49,9 @@
                                 <td>
                                     <button class="artwork-edit small">Edit</button>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <button class="artwork-delete small">Delete</button>
-                                </td>
+                                </td> -->
                             </tr>
                         <% }) %>
                     </table>
@@ -68,17 +68,17 @@
         var ArtworkManage = {
             initiate: function () {
                 this.initiateStatus();
-                this.initiateDelete();
+                // this.initiateDelete();
                 this.initiateEdit();
             },
             initiateStatus: function () {
                 $(".artwork-status").change(function () {
-                    var AUID = $(this).parent().parent().attr("id");
+                    var id = $(this).parent().parent().attr("id");
                     var status = parseInt($(this).val());
                     $.ajax({
                         url: "/ajax/admin?action=change_artwork_status",
                         type: "post",
-                        data: { "artwork": AUID, "status": status },
+                        data: { "artwork": id, "status": status },
                         success: function (result) {
                             var data = JSON.parse(result);
                             if (data["code"] != 0) {
@@ -89,31 +89,31 @@
                     });
                 });
             },
-            initiateDelete: function () {
-                $(".artwork-delete").click(function () {
-                    if (confirm("Do you really want to delete this artwork?")) {
-                        var AUID = $(this).parent().parent().attr("id");
-                        $.ajax({
-                            url: "/ajax/admin?action=delete_artwork",
-                            type: "post",
-                            data: { "artwork": AUID },
-                            success: function (result) {
-                                var data = JSON.parse(result);
-                                if (data["code"] != 0) {
-                                    alert(data["msg"]);
-                                    window.location.reload();
-                                }
-                                else {
-                                    window.location.reload();
-                                }
-                            },
-                            error: function () {
-                                alert("Server connection error");
-                            }
-                        });
-                    }
-                });
-            },
+            // initiateDelete: function () {
+            //     $(".artwork-delete").click(function () {
+            //         if (confirm("Do you really want to delete this artwork?")) {
+            //             var AUID = $(this).parent().parent().attr("id");
+            //             $.ajax({
+            //                 url: "/ajax/admin?action=delete_artwork",
+            //                 type: "post",
+            //                 data: { "artwork": AUID },
+            //                 success: function (result) {
+            //                     var data = JSON.parse(result);
+            //                     if (data["code"] != 0) {
+            //                         alert(data["msg"]);
+            //                         window.location.reload();
+            //                     }
+            //                     else {
+            //                         window.location.reload();
+            //                     }
+            //                 },
+            //                 error: function () {
+            //                     alert("Server connection error");
+            //                 }
+            //             });
+            //         }
+            //     });
+            // },
             initiateEdit: function () {
                 $(".artwork-edit").click(function () {
                     var AUID = $(this).parent().parent().attr("id");
