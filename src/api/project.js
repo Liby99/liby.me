@@ -128,7 +128,9 @@ module.exports = {
         Projects.updateOne({
             "_id": ObjectId(projectId)
         }, {
-            "status": status
+            $set: {
+                "status": parseInt(status)
+            }
         }, (err, result) => {
             if (err) {
                 error(err);
