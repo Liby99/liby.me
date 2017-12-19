@@ -69,8 +69,10 @@ module.exports = {
         }, {
             sort: {
                 "date_time": -1
-            }
-        }).limit(start, start + 5).toArray((err, articles) => {
+            },
+            skip: start,
+            limit: 5
+        }).toArray((err, articles) => {
             if (err) {
                 error(err);
             }

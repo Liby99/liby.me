@@ -1,1 +1,1 @@
-module.exports = require("../api/migration/migrate_article");
+module.exports = require("../api/migration/migrate_project");

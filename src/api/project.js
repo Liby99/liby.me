@@ -38,7 +38,7 @@ module.exports = {
             "status": 1
         }).sort({
             "date_time": -1
-        }).limit(3).toArray((err, projects) => {
+        }).toArray((err, projects) => {
             if (err) {
                 error(err);
             }
@@ -76,8 +76,7 @@ module.exports = {
     },
     
     updateProject (projectId, name, author, url, status, dateTime, cover, callback, error) {
-        
-        function next (coverUrl) {
+        uploadCover(projectId, cover, (coverUrl, coverUploaded) => {
             Projects.updateOne({
                 "_id": ObjectId(projectId)
             }, {
@@ -100,25 +99,12 @@ module.exports = {
                     callback();
                 }
             });
-        }
-        
-        try {
-            var coverBuf = Image.decodeBase64(cover);
-            var coverName = "project/" + projectId + ".jpg";
-            AWS.saveImage(coverName, coverBuf, (location) => {
-                next(location);
-            }, error);
-        }
-        catch (err) {
-            next(cover);
-        }
+        }, error);
     },
     
     newProject (name, author, url, status, dateTime, cover, callback, error) {
-        
         var projectId = ObjectId();
-        
-        function next (coverUrl) {
+        uploadCover(projectId, cover, (coverUrl, coverUploaded) => {
             Projects.insertOne({
                 "_id": ObjectId(projectId),
                 name: name,
@@ -128,7 +114,6 @@ module.exports = {
                 date_time: new Date(Date.parse(dateTime)),
                 cover: coverUrl
             }, (err, result) => {
-                console.log(result);
                 if (err) {
                     error(err);
                 }
@@ -136,18 +121,7 @@ module.exports = {
                     callback();
                 }
             });
-        }
-        
-        try {
-            var coverBuf = Image.decodeBase64(cover);
-            var coverName = "project/" + projectId + ".jpg";
-            AWS.saveImage(coverName, coverBuf, (location) => {
-                next(location);
-            }, error);
-        }
-        catch (err) {
-            next(cover);
-        }
+        }, error);
     },
     
     changeStatus (projectId, status, callback, error) {
@@ -163,5 +137,21 @@ module.exports = {
                 callback();
             }
         })
+    }
+}
+
+function uploadCover (projectId, cover, callback, error) {
+    uploadImage("project/" + projectId + ".jpg", cover, callback, error);
+}
+
+function uploadImage (name, img, callback, error) {
+    try {
+        var buf = Image.decodeBase64(img);
+        AWS.saveImage(name, buf, (location) => {
+            callback(location, true);
+        }, error);
+    }
+    catch (err) {
+        callback(img, false);
     }
 }
