@@ -199,148 +199,60 @@ module.exports = {
     },
     
     updateArticle (articleId, title, subtitle, tags, status, dateTime, cover, content, callback, error) {
-        AWS.listObjects("article/" + articleId + "/", (files) => {
-            
-            var $ = Cheerio.load("<body>" + content + "</body>");
-            var maxImageId = 0;
-            
-            // First remove all the deleted images
-            Promise.all(files.filter((file) => {
-                return file.key.indexOf("cover") == -1;
-            }), (file, i, c, e) => {
-                if ($("img[src='" + file.url + "']").length == 0) {
-                    AWS.removeImage(file.key, c, e);
-                }
-                else {
-                    c();
-                }
-            }, () => {
-                
-                function next(coverLocation) {
-                    
-                    // Then upload all new uploaded images
-                    var $imgs = $("img:not([data-aws])");
-                    Promise.all($imgs, (elem, i, c, e) => {
-                        try {
-                            var buf = Image.decodeBase64($(elem).attr("src"));
-                        }
-                        catch (err) {
-                            $(elem).attr("data-aws", "0");
-                            c();
-                            return;
-                        }
-                        
-                        var name = "article/" + articleId + "/" + i + ".jpg";
-                        AWS.saveImage(name, buf, function (location) {
-                            $(elem).attr("src", location).attr("data-aws", "1");
-                            c();
-                        }, (err) => {
-                            e(err);
-                        });
-                    }, () => {
-                        Articles.updateOne({ "_id": ObjectId(articleId) }, {
-                            $set: {
-                                "title": title,
-                                "subtitle": subtitle,
-                                "tags": tags,
-                                "status": parseInt(status),
-                                "date_time": new Date(Date.parse(dateTime)),
-                                "cover": coverLocation,
-                                "content": $("body").html()
-                            }
-                        }, function (err, result) {
-                            if (err) {
-                                error(err);
-                            }
-                            else {
-                                callback();
-                            }
-                        });
-                    }, error);
-                }
-                
-                // First upload cover
-                try {
-                    var coverBuf = Image.decodeBase64(cover);
-                    var coverName = "article/" + articleId + "/cover.jpg";
-                    AWS.saveImage(coverName, coverBuf, function (location) {
-                        var coverLocation = location;
-                        next(coverLocation);
-                    }, error);
-                }
-                catch (err) {
-                    next(cover);
-                }
+        uploadCover(articleId, cover, (coverUrl, coverUploaded) => {
+            uploadContentImage(articleId, content, (html) => {
+                Articles.updateOne({
+                    "_id": ObjectId(articleId)
+                }, {
+                    $set: {
+                        "title": title,
+                        "subtitle": subtitle,
+                        "tags": tags,
+                        "status": parseInt(status),
+                        "date_time": new Date(Date.parse(dateTime)),
+                        "update_date_time": new Date(),
+                        "cover": coverUrl,
+                        "content": html,
+                    }
+                }, (err, result) => {
+                    if (err) {
+                        error(err);
+                    }
+                    else {
+                        callback();
+                    }
+                });
             }, error);
         }, error);
     },
     
     newArticle (title, subtitle, tags, status, dateTime, cover, content, callback, error) {
-        Articles.insertOne({
-            "username": "Liby99",
-            "title": title,
-            "subtitle": subtitle,
-            "tags": tags,
-            "status": parseInt(status),
-            "view": 0,
-            "date_time": new Date(Date.parse(dateTime)),
-            "update_date_time": new Date(),
-            "comments": []
-        }, function (err, result) {
-            if (err) {
-                error(err);
-            }
-            else {
-                
-                // Get the insert id we just got
-                var articleId = result["insertedId"];
-                
-                // Upload the cover image
-                var coverBuf = Image.decodeBase64(cover);
-                var coverName = "article/" + articleId + "/cover.jpg";
-                AWS.saveImage(coverName, coverBuf, function (location) {
-                
-                    // Then process the content and upload all the images within
-                    var $ = Cheerio.load("<body>" + content + "</body>");
-                    Promise.all($("img"), (elem, i, c, e) => {
-                
-                        try {
-                            var buf = Image.decodeBase64($(elem).attr("src"));
-                        }
-                        catch (err) {
-                            $(elem).attr("data-aws", "0");
-                            c();
-                            return;
-                        }
-                
-                        var name = "article/" + articleId + "/" + i + ".jpg";
-                        AWS.saveImage(name, buf, function (location) {
-                            $(elem).attr("src", location);
-                            $(elem).attr("data-aws", "1");
-                            c();
-                        }, (err) => {
-                            e(err);
-                        });
-                    }, () => {
-                        Articles.updateOne({ "_id": ObjectId(articleId) }, {
-                            $set: {
-                                "cover": coverName,
-                                "content": $("body").html()
-                            }
-                        }, function (err, result) {
-                            if (err) {
-                                error(err);
-                            }
-                            else {
-                                callback();
-                            }
-                        });
-                    }, error);
-                }, (err) => {
-                    error(err);
+        var articleId = ObjectId();
+        uploadCover(articleId, cover, (coverUrl, coverUploaded) => {
+            uploadContentImage(articleId, content, (html) => {
+                Articles.insertOne({
+                    "_id": articleId,
+                    "username": "Liby99",
+                    "title": title,
+                    "subtitle": subtitle,
+                    "tags": tags,
+                    "status": parseInt(status),
+                    "view": 0,
+                    "date_time": new Date(Date.parse(dateTime)),
+                    "update_date_time": new Date(),
+                    "cover": coverUrl,
+                    "content": html,
+                    "comments": []
+                }, (err, result) => {
+                    if (err) {
+                        error(err);
+                    }
+                    else {
+                        callback();
+                    }
                 });
-            }
-        });
+            }, error);
+        }, error);
     },
     
     changeStatus (articleId, status, callback, error) {
@@ -481,5 +393,67 @@ module.exports = {
                 callback();
             }
         });
+    }
+}
+
+function findNextGap (arr) {
+    arr = arr.sort();
+    for (var i = 0; i < arr.length; i++)
+        if (i != arr[i])
+            return i;
+    return arr.length;
+}
+
+const IMAGE_REGEX = /\/(\d+).jpg$/;
+
+function uploadContentImage (articleId, content, callback, error) {
+    var $ = Cheerio.load("<body>" + content + "</body>");
+    removeUnusedImage(articleId, $, (files) => {
+        var ids = files.filter((f) => !f.removed).map((f) => parseInt(f.key.match(IMAGE_REGEX)[1]));
+        Promise.all($("img:not([data-aws])"), (elem, i, c, e) => {
+            var id = findNextGap(ids);
+            ids.push(id);
+            var name = "article/" + articleId + "/" + id + ".jpg";
+            var img = $(elem).attr("src");
+            uploadImage(name, img, (location, uploaded) => {
+                $(elem).attr("src", location).attr("data-aws", uploaded ? 1 : 0);
+                c();
+            }, e);
+        }, () => {
+            callback($("body").html());
+        }, error);
+    }, error);
+}
+
+function removeUnusedImage (articleId, $, callback, error) {
+    AWS.listObjects("article/" + articleId + "/", (files) => {
+        contentFiles = files.filter((file) => file.key.indexOf("cover") == -1 && file.key.indexOf("thumb") == -1);
+        Promise.all(contentFiles, (file, i, c, e) => {
+            if ($("img[src='" + file.url + "']").length == 0) {
+                file.removed = true;
+                AWS.removeImage(file.key, c, e);
+            }
+            else {
+                c();
+            }
+        }, () => {
+            callback(contentFiles);
+        }, error);
+    }, error);
+}
+
+function uploadCover (articleId, cover, callback, error) {
+    uploadImage("article/" + articleId + "/cover.jpg", cover, callback, error);
+}
+
+function uploadImage (name, img, callback, error) {
+    try {
+        var buf = Image.decodeBase64(img);
+        AWS.saveImage(name, buf, (location) => {
+            callback(location, true);
+        }, error);
+    }
+    catch (err) {
+        callback(img, false);
     }
 }

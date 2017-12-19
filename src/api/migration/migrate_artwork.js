@@ -1,6 +1,6 @@
-const ArtworkOld = require("../api/artwork.old");
-const Artwork = require("../api/artwork");
-const Promise = require("../api/lib/promise");
+const ArtworkOld = require("../old/artwork.old");
+const Artwork = require("../artwork");
+const Promise = require("../lib/promise");
 const fs = require("fs");
 const path = require("path");
 

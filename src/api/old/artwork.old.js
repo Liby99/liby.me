@@ -1,5 +1,5 @@
 var mysql = require("keeling-js/lib/mysql.js");
-var file = require("./lib/file.js");
+var file = require("../lib/file.js");
 
 module.exports = {
     getAdminArtworks: function (callback) {
