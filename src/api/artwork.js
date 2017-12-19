@@ -153,7 +153,7 @@ module.exports = {
                             "status": parseInt(status),
                             "type": parseInt(type),
                             "source_type": parseInt(sourceType),
-                            "source_url": parseInt(sourceUrl),
+                            "source_url": sourceUrl,
                             "date_time": new Date(Date.parse(dateTime)),
                             "softwares": softwares,
                             "tags": tags,

@@ -110,7 +110,7 @@ module.exports = {
                 name: name,
                 author: author,
                 url: url,
-                status: status,
+                status: parseInt(status),
                 date_time: new Date(Date.parse(dateTime)),
                 cover: coverUrl
             }, (err, result) => {

@@ -120,7 +120,8 @@ var Artwork = {
         this.$artworkSubtitle.text(subtitle);
     },
     loadArtworkDateTime: function (dateTime) {
-        this.$artworkDateTime.text(dateTime);
+        var dt = new Date(Date.parse(dateTime));
+        this.$artworkDateTime.text(dt.toString().substring(4, 10) + ", " + dt.getFullYear());
     },
     loadArtworkType: function (type) {
         this.$artworkType.text(type);

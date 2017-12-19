@@ -94,7 +94,7 @@
                             <div id="artwork-information">
                                 <div class="artwork-info-section">
                                     <span class="label">Post: </span>
-                                    <span id="artwork-date-time"><%= artwork ? artwork["date_time"] : "" %></span>
+                                    <span id="artwork-date-time"><%= artwork ? (artwork["date_time"].toString().substring(4, 10) + ", " + artwork["date_time"].getFullYear()) : "" %></span>
                                 </div>
                                 <div class="artwork-info-section">
                                     <span class="label">Type: </span>

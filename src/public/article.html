@@ -28,7 +28,7 @@
                                 <div id="first-article-info">
                                     <div id="first-article-data">
                                         <%= articles[0]["username"] %> |
-                                        <%= articles[0]["date_time"].toString().substring(0, 10) %> |
+                                        <%= articles[0]["date_time"] %> |
                                         <i class="fa fa-eye"></i>
                                         <%= articles[0]["view"] %> |
                                         <i class="fa fa-comments"></i>
@@ -59,7 +59,7 @@
                                     <div class="article-subtitle"><%= articles[i]["subtitle"] %></div>
                                     <div class="article-data">
                                         <%= articles[i]["username"] %> |
-                                        <%= articles[i]["date_time"].toString().substring(0, 10) %> |
+                                        <%= articles[i]["date_time"] %> |
                                         <i class="fa fa-eye"></i>
                                         <%= articles[i]["view"] || 0 %> |
                                         <i class="fa fa-comments"></i>

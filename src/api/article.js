@@ -47,6 +47,7 @@ module.exports = {
             "tags": 1,
             "view": 1,
             "status": 1,
+            "update_date_time": 1,
             "comments": 1
         }, {
             sort: {
