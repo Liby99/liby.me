@@ -1,5 +1,5 @@
 {
-    "ignore": [],
+    "ignore": [ "public" ],
     "delay": "3000",
     "ext": "js json"
 }
