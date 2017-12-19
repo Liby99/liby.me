@@ -144,7 +144,7 @@ body.mobile #banner-section {
     font-weight: bold;
 }
 
-#skill-list {
+#skill-list-holder {
     z-index: 126;
     position: absolute;
     width: 100%;
@@ -152,24 +152,22 @@ body.mobile #banner-section {
     overflow: hidden;
 }
 
+#skill-list {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-flow: row;
+    width: 400%;
+}
+
 .skill {
+    flex-grow: 1;
     transition: all 0.5s;
-    margin-left: 100%;
-    width: 100%;
     height: 420px;
     background-position: center;
     background-size: cover;
     color: rgba(240, 240, 240, 1);
     opacity: 1;
     z-index: 127;
-}
-
-.skill.active {
-    margin-left: 0;
-}
-
-.skill + .skill {
-    margin-top: -420px;
 }
 
 .skill .inner {
@@ -445,11 +443,11 @@ body.mobile #banner-section {
         height: auto;
     }
     
-    #skill-list, .skill {
+    #skill-list-holder, .skill {
         position: relative;
     }
     
-    #skill-list {
+    #skill-list-holder {
         height: auto;
     }
     
@@ -463,10 +461,6 @@ body.mobile #banner-section {
     
     .skill.active {
         height: auto;
-    }
-    
-    .skill + .skill {
-        margin-top: -450px;
     }
     
     .skill .inner {

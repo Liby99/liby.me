@@ -7,14 +7,16 @@ $(function () {
 var Skill = {
     currSkill: 0,
     schedule: undefined,
-    interval: 8 * 1000,
+    interval: 5 * 1000,
     $skillHeaders: $(".skill-header"),
+    $skillHolder: $("#skill-list-holder"),
     $skills: $(".skill"),
     initiate: function () {
         this.initiateHeaderHover();
         this.initiateHover();
         this.initiateScheduler();
         this.initiateSkillTree();
+        this.initiateResize();
     },
     initiateHover: function () {
         var self = this;
@@ -41,6 +43,16 @@ var Skill = {
             $(this).children(".progress-outer").children(".progress-bar").css("width", percentage + "%");
         });
     },
+    initiateResize: function () {
+        var self = this;
+        $(window).resize(function () {
+            self.refreshSize();
+        });
+        self.refreshSize();
+    },
+    refreshSize: function () {
+        this.$skills.width($(window).width());
+    },
     runScheduler: function () {
         var self = this;
         self.stopScheduler();
@@ -60,6 +72,7 @@ var Skill = {
     },
     open: function (id) {
         this.currSkill = id;
+        this.$skillHolder.animate({ scrollLeft: id * $(window).width() });
         this.$skillHeaders.eq(id).addClass("active").siblings().removeClass("active");
         this.$skills.eq(id).addClass("active").siblings().removeClass("active").find(".progress-bar").addClass("hidden");
         this.$skills.eq(id).find(".progress-bar").removeClass("hidden");
