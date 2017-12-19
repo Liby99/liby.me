@@ -26,6 +26,7 @@
                             <th>Subtitle</th>
                             <th>Type</th>
                             <th>Date</th>
+                            <th>Visible</th>
                             <th>Status</th>
                             <th>View</th>
                             <th>Edit</th>
@@ -38,6 +39,12 @@
                                 <td><%= artwork["subtitle"] %></td>
                                 <td><%= artwork["type"] %></td>
                                 <td><%= artwork["date_time"] %></td>
+                                <td>
+                                    <select class="artwork-visibility" value="<%= artwork["visible"] %>">
+                                        <option value="true" <%= (artwork["visible"] ? "selected" : "") %>>Yes</option>
+                                        <option value="false" <%= (!artwork["visible"] ? "selected" : "") %>>No</option>
+                                    </select>
+                                </td>
                                 <td>
                                     <select class="artwork-status" value="<%= artwork["status"] %>">
                                         <option value="0" <%= (artwork["status"] == 0 ? "selected" : "") %>>Draft</option>
@@ -67,9 +74,31 @@
         
         var ArtworkManage = {
             initiate: function () {
+                this.initiateVisibility();
                 this.initiateStatus();
                 // this.initiateDelete();
                 this.initiateEdit();
+            },
+            initiateVisibility: function () {
+                $(".artwork-visibility").change(function () {
+                    var id = $(this).parent().parent().attr("id");
+                    var visible = $(this).val() == "true" ? true : false;
+                    $.ajax({
+                        url: "/ajax/admin?action=set_artwork_visibility",
+                        type: "post",
+                        data: {
+                            "artwork": id,
+                            "visible": visible
+                        },
+                        success: function (result) {
+                            var data = JSON.parse(result);
+                            if (data["code"] != 0) {
+                                alert(data["msg"]);
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
             },
             initiateStatus: function () {
                 $(".artwork-status").change(function () {
