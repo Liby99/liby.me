@@ -157,6 +157,7 @@ main {
 .artwork {
     transition: all 0.5s;
     display: flex;
+    margin-left: 5px;
     margin-top: 5px;
     width: 100px;
     height: 100px;
@@ -172,7 +173,6 @@ main {
 .artwork div {
     transition: all 0.2s;
     margin: 0;
-    margin-left: 5px;
     width: 100%;
     height: 100%;
     background-size: cover;
