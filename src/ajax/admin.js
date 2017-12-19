@@ -146,52 +146,49 @@ module.exports = {
             res.error(500, err);
         });
     },
-    get_article_comment: function (req, res) {
-        Admin.loggedIn(req, function (logged) {
-            if (logged) {
-                if (req.body["article"] && req.body["article"] != "") {
-                    Article.adminExists(req.body["article"], function (exists) {
-                        if (exists) {
-                            Article.getAdminComments(req.body["article"], function (comments) {
-                                if (comments != undefined) {
-                                    res.success(comments);
-                                }
-                                else {
-                                    res.error(3, "Database error");
-                                }
-                            });
-                        }
-                        else {
-                            res.error(2, "Such article does not exist");
-                        }
-                    });
-                }
-                else {
-                    res.error(1, "Article parameter is required");
-                }
-            }
-            else {
-                res.error(1000, "Please login first");
-            }
-        }, (err) => {
-            res.error(500, err);
-        });
-    },
+    // get_article_comment: function (req, res) {
+    //     Admin.loggedIn(req, function (logged) {
+    //         if (logged) {
+    //             if (req.body["article"] && req.body["article"] != "") {
+    //                 Article.adminExists(req.body["article"], function (exists) {
+    //                     if (exists) {
+    //                         Article.getAdminComments(req.body["article"], function (comments) {
+    //                             if (comments != undefined) {
+    //                                 res.success(comments);
+    //                             }
+    //                             else {
+    //                                 res.error(3, "Database error");
+    //                             }
+    //                         });
+    //                     }
+    //                     else {
+    //                         res.error(2, "Such article does not exist");
+    //                     }
+    //                 });
+    //             }
+    //             else {
+    //                 res.error(1, "Article parameter is required");
+    //             }
+    //         }
+    //         else {
+    //             res.error(1000, "Please login first");
+    //         }
+    //     }, (err) => {
+    //         res.error(500, err);
+    //     });
+    // },
     delete_comment: function (req, res) {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
-                if (req.body["id"] && req.body["id"] != "") {
-                    Article.deleteComment(req.body["id"], function (success) {
-                        if (success) {
-                            res.success({});
-                        }
-                        else {
-                            res.error(2, "Database Error");
-                        }
+                if (req.body["article"] && req.body["article"] != "" && req.body["comment"] && req.body["comment"] != "") {
+                    Article.deleteComment(req.body["article"], req.body["comment"], function () {
+                        res.success({});
+                    }, (err) => {
+                        res.error(500, err);
                     });
                 }
                 else {
-                    res.error(1, "CUID is required");
+                    res.error(403, "article and comment id are required");
                 }
             }
             else {
@@ -204,18 +201,15 @@ module.exports = {
     undelete_comment: function (req, res) {
         Admin.loggedIn(req, function (logged) {
             if (logged) {
-                if (req.body["id"] && req.body["id"] != "") {
-                    Article.undeleteComment(req.body["id"], function (success) {
-                        if (success) {
-                            res.success({});
-                        }
-                        else {
-                            res.error(2, "Database Error");
-                        }
+                if (req.body["article"] && req.body["article"] != "" && req.body["comment"] && req.body["comment"] != "") {
+                    Article.undeleteComment(req.body["article"], req.body["comment"], function () {
+                        res.success({});
+                    }, (err) => {
+                        res.error(500, err);
                     });
                 }
                 else {
-                    res.error(1, "CUID is required");
+                    res.error(403, "article and comment id are required");
                 }
             }
             else {

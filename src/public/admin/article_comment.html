@@ -272,6 +272,7 @@
         });
         
         var ArticleList = {
+            article: "<%= id %>",
             showDeleted: false,
             initiate: function () {
                 this.initiateClick();
@@ -300,13 +301,16 @@
             },
             initiateDelete: function () {
                 $(".delete-comment").click(function () {
-                    var CUID = $(this).parent().parent().attr("id");
+                    var comment = $(this).parent().parent().attr("id");
                     if ($(this).parent().parent().hasClass("deleted")) {
                         if (confirm("Do you want to undelete this comment?")) {
                             $.ajax({
                                 url: "/ajax/admin?action=undelete_comment",
                                 type: "post",
-                                data: { "CUID": CUID },
+                                data: {
+                                    "article": this.article,
+                                    "comment": comment
+                                },
                                 success: function (result) {
                                     var data = JSON.parse(result);
                                     if (data["code"] == 0) {
@@ -327,7 +331,10 @@
                             $.ajax({
                                 url: "/ajax/admin?action=delete_comment",
                                 type: "post",
-                                data: { "CUID": CUID },
+                                data: {
+                                    "article": this.article,
+                                    "comment": comment
+                                },
                                 success: function (result) {
                                     var data = JSON.parse(result);
                                     if (data["code"] == 0) {
